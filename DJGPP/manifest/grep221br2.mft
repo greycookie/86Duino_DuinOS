@@ -1,0 +1,15 @@
+bin/egrep.exe
+bin/fgrep.exe
+bin/grep.exe
+gnu/grep-2.21/ChangeLog
+gnu/grep-2.21/djgpp/README
+gnu/grep-2.21/NEWS
+gnu/grep-2.21/README
+manifest/grep221br2.dsm
+manifest/grep221br2.mft
+manifest/grep221br2.ver
+share/info/grep.info
+share/man/cat1/egrep.1
+share/man/cat1/fgrep.1
+share/man/cat1/grep.1
+gnu/grep-2.21

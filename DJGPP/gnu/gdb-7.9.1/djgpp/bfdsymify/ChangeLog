@@ -1,0 +1,8 @@
+2012-08-21 Juan Manuel Guerrero <juan.guerrero@gmx.de>
+	Include sysdep.h before bfd.h
+
+2006-02-18 Andris Pavenis <andris.pavenis@saunalahti.fi>
+	Modified BFDSYMIFY to work with BFD from GDB-6.4. Had to use
+	bfd_get_section_size() instead of bfd_get_section_size_befor_reloc().
+	I'm not sure that this is correct, but it seems to at least work for 
+	DJGPP.

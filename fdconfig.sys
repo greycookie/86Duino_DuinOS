@@ -1,0 +1,16 @@
+DEVICE=C:\FDOS\BIN\HIMEMX.EXE /TESTMEM:OFF
+
+LASTDRIVE=Z
+DEVICE=C:\NET\Protman.Dos /i:C:\NET\R6040
+DEVICE=C:\NET\dis_pkt.dos
+DEVICE=C:\NET\R6040\RDCPCI.dos
+
+switches=/N
+break=off
+dos=high
+files=60
+fcbs=60,0
+rem stacks=16,256
+
+shell=command.com /P /E:512
+installhigh=C:\fdos\bin\ctmouse.exe /3 /P

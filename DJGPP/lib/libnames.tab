@@ -1,0 +1,23 @@
+#
+#  Table to map libraries long file name to short file names.
+#  The entry is:
+#    LFN   SFN
+#  The library name is the name stripped from its directory name,
+#  stripped from its "lib" prefix and its ".a" suffix.
+#
+#
+#  E.g.: for the library
+#
+#    /dev/env/DJDIR/lib/foobar-1.2.3/libverylongname-1.2.3.a
+#
+#  the mapping entry will look like this:
+#
+#    verylongname-1.2.3   vln123
+#
+
+
+#  LFN           SFN
+
+gettextlib     gtxtlib
+gettextpo      gtxtpo
+gettextsrc     gtxtsrc

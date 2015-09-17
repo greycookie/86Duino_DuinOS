@@ -1,0 +1,3 @@
+f bootfix.obj
+sys com
+opt el,vfr

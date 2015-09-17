@@ -1,0 +1,646 @@
+--- wget-1.8.2/djconfig.sh.orig	2002-06-01 19:05:26.000000000 -0800
++++ wget-1.8.2/djconfig.sh.ori	2002-09-02 11:07:50.000000000 -0800
+@@ -0,0 +1,16 @@
++#!/bin/sh
++# This file, when run from a bash shell in DOS, will configure wget
++# for DJGPP. Be sure to set the environment variable WATT_ROOT first,
++# pointing to your WATT-32 distribution. Remove "-lintl" and "-liconv"
++# and add the flag "--disable-nls" if you don't have the gettext package
++# installed. Remove "-lwmemu" if you don't want to link with the wmemu
++# floating point emulator. Remove "--with-ssl" if you don't have openssl
++# installed. This file must have unix-style end of lines (LF), not
++# DOS-style (CR LF).
++
++auto_cflags=1 \
++CFLAGS="-W" \
++CPPFLAGS="-I$WATT_ROOT/inc" \
++LIBS="-L$WATT_ROOT/lib -lwatt -lintl -liconv -lwmemu" \
++./configure \
++--with-ssl
+--- wget-1.8.2/configure.in.orig	2002-05-17 19:05:10.000000000 -0800
+--- wget-1.8.2/configure.in	2002-06-01 19:05:26.000000000 -0800
+@@ -138,6 +138,7 @@
+ dnl Might also be erelevant for DJGPP.
+ dnl
+ case "$host_os" in
++  *msdosdjgpp) exeext='.exe';;
+   *win32) exeext='.exe';;
+   *) exeext='';;
+ esac
+--- wget-1.8.2/Makefile.in.orig	2002-05-17 19:05:10.000000000 -0800
+--- wget-1.8.2/Makefile.in	2002-06-01 19:05:26.000000000 -0800
+@@ -153,7 +153,7 @@
+ 	$(RM) *~ *.bak $(DISTNAME).tar.gz
+ 
+ distclean-top: clean-top
+-	$(RM) Makefile config.status config.log config.cache stamp-h
++	$(RM) Makefile config.status config.log config.cache libtool stamp-h
+ 
+ realclean-top: distclean-top
+ 	$(RM) configure
+--- wget-1.8.2/src/netrc.c.orig	2002-05-18 19:04:54.000000000 -0800
+--- wget-1.8.2/src/netrc.c	2002-06-02 09:43:40.000000000 -0800
+@@ -53,7 +53,11 @@
+ extern int errno;
+ #endif
+ 
++#ifdef __DJGPP__
++#define NETRC_FILE_NAME "_netrc"
++#else
+ #define NETRC_FILE_NAME ".netrc"
++#endif /* __DJGPP__ */
+ 
+ acc_t *netrc_list;
+ 
+--- wget-1.8.2/src/ftp.c.orig	2002-05-17 19:05:16.000000000 -0800
+--- wget-1.8.2/src/ftp.c	2002-08-08 07:50:26.000000000 -0800
+@@ -43,6 +43,9 @@
+ #include <sys/types.h>
+ #include <assert.h>
+ #include <errno.h>
++#ifdef __DJGPP__
++#include <sys/errno.h>
++#endif /* __DJGPP__ */
+ 
+ #include "wget.h"
+ #include "utils.h"
+@@ -60,7 +63,11 @@
+ #endif
+ 
+ /* File where the "ls -al" listing will be saved.  */
++#ifdef __DJGPP__
++#define LIST_FILENAME "_listing"
++#else
+ #define LIST_FILENAME ".listing"
++#endif /* __DJGPP__ */
+ 
+ extern char ftp_last_respline[];
+ 
+@@ -1352,7 +1359,7 @@
+ 	     follow them.  */
+ 	  if (!opt.retr_symlinks)
+ 	    {
+-#ifdef HAVE_SYMLINK
++#if defined(HAVE_SYMLINK) && defined(S_IFLNK)
+ 	      if (!f->linkto)
+ 		logputs (LOG_NOTQUIET,
+ 			 _("Invalid name of the symlink, skipping.\n"));
+@@ -1393,7 +1400,7 @@
+ 	      logprintf (LOG_NOTQUIET,
+ 			 _("Symlinks not supported, skipping symlink `%s'.\n"),
+ 			 con->target);
+-#endif /* not HAVE_SYMLINK */
++#endif /* not HAVE_SYMLINK or not S_IFLNK */
+ 	    }
+ 	  else                /* opt.retr_symlinks */
+ 	    {
+--- wget-1.8.2/src/config.h.in.orig	2002-05-17 19:05:14.000000000 -0800
+--- wget-1.8.2/src/config.h.in	2002-06-01 19:05:26.000000000 -0800
+@@ -36,7 +36,9 @@
+ 
+ /* AIX requires this to be the first thing in the file.  */
+ #ifdef __GNUC__
++#ifndef __CYGWIN__
+ # define alloca __builtin_alloca
++#endif /* __CYGWIN__ */
+ #else
+ # if HAVE_ALLOCA_H
+ #  include <alloca.h>
+--- wget-1.8.2/src/gen_sslfunc.c.orig	2002-05-17 19:14:48.000000000 -0800
+--- wget-1.8.2/src/gen_sslfunc.c	2002-06-01 19:05:26.000000000 -0800
+@@ -34,6 +34,9 @@
+ 
+ #include <assert.h>
+ #include <errno.h>
++#ifdef __DJGPP__
++#include <sys/errno.h>
++#endif /* __DJGPP__ */
+ #ifdef HAVE_UNISTD_H
+ # include <unistd.h>
+ #endif
+--- wget-1.8.2/src/http.c.orig	2002-05-18 19:04:52.000000000 -0800
+--- wget-1.8.2/src/http.c	2002-06-01 19:05:26.000000000 -0800
+@@ -43,6 +43,9 @@
+ #endif
+ #include <assert.h>
+ #include <errno.h>
++#ifdef __DJGPP__
++#include <sys/errno.h>
++#endif /* __DJGPP__ */
+ #if TIME_WITH_SYS_TIME
+ # include <sys/time.h>
+ # include <time.h>
+--- wget-1.8.2/src/init.c.orig	2002-05-17 19:05:18.000000000 -0800
+--- wget-1.8.2/src/init.c	2002-06-01 19:05:26.000000000 -0800
+@@ -113,7 +113,9 @@
+   { "accept",		&opt.accepts,		cmd_vector },
+   { "addhostdir",	&opt.add_hostdir,	cmd_boolean },
+   { "alwaysrest",	&opt.always_rest,	cmd_boolean }, /* deprecated */
++#ifndef __DJGPP__
+   { "background",	&opt.background,	cmd_boolean },
++#endif /* __DJGPP__ */
+   { "backupconverted",	&opt.backup_converted,	cmd_boolean },
+   { "backups",		&opt.backups,		cmd_number },
+   { "base",		&opt.base_href,		cmd_string },
+@@ -200,6 +202,9 @@
+   { "verbose",		&opt.verbose,		cmd_boolean },
+   { "wait",		&opt.wait,		cmd_time },
+   { "waitretry",	&opt.waitretry,		cmd_time }
++#ifdef __DJGPP__
++, { "wdebug",		&opt.wdebug,		cmd_boolean }
++#endif /* __DJGPP__ */
+ };
+ 
+ /* Return index of COM if it is a valid command, or -1 otherwise.  COM
+@@ -321,9 +326,14 @@
+   /* If that failed, try $HOME/.wgetrc.  */
+   home = home_dir ();
+   if (home)
+-    {
+-      file = (char *)xmalloc (strlen (home) + 1 + strlen (".wgetrc") + 1);
+-      sprintf (file, "%s/.wgetrc", home);
++  {
++#ifdef __DJGPP__
++      file = (char *)xmalloc (strlen (home) + 1 + strlen ("_wgetrc") + 1);
++      sprintf (file, "%s/_wgetrc", home);
++#else
++       file = (char *)xmalloc (strlen (home) + 1 + strlen (".wgetrc") + 1);
++       sprintf (file, "%s/.wgetrc", home);
++#endif /* __DJGPP__ */
+     }
+   FREE_MAYBE (home);
+ #else  /* WINDOWS */
+--- wget-1.8.2/src/main.c.orig	2002-05-17 19:05:18.000000000 -0800
+--- wget-1.8.2/src/main.c	2002-06-01 19:05:26.000000000 -0800
+@@ -49,6 +49,10 @@
+ # include <locale.h>
+ #endif /* HAVE_LOCALE_H */
+ #endif /* HAVE_NLS */
++#ifdef __DJGPP__
++#include <fcntl.h>
++#include <io.h>
++#endif /* __DJGPP__ */
+ #include <errno.h>
+ 
+ #define OPTIONS_DEFINED_HERE	/* for options.h */
+@@ -131,6 +135,9 @@
+ static void
+ print_help (void)
+ {
++#if (defined(O_TEXT) != 0)
++  setmode(fileno(stdout), O_TEXT);
++#endif /* O_TEXT */
+   printf (_("GNU Wget %s, a non-interactive network retriever.\n"),
+ 	  version_string);
+   print_usage ();
+@@ -144,7 +151,13 @@
+ Startup:\n\
+   -V,  --version           display the version of Wget and exit.\n\
+   -h,  --help              print this help.\n\
++"), stdout);
++#ifndef __DJGPP__
++  fputs (_("\
+   -b,  --background        go to background after startup.\n\
++"), stdout);
++#endif /* __DJGPP__ */
++  fputs (_("\
+   -e,  --execute=COMMAND   execute a `.wgetrc\'-style command.\n\
+ \n"), stdout);
+   fputs (_("\
+@@ -152,6 +165,13 @@
+   -o,  --output-file=FILE     log messages to FILE.\n\
+   -a,  --append-output=FILE   append messages to FILE.\n\
+   -d,  --debug                print debug output.\n\
++"), stdout);
++#ifdef __DJGPP__
++  fputs (_("\
++       --wdebug               print WATT-32 debug output.\n\
++"), stdout);
++#endif /* __DJGPP__ */
++  fputs (_("\
+   -q,  --quiet                quiet (no output).\n\
+   -v,  --verbose              be verbose (this is the default).\n\
+   -nv, --non-verbose          turn off verboseness, without being quiet.\n\
+@@ -241,6 +261,10 @@
+ \n"), stdout);
+   fputs (_("Mail bug reports and suggestions to <bug-wget@gnu.org>.\n"),
+ 	 stdout);
++#if (defined(O_BINARY) != 0)
++  if (!isatty(fileno(stdout)))
++  setmode(fileno(stdout), O_BINARY);
++#endif /* O_BINARY */
+ }
+ 
+ int
+@@ -252,7 +276,9 @@
+   static struct option long_options[] =
+   {
+     /* Options without arguments: */
++#ifndef __DJGPP__
+     { "background", no_argument, NULL, 'b' },
++#endif /* __DJGPP__ */
+     { "backup-converted", no_argument, NULL, 'K' },
+     { "continue", no_argument, NULL, 'c' },
+     { "convert-links", no_argument, NULL, 'k' },
+@@ -288,6 +314,9 @@
+     { "timestamping", no_argument, NULL, 'N' },
+     { "verbose", no_argument, NULL, 'v' },
+     { "version", no_argument, NULL, 'V' },
++#ifdef __DJGPP__
++    { "wdebug", no_argument, NULL, 167 },
++#endif /* __DJGPP__ */
+ 
+     /* Options accepting an argument: */
+     { "accept", required_argument, NULL, 'A' },
+@@ -343,6 +372,12 @@
+ 
+   i18n_initialize ();
+ 
++#if (defined(O_BINARY) != 0)
++  _fmode = O_BINARY;
++  if (!isatty(fileno(stdout)))
++  setmode(fileno(stdout), O_BINARY);
++#endif /* O_BINARY */
++
+   append_to_log = 0;
+ 
+   /* Construct the name of the executable, without the directory part.  */
+@@ -417,9 +452,16 @@
+ 	case 165:
+ 	  setval ("randomwait", "on");
+ 	  break;
+-	case 'b':
+-	  setval ("background", "on");
+-	  break;
++#ifdef __DJGPP__
++	case 167:
++	  setval ("wdebug", "on");
++	  break;
++#endif /* __DJGPP__ */
++#ifndef __DJGPP__
++  	case 'b':
++  	  setval ("background", "on");
++  	  break;
++#endif /* !__DJGPP__ */
+ 	case 'c':
+ 	  setval ("continue", "on");
+ 	  break;
+@@ -733,8 +775,16 @@
+       exit (1);
+     }
+ 
+-  if (opt.background)
+-    fork_to_background ();
++#ifndef __DJGPP__
++   if (opt.background)
++     fork_to_background ();
++#endif /* !__DJGPP__ */
++
++#ifdef __DJGPP__
++  if (opt.wdebug)
++	  dbug_init();
++  sock_init();
++#endif /* __DJGPP__ */
+ 
+   /* Initialize progress.  Have to do this after the options are
+      processed so we know where the log file is.  */
+--- wget-1.8.2/src/options.h.orig	2002-05-17 19:05:20.000000000 -0800
+--- wget-1.8.2/src/options.h	2002-06-01 19:05:26.000000000 -0800
+@@ -131,6 +131,10 @@
+   int debug;			/* Debugging on/off */
+ #endif /* DEBUG */
+ 
++#ifdef __DJGPP__
++  int wdebug;			/* WATT-32 debugging on/off */
++#endif /*  __DJGPP__ */
++
+   int timestamping;		/* Whether to use time-stamping. */
+ 
+   int backup_converted;		/* Do we save pre-converted files as *.orig? */
+--- wget-1.8.2/src/sysdep.h.orig	2002-05-17 19:05:22.000000000 -0800
+--- wget-1.8.2/src/sysdep.h	2002-06-01 19:05:26.000000000 -0800
+@@ -69,15 +69,15 @@
+ # include <io.h>
+ #endif /* __WATCOMC__ */
+ 
+-/* Needed for compilation under OS/2: */
+-#ifdef __EMX__
++/* Needed for compilation under OS/2 or DJGPP: */
++#if defined(__EMX__) || defined(__DJGPP__)
+ #ifndef S_ISLNK
+ # define S_ISLNK(m) 0
+ #endif
+ #ifndef lstat
+ # define lstat stat
+ #endif
+-#endif /* __EMX__ */
++#endif /* __EMX__ || __DJGPP__ */
+ 
+ /* Reportedly, stat() macros are broken on some old systems.  Those
+    systems will have to fend for themselves, as I will not introduce
+--- wget-1.8.2/src/url.c.orig	2002-05-24 02:22:24.000000000 -0800
+--- wget-1.8.2/src/url.c	2002-06-01 19:05:26.000000000 -0800
+@@ -42,6 +42,9 @@
+ #endif
+ #include <errno.h>
+ #include <assert.h>
++#if defined(__DJGPP__) || defined(__CYGWIN__)
++#include <limits.h>
++#endif /* __DJGPP__ || __CYGWIN__ */
+ 
+ #include "wget.h"
+ #include "utils.h"
+@@ -1349,6 +1352,9 @@
+ url_filename (const struct url *u)
+ {
+   char *file, *name;
++#if defined(__DJGPP__) || defined(__CYGWIN__)
++  char *file1 = NULL;
++#endif /* __DJGPP__ */
+   int have_prefix = 0;		/* whether we must prepend opt.dir_prefix */
+ 
+   if (opt.dirstruct)
+@@ -1386,6 +1392,12 @@
+ 	*p = '@';
+   }
+ #endif /* WINDOWS */
++#if defined(__DJGPP__) || defined(__CYGWIN__)
++    file1=xmalloc(PATH_MAX);
++    strcpy(file1, msdosify(file));
++    strcpy(file, rename_if_dos_device_name(file1));
++    xfree(file1);
++#endif /* __DJGPP__ || __CYGWIN__ */
+ 
+   /* Check the cases in which the unique extensions are not used:
+      1) Clobbering is turned off (-nc).
+--- wget-1.8.2/src/utils.c.orig	2002-05-17 19:05:22.000000000 -0800
+--- wget-1.8.2/src/utils.c	2002-06-01 19:05:26.000000000 -0800
+@@ -77,6 +77,9 @@
+ #ifndef errno
+ extern int errno;
+ #endif
++#ifdef __DJGPP__
++#include <fcntl.h>
++#endif /*  __DJGPP__ */
+ 
+ /* This section implements several wrappers around the basic
+    allocation routines.  This is done for two reasons: first, so that
+@@ -497,6 +500,7 @@
+    nothing under MS-Windows.  */
+ int
+ remove_link (const char *file)
++#ifdef S_IFLNK
+ {
+   int err = 0;
+   struct stat st;
+@@ -511,6 +515,9 @@
+     }
+   return err;
+ }
++#else
++{}
++#endif /* S_IFLNK */
+ 
+ /* Does FILENAME exist?  This is quite a lousy implementation, since
+    it supplies no error codes -- only a yes-or-no answer.  Thus it
+@@ -551,8 +558,13 @@
+ 
+   if (count)
+     {
++#ifdef __DJGPP__
++      filename = (char *)xmalloc (strlen (fileprefix) + numdigit (count) + 1);
++      sprintf (filename, "%d%s", count, fileprefix);
++#else
+       filename = (char *)xmalloc (strlen (fileprefix) + numdigit (count) + 2);
+       sprintf (filename, "%s.%d", fileprefix, count);
++#endif /* __DJGPP__ */
+     }
+   else
+     filename = xstrdup (fileprefix);
+@@ -1387,6 +1399,198 @@
+   return p;
+ }
+ 
++#ifdef __DJGPP__
++/* The following functions are taken with modification from the DJGPP
++ * port of tar 1.12. They use algorithms originally from DJTAR. */
++
++char *
++msdosify (char *file_name)
++{
++  static char dos_name[PATH_MAX];
++  static char illegal_chars_dos[] = ".+, ;=[]|<>\\\":?*";
++  static char *illegal_chars_w95 = &illegal_chars_dos[8];
++  int idx, dot_idx;
++  char *s = file_name, *d = dos_name;
++  char *illegal_aliens = illegal_chars_dos;
++  size_t len = sizeof (illegal_chars_dos) - 1;
++  int lfn = 0;
++
++  /* Support for Windows 9X VFAT systems, when available.  */
++  if (_use_lfn (file_name))
++    lfn = 1;
++  if (lfn)
++    {
++      illegal_aliens = illegal_chars_w95;
++      len -= (illegal_chars_w95 - illegal_chars_dos);
++    }
++
++  /* Get past the drive letter, if any. */
++  if (s[0] >= 'A' && s[0] <= 'z' && s[1] == ':')
++    {
++      *d++ = *s++;
++      *d++ = *s++;
++    }
++
++  for (idx = 0, dot_idx = -1; *s; s++, d++)
++    {
++      if (memchr (illegal_aliens, *s, len))
++	{
++	  /* Dots are special: DOS doesn't allow them as the leading
++	     character, and a file name cannot have more than a single dot.
++	     We leave the first non-leading dot alone, unless it comes too
++	     close to the beginning of the name: we want sh.lex.c to become
++	     sh_lex.c, not sh.lex-c.  */
++	  if (*s == '.')
++	    {
++	      if (idx == 0 && (s[1] == '/' || (s[1] == '.' && s[2] == '/')))
++		{
++		  /* Copy "./" and "../" verbatim.  */
++		  *d++ = *s++;
++		  if (*s == '.')
++		    *d++ = *s++;
++		  *d = *s;
++		}
++	      else if (idx == 0)
++		*d = '_';
++	      else if (dot_idx >= 0)
++		{
++		  if (dot_idx < 5) /* 5 is a heuristic ad-hoc'ery */
++		    {
++		      d[dot_idx - idx] = '_'; /* replace previous dot */
++		      *d = '.';
++		    }
++		  else
++		    *d = '-';
++		}
++	      else
++		*d = '.';
++
++	      if (*s == '.')
++		dot_idx = idx;
++	    }
++	  else if (*s == '+' && s[1] == '+')
++	    {
++	      if (idx - 2 == dot_idx) /* .c++, .h++ etc. */
++		{
++		  *d++ = 'x';
++		  *d   = 'x';
++		}
++	      else
++		{
++		  /* libg++ etc.  */
++		  memcpy (d, "plus", 4);
++		  d += 3;
++		}
++	      s++;
++	      idx++;
++	    }
++	  else
++	    *d = '_';
++	}
++      else
++	*d = *s;
++      if (*s == '/')
++	{
++	  idx = 0;
++	  dot_idx = -1;
++	}
++      else
++	idx++;
++    }
++
++  *d = '\0';
++  return dos_name;
++}
++
++char *
++rename_if_dos_device_name (char *file_name)
++{
++  /* We could have a file whose name is a device on MS-DOS.  
++   * Trying to retrieve such a file would fail at best and 
++   * wedge us at worst.  We need to rename such files. */
++  extern char *basename (const char *);
++  char *base;
++  struct stat st_buf;
++  char fname[PATH_MAX];
++
++  strcpy (fname, file_name);
++  base = basename (fname);
++  if (stat (base, &st_buf) == 0 && S_ISCHR (st_buf.st_mode))
++    {
++      size_t blen = strlen (base);
++
++      /* Prepend a '_'.  */
++      memmove (base + 1, base, blen + 1);
++      base[0] = '_';
++      strcpy (file_name, fname);
++    }
++    return file_name;
++}
++
++#endif /* __DJGPP__ */
++
++#ifdef __CYGWIN__
++char *
++msdosify (char *file_name)
++{
++  static char dos_name[PATH_MAX];
++  static char illegal_chars_w95[] = "<>\\\":?*";
++  int idx;
++  char *s = file_name, *d = dos_name;
++  char *illegal_aliens = illegal_chars_w95;
++  size_t len = sizeof (illegal_chars_w95) - 1;
++
++
++  /* Get past the drive letter, if any. */
++  if (s[0] >= 'A' && s[0] <= 'z' && s[1] == ':')
++    {
++      *d++ = *s++;
++      *d++ = *s++;
++    }
++
++  for (idx = 0; *s; s++, d++)
++    {
++      if (memchr (illegal_aliens, *s, len))
++	{
++	    *d = '_';
++	}
++      else
++	*d = *s;
++	idx++;
++    }
++
++  *d = '\0';
++  return dos_name;
++}
++
++char *
++rename_if_dos_device_name (char *file_name)
++{
++  /* We could have a file whose name is a device on MS-DOS.  
++   * Trying to retrieve such a file would fail at best and 
++   * wedge us at worst.  We need to rename such files. */
++  char *base;
++  struct stat st_buf;
++  char fname[PATH_MAX];
++
++  strcpy (fname, file_name);
++  base = strrchr(fname, '/') + 1;
++  if (base == NULL) {base = fname;}
++  if ((stat (base, &st_buf) == 0 && S_ISCHR (st_buf.st_mode)) || (tolower(base[0]) == 'p' && tolower(base[1]) == 'r' && tolower(base[2]) == 'n' && base[3] == '\0'))
++    {
++      size_t blen = strlen (base);
++
++      /* Prepend a '_'.  */
++      memmove (base + 1, base, blen + 1);
++      base[0] = '_';
++      strcpy (file_name, fname);
++    }
++    return file_name;
++}
++
++
++#endif /* __CYGWIN__ */
++
+ #undef ONE_DIGIT
+ #undef ONE_DIGIT_ADVANCE
+ 
+--- wget-1.8.2/src/utils.h.orig	2002-05-17 19:05:22.000000000 -0800
+--- wget-1.8.2/src/utils.h	2002-06-01 19:05:26.000000000 -0800
+@@ -114,4 +114,9 @@
+ int determine_screen_width PARAMS ((void));
+ int random_number PARAMS ((int));
+ 
++#if defined(__DJGPP__) || defined(__CYGWIN__)
++char *rename_if_dos_device_name PARAMS ((char *));
++char *msdosify PARAMS ((char *));
++#endif /* __DJGPP__ || __CYGWIN__ */
++
+ #endif /* UTILS_H */
+--- wget-1.8.2/src/wget.h.orig	2002-05-17 19:14:48.000000000 -0800
+--- wget-1.8.2/src/wget.h	2002-06-01 19:05:26.000000000 -0800
+@@ -54,10 +54,12 @@
+ /* `gettext (FOO)' is long to write, so we use `_(FOO)'.  If NLS is
+    unavailable, _(STRING) simply returns STRING.  */
+ #ifdef HAVE_NLS
+-# define _(string) gettext (string)
+ # ifdef HAVE_LIBINTL_H
+ #  include <libintl.h>
+ # endif /* HAVE_LIBINTL_H */
++#ifndef _
++# define _(string) gettext (string)
++#endif /* _ */
+ #else  /* not HAVE_NLS */
+ # define _(string) string
+ #endif /* not HAVE_NLS */

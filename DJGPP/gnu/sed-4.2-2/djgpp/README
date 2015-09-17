@@ -1,0 +1,125 @@
+This is a port of GNU Sed 4.2.2 to MSDOS/DJGPP.
+
+1.:     DJGPP specific changes.
+        =======================
+
+      - This version of the port will support the generation of 8+3 valid
+        backup names for input file names if only SFN support is available.
+        This concerns the '-i' option (in-place editing).
+      - The port will open the input stream in binary mode.  This will allow to
+        process files that contain embedded ^Z and lone ^M characters.
+      - This version of the port no longer support the bootstrapping of sed.
+      - You will need LFN support to configure and compile the source package.
+        I have no plans to support SFN systems to build the sed binaries.
+      - No support for DJGPP's own regex function.  They no longer do match the
+        GNU regex ones.  Here some work needs to be done before DJGPP's
+        functions will again be a one-to-one substitute of GNU regex.
+      - To build the binary the CVS repository version of popen/pclose and
+        unistd.h are used.
+
+        As usual, all djgpp specific files (config.bat, diffs, readme files,
+        etc.) are located in the djgpp subdir.
+
+
+2.:     Installing the binary package.
+        ==============================
+
+2.1.:   Copy the binary distribution into the top DJGPP installation directory
+        and unzip it running *ONE* of the following commands:
+          unzip32 sed422b.zip      or
+          djtarx sed422b.zip       or
+          pkunzip -d sed422b.zip
+
+2.2.:   If there is no entry for the sed info docs in your dir file, located
+        info directory, create one running the command:
+          install-info --info-dir=/dev/env/DJDIR/info /dev/env/DJDIR/info/sed.info
+
+        For further information about GNU Sed please read the info docs and the NEWS file.
+
+
+3.:     Building the binaries from sources.
+        ===================================
+
+3.1.:   To build the binaries you will need the following binary packages:
+          djdev203.zip (patch level 2, see the djdev203.dsm)
+          bsh204br2.zip, gccNNNb.zip, bnuNNNb.zip, makNNNb.zip,
+          filNNNb.zip, shlNNNb.zip, txtNNNb.zip, txiNNNb.zip,
+          grepNNNb.zip, sedNNNb.zip and difNNNb.zip.
+        NNN stands for the current version of that port.  All these packages can
+        be found in the /v2gnu directory of ftp.delorie.com and any mirror.
+        Previous versions of those packages may do the job as well but I have
+        not tested this.
+
+3.2.:   Create a temporary directory. Copy the source package: sed422s.zip
+        into the directory and unzip it running ONE of the following commands:
+          unzip32 sed422s.zip      or
+          djtarx sed422s.zip       or
+          pkunzip -d sed422s.zip
+
+3.3.:   If for some reason you want to reconfigure the package cd into the top
+        srcdir (sed-4.2-2) and run the following commands:
+          del djgpp\config.cache
+          make distclean
+          djgpp\config
+
+        Please note that you *MUST* delete the config.cache file in the /djgpp
+        subdir or you will not really reconfigure the sources because the
+        configuration informations will be read from the cache file instead
+        of being newly computed.
+        To build the programs in a directory other than where the sources are,
+        you must add the parameter that specifies the source directory,
+        e.g:
+          x:\src\gnu\sed-4.2-2\djgpp\config x:/src/gnu/sed-4.2-2
+        or:
+          x:\src\gnu\sed-4.2-2\djgpp\xp-config x:/src/gnu/sed-4.2-2
+
+        Lets assume you want to build the binaries in a directory placed on a
+        different drive (z:\build in this case) from where the sources are,
+        then you will run the following commands:
+          z:
+          md \build
+          cd \build
+          x:\src\gnu\sed-4.2-2\djgpp\config x:/src/gnu/sed-4.2-2
+        or:
+          x:\src\gnu\sed-4.2-2\djgpp\xp-config x:/src/gnu/sed-4.2-2
+
+        The order of the options and the srcdir option does not matter. You
+        *MUST* use forward slashes to specify the source directory.
+
+        The batch file will set same environment variables, make MSDOS specific
+        modifications to the Makefile.ins and supply all other needed options
+        to the configure script.
+
+
+3.4.:   To compile the package run from the directory where you have configured
+        the sources the command:
+          make
+
+3.5.:   Now you can run the tests if you like. From the directory where you have
+        configured the sources run the command:
+          make check
+
+        No one of the tests should fail no matter if you have used stock djdev203
+        or beta djdev204.
+
+3.6.:   To install the binary, info docs and man pages run the following command
+        from the top srcdir:
+          make install
+
+        This will install the products into your DJGPP installation tree given
+        by the default prefix "/dev/env/DJDIR". If you prefer to install them
+        into some other directory you will have to set prefix to the appropriate
+        value.
+        Example:
+          make install prefix=z:/some/other/dir
+
+
+
+
+        Send sed specific bug reports to <bonzini@gnu.org>.
+        Send suggestions and bug reports concerning the DJGPP port
+        to comp.os.msdos.djgpp or <djgpp@delorie.com>.
+
+Enjoy.
+
+          Guerrero, Juan Manuel <juan.guerrero@gmx.de>

@@ -1,0 +1,25 @@
+;
+;  NDIS2 OEMSETUP.INF for RDC MAC Series Fast Ethernet adapters
+;
+[data]
+type=network
+version=3.11.250
+
+[disks]
+    1 =. ,"RDC MAC driver diskette",disk1
+[netcard]
+RDCPCI="RDC PCI Series Ethernet Adapter",0,ndis,ethernet,real,RDCPCI,RDCPCI_nif
+
+;
+; Install Sections
+;
+[RDCPCI]
+devdir= 1:RDCPCI.dos
+device=RDCPCI.dos,@devdir\RDCPCI.dos
+
+[RDCPCI_nif]
+drivername=RDCPCI$
+param=SLOT,"Slot number",int,"1,16,1",1
+param=MEDIA_TYPE,"Media Type",text,"AUTODETECT,FM_100M_FULL,FM_100M_HALF,FM_10M_FULL,FM_10M_HALF","AUTODETECT"
+
+

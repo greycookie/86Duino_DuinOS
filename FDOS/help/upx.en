@@ -1,0 +1,13 @@
+UPX
+
+UPX is a compression program for executables (programs and drivers).
+Usage: upx --8086 --lzma --ultra-brute program.exe
+Usage: upx --8086 --lzma --ultra-brute program.com
+Usage: upx --8086 --lzma --ultra-brute driver.sys
+
+UPX requires a 80386, executable can keep (not gain) 8086 compatibility if 
+above options are used. No extra disk space or memory is needed for the 
+in-memory decompressed programs.
+
+Best compression is gained through UPX with built-in closed source NRV-engine.
+Most opensource friendly version is UPX compiled with the UCL engine/library

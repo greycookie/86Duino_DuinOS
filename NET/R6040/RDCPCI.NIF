@@ -1,0 +1,52 @@
+[RDCPCI]
+Type = NDIS
+Title = "RDC PCI Series Ethernet Adapter"
+Version = 2.01
+Drivername = RDCPCI$
+Xports = NETBEUI LANDD
+
+[FILE]
+Name = RDCPCI.DOS
+
+[SLOT]
+tag = SLOT
+display = "Slot Number"
+type = decimal
+optional = YES
+editable = YES
+help = "This parameter specifies the slot number used."
+
+[MEDIA_TYPE]
+tag = MEDIA_TYPE
+diaplay = "Media Type"
+type = string
+Strlength = 14
+Set = AUTODETECT,FM_100M_FULL,FM_100M_HALF,FM_10M_FULL,FM_10M_HALF
+default = AUTODETECT
+optional = YES
+editable = YES
+help = "This parameter specifies the operation mode (speed/duplex mode)
+	of the network adapter."
+
+[RX_FLOW]
+tag = RX_FLOW
+display = "Rx Flow Control Enable"
+type = string
+Strlength = 16
+Set = ENABLE, DISABLE
+default = DISABLE
+optional = YES
+editable = YES
+help = "ENABLE/DISABLE Rx flow control."
+
+[TX_FLOW]
+tag = TX_FLOW
+display = "Tx Flow Control Enable"
+type = string
+Strlength = 16
+Set = ENABLE, DISABLE
+default = DISABLE
+optional = YES
+editable = YES
+help = "ENABLE/DISABLE Tx flow control."
+

@@ -1,0 +1,2 @@
+infozip || 7zip
+command || 4dos

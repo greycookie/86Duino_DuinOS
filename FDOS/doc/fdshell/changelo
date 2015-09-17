@@ -1,0 +1,29 @@
+ChangeLog for FreeDOS Shell
+
+	* Version 0.01 to 0.09  (UNSTABLE)
+
+	Video mode testing.
+
+	* Version 0.10 	(STABLE)
+
+	First beta release.
+
+      +	Minimal functionalities (copy, run, delete, move, rename, change 
+	attributes, create directory, remove directory)
+      + Ability to show information about files on disk and directories
+	(not completed)
+      + Ability to change colours.
+      + Ability to load values from DOSSHELL.INI initialization file.
+      + Ability to respond to basic user events (click on file/directory
+	lists change available File menu commands)
+      - Lack of a routine to save settings to DOSSHELL.INI
+      - Lack of online help.		
+      - Lack of program management.
+      - Lack of multiple file selection.
+      - Directory Size label in 'Show information...' only shows total
+	file size for non-hidden/system files.	(bug in my 
+	GetDirectoryEntries routine)
+      - Other (not yet found) bugs.	
+
+	Next public release:	version 0.20
+

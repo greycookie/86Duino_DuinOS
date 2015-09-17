@@ -1,0 +1,116 @@
+/* Replace: _setupio() (setupio.c in BC++ 3.1 RTL).
+   Description: reduced version of _setupio(). With NOBUFFER stdin and
+		stdout are unbuffered; NOSTDIO mean that streams will not
+		be used (and fopen() will fail). NFILE defines amount of
+		available handles and streams (with 5 standard); without
+		NFILE only 6 handles (5 standard+1 free) is assumed.
+   Removed calls: with NOBUFFER: setvbuf();
+		  with NOSTDIO: isatty(), setvbuf().
+   Referenced by: RTL startup.
+*/
+
+#if defined __BORLANDC__ && __BORLANDC__ == 0x410
+
+#include <io.h>
+#include <fcntl.h>
+#ifndef NOSTDIO
+# include <stdio.h>
+#endif
+
+/* Import: NFILE, NOBUFFER, NOSTDIO */
+
+#ifndef NFILE
+# define NFILE 6
+#endif
+
+/*----------------------------------------------------------------------*/
+
+unsigned _nfile = NFILE;
+unsigned _openfd [NFILE] = {
+	O_RDONLY | O_DEVICE | O_TEXT,
+	O_WRONLY | O_DEVICE | O_TEXT,
+	O_WRONLY | O_DEVICE | O_TEXT,
+	O_RDWR   | O_DEVICE | O_BINARY,
+	O_WRONLY | O_DEVICE | O_BINARY
+};
+
+#ifndef NOSTDIO
+
+/*----------------------------------------------------------------------*/
+
+FILE _streams [NFILE] = {
+  { 0, _F_READ|_F_TERM|_F_LBUF,	 0, 0, 0, NULL, NULL, 0, (short)stdin },
+  { 0, _F_WRIT|_F_TERM,		 1, 0, 0, NULL, NULL, 0, (short)stdout },
+  { 0, _F_WRIT|_F_TERM,		 2, 0, 0, NULL, NULL, 0, (short)stderr },
+  { 0, _F_RDWR|_F_TERM|_F_BIN,	 3, 0, 0, NULL, NULL, 0, (short)stdaux },
+  { 0, _F_WRIT|_F_TERM|_F_BIN,	 4, 0, 0, NULL, NULL, 0, (short)stdprn },
+# if NFILE > 5
+  { 0, 0,			-1, 0, 0, NULL, NULL, 0, (short)&_streams[5] },
+# endif
+# if NFILE > 6
+  { 0, 0,			-1, 0, 0, NULL, NULL, 0, (short)&_streams[6] },
+# endif
+# if NFILE > 7
+  { 0, 0,			-1, 0, 0, NULL, NULL, 0, (short)&_streams[7] },
+# endif
+};
+
+/*----------------------------------------------------------------------*/
+
+/* "Check for stack overflow" off for BC++ 3.1				*/
+/* "Suppress redundant load" on for BC++ 3.1				*/
+# pragma option -N- -Z
+
+# ifdef NOBUFFER
+
+static void near __fastcall _setbuf_ (FILE *fp) {
+	if (!isatty (fp->fd))
+		fp->flags &= ~_F_TERM;
+}
+
+# else
+
+static void near __fastcall _setbuf_ (FILE *fp) {
+	int type;
+	if (!isatty (fp->fd)){
+		fp->flags &= ~_F_TERM,
+		type = _IOFBF;
+	} else {
+		type = _IONBF;
+		if (fp->flags & _F_LBUF) type = _IOLBF;
+	}
+	setvbuf (fp, NULL, type, BUFSIZ);
+}
+
+# endif
+
+# ifdef __cplusplus
+extern "C"
+# endif
+void near _Cdecl _setupio (void) {
+# if NFILE > 8
+	FILE *fp = &_streams [8];
+	do {	/*_openfd[i] = 0,*/
+		fp->fd = -1, fp->token = (short)fp, fp++;
+	} while (fp < &_streams [NFILE]);
+# endif
+	_setbuf_ (stdin);
+	_setbuf_ (stdout);
+}
+
+# pragma startup _setupio 2
+
+#else /* NOSTDIO */
+
+/*----------------------------------------------------------------------*/
+
+# ifdef __cplusplus
+extern "C"
+# endif
+void near _Cdecl _setupio (void) {}
+
+#endif /* NOSTDIO */
+
+#pragma option -N. -Z.
+
+#endif /* __BORLANDC__ */

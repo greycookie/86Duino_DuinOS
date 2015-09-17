@@ -1,0 +1,264 @@
+
+
+
+BISON(1)                  User Commands                  BISON(1)
+
+
+NNAAMMEE
+       bison - GNU Project parser generator (yacc replacement)
+
+SSYYNNOOPPSSIISS
+       bbiissoonn [_O_P_T_I_O_N]... _F_I_L_E
+
+DDEESSCCRRIIPPTTIIOONN
+       _B_i_s_o_n  is  a parser generator in the style of _y_a_c_c(1).  It
+       should be upwardly compatible with  input  files  designed
+       for _y_a_c_c.
+
+       Input files should follow the _y_a_c_c convention of ending in
+       ..yy.  Unlike _y_a_c_c, the generated files do  not  have  fixed
+       names,  but  instead  use  the  prefix  of the input file.
+       Moreover, if you need to put _C_+_+ code in the  input  file,
+       you  can  end  his  name  by a C++-like extension (.ypp or
+       .y++), then bison will follow your extension to  name  the
+       output  file  (.cpp  or  .c++).   For  instance, a grammar
+       description file named ppaarrssee..yyxxxx would produce the  gener-
+       ated  parser  in  a  file  named ppaarrssee..ttaabb..ccxxxx, instead of
+       _y_a_c_c's yy..ttaabb..cc or old _B_i_s_o_n version's ppaarrssee..ttaabb..cc.
+
+       This description of the options that can be given to _b_i_s_o_n
+       is  adapted  from the node IInnvvooccaattiioonn in the bbiissoonn..tteexxiinnffoo
+       manual, which should be taken as authoritative.
+
+       _B_i_s_o_n supports both traditional single-letter options  and
+       mnemonic  long  option names.  Long option names are indi-
+       cated with ---- instead  of  --.   Abbreviations  for  option
+       names are allowed as long as they are unique.  When a long
+       option takes an argument, like ----ffiillee--pprreeffiixx, connect  the
+       option name and the argument with ==.
+
+       Generate LALR(1) and GLR parsers.
+
+       Mandatory  arguments  to  long  options  are mandatory for
+       short options too.  The same is true  for  optional  argu-
+       ments.
+
+   OOppeerraattiioonn mmooddeess::
+       --hh, ----hheellpp
+              display this help and exit
+
+       --VV, ----vveerrssiioonn
+              output version information and exit
+
+       ----pprriinntt--llooccaalleeddiirr
+              output directory containing locale-dependent data
+
+       ----pprriinntt--ddaattaaddiirr
+              output directory containing skeletons and XSLT
+
+       --yy, ----yyaacccc
+              emulate POSIX Yacc
+
+
+
+bison 2.4.1               December 2008                         1
+
+
+
+
+
+BISON(1)                  User Commands                  BISON(1)
+
+
+       --WW, ----wwaarrnniinnggss=_[_C_A_T_E_G_O_R_Y_]
+              report the warnings falling in CATEGORY
+
+   PPaarrsseerr::
+       --LL, ----llaanngguuaaggee=_L_A_N_G_U_A_G_E
+              specify the output programming language (this is an
+              experimental feature)
+
+       --SS, ----sskkeelleettoonn=_F_I_L_E
+              specify the skeleton to use
+
+       --tt, ----ddeebbuugg
+              instrument the parser for debugging
+
+       ----llooccaattiioonnss
+              enable locations computation
+
+       --pp, ----nnaammee--pprreeffiixx=_P_R_E_F_I_X
+              prepend PREFIX to the external symbols
+
+       --ll, ----nnoo--lliinneess
+              don't generate `#line' directives
+
+       --kk, ----ttookkeenn--ttaabbllee
+              include a table of token names
+
+   OOuuttppuutt::
+       ----ddeeffiinneess[=_F_I_L_E]
+              also produce a header file
+
+       --dd     likewise but cannot specify FILE (for POSIX Yacc)
+
+       --rr, ----rreeppoorrtt=_T_H_I_N_G_S
+              also produce details on the automaton
+
+       ----rreeppoorrtt--ffiillee=_F_I_L_E
+              write report to FILE
+
+       --vv, ----vveerrbboossee
+              same as `--report=state'
+
+       --bb, ----ffiillee--pprreeffiixx=_P_R_E_F_I_X
+              specify a PREFIX for output files
+
+       --oo, ----oouuttppuutt=_F_I_L_E
+              leave output to FILE
+
+       --gg, ----ggrraapphh[=_F_I_L_E]
+              also output a graph of the automaton
+
+       --xx, ----xxmmll[=_F_I_L_E]
+              also output an XML report of the automaton (the XML
+              schema is experimental)
+
+
+
+
+bison 2.4.1               December 2008                         2
+
+
+
+
+
+BISON(1)                  User Commands                  BISON(1)
+
+
+   WWaarrnniinngg ccaatteeggoorriieess iinncclluuddee::
+       `midrule-values'
+              unset or unused midrule values
+
+       `yacc' incompatibilities with POSIX YACC
+
+       `all'  all the warnings
+
+       `no-CATEGORY'
+              turn off warnings in CATEGORY
+
+       `none' turn off all the warnings
+
+       `error'
+              treat warnings as errors
+
+   TTHHIINNGGSS iiss aa lliisstt ooff ccoommmmaa sseeppaarraatteedd wwoorrddss tthhaatt ccaann iinncclluuddee::
+       `state'
+              describe the states
+
+       `itemset'
+              complete the core item sets with their closure
+
+       `lookahead'
+              explicitly associate lookahead tokens to items
+
+       `solved'
+              describe shift/reduce conflicts solving
+
+       `all'  include all the above information
+
+       `none' disable the report
+
+AAUUTTHHOORR
+       Written by Robert Corbett and Richard Stallman.
+
+RREEPPOORRTTIINNGG BBUUGGSS
+       Report bugs to <bug-bison@gnu.org>.
+
+CCOOPPYYRRIIGGHHTT
+       Copyright (C) 2008 Free Software Foundation, Inc.
+       This  is  free software; see the source for copying condi-
+       tions.  There is NO warranty; not even for MERCHANTABILITY
+       or FITNESS FOR A PARTICULAR PURPOSE.
+
+SSEEEE AALLSSOO
+       lleexx(1), fflleexx(1), yyaacccc(1).
+
+       The  full  documentation for bbiissoonn is maintained as a Tex-
+       info manual.  If the iinnffoo and bbiissoonn programs are  properly
+       installed at your site, the command
+
+              iinnffoo bbiissoonn
+
+
+
+
+bison 2.4.1               December 2008                         3
+
+
+
+
+
+BISON(1)                  User Commands                  BISON(1)
+
+
+       should give you access to the complete manual.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+bison 2.4.1               December 2008                         4
+
+
