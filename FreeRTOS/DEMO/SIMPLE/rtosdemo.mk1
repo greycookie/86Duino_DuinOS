@@ -1,0 +1,81 @@
+!define BLANK ""
+C:\FREERTOS\DEMO\SIMPLE\list.obj : C:\FREERTOS\source\list.c .AUTODEPEND
+ @C:
+ cd C:\FREERTOS\DEMO\SIMPLE
+ *wcc ..\..\source\list.c -i=C:\WATCOM\h;..\common\include;..\..\source\incl&
+ude;..\..\source\portable\owatcom\16bitdos\common;..\..\source\portable\owat&
+com\16bitdos\pc -w4 -e25 -za -dOPEN_WATCOM_INDUSTRIAL_PC_PORT -dUSE_STDIO -d&
+DEBUG_BUILD -j -zq -od -s -d2 -fpc -zu -1 -bt=dos -fo=.obj -ml
+
+C:\FREERTOS\DEMO\SIMPLE\heap_3.obj : C:\FREERTOS\SOURCE\PORTABLE\MEMMANG\hea&
+p_3.c .AUTODEPEND
+ @C:
+ cd C:\FREERTOS\DEMO\SIMPLE
+ *wcc ..\..\SOURCE\PORTABLE\MEMMANG\heap_3.c -i=C:\WATCOM\h;..\common\includ&
+e;..\..\source\include;..\..\source\portable\owatcom\16bitdos\common;..\..\s&
+ource\portable\owatcom\16bitdos\pc -w4 -e25 -za -dOPEN_WATCOM_INDUSTRIAL_PC_&
+PORT -dUSE_STDIO -dDEBUG_BUILD -j -zq -od -s -d2 -fpc -zu -1 -bt=dos -fo=.ob&
+j -ml
+
+C:\FREERTOS\DEMO\SIMPLE\portcomn.obj : C:\FREERTOS\source\portable\owatcom\1&
+6bitdos\common\portcomn.c .AUTODEPEND
+ @C:
+ cd C:\FREERTOS\DEMO\SIMPLE
+ *wcc ..\..\source\portable\owatcom\16bitdos\common\portcomn.c -i=C:\WATCOM\&
+h;..\common\include;..\..\source\include;..\..\source\portable\owatcom\16bit&
+dos\common;..\..\source\portable\owatcom\16bitdos\pc -w4 -e25 -za -dOPEN_WAT&
+COM_INDUSTRIAL_PC_PORT -dUSE_STDIO -dDEBUG_BUILD -j -zq -od -s -d2 -fpc -zu &
+-1 -bt=dos -fo=.obj -ml
+
+C:\FREERTOS\DEMO\SIMPLE\port.obj : C:\FREERTOS\source\portable\owatcom\16bit&
+dos\pc\port.c .AUTODEPEND
+ @C:
+ cd C:\FREERTOS\DEMO\SIMPLE
+ *wcc ..\..\source\portable\owatcom\16bitdos\pc\port.c -i=C:\WATCOM\h;..\com&
+mon\include;..\..\source\include;..\..\source\portable\owatcom\16bitdos\comm&
+on;..\..\source\portable\owatcom\16bitdos\pc -w4 -e25 -za -dOPEN_WATCOM_INDU&
+STRIAL_PC_PORT -dUSE_STDIO -dDEBUG_BUILD -j -zq -od -s -d2 -fpc -zu -1 -bt=d&
+os -fo=.obj -ml
+
+C:\FREERTOS\DEMO\SIMPLE\queue.obj : C:\FREERTOS\source\queue.c .AUTODEPEND
+ @C:
+ cd C:\FREERTOS\DEMO\SIMPLE
+ *wcc ..\..\source\queue.c -i=C:\WATCOM\h;..\common\include;..\..\source\inc&
+lude;..\..\source\portable\owatcom\16bitdos\common;..\..\source\portable\owa&
+tcom\16bitdos\pc -w4 -e25 -za -dOPEN_WATCOM_INDUSTRIAL_PC_PORT -dUSE_STDIO -&
+dDEBUG_BUILD -j -zq -od -s -d2 -fpc -zu -1 -bt=dos -fo=.obj -ml
+
+C:\FREERTOS\DEMO\SIMPLE\tasks.obj : C:\FREERTOS\source\tasks.c .AUTODEPEND
+ @C:
+ cd C:\FREERTOS\DEMO\SIMPLE
+ *wcc ..\..\source\tasks.c -i=C:\WATCOM\h;..\common\include;..\..\source\inc&
+lude;..\..\source\portable\owatcom\16bitdos\common;..\..\source\portable\owa&
+tcom\16bitdos\pc -w4 -e25 -za -dOPEN_WATCOM_INDUSTRIAL_PC_PORT -dUSE_STDIO -&
+dDEBUG_BUILD -j -zq -od -s -d2 -fpc -zu -1 -bt=dos -fo=.obj -ml
+
+C:\FREERTOS\DEMO\SIMPLE\main.obj : C:\FREERTOS\DEMO\SIMPLE\main.c .AUTODEPEN&
+D
+ @C:
+ cd C:\FREERTOS\DEMO\SIMPLE
+ *wcc main.c -i=C:\WATCOM\h;..\common\include;..\..\source\include;..\..\sou&
+rce\portable\owatcom\16bitdos\common;..\..\source\portable\owatcom\16bitdos\&
+pc -w4 -e25 -za -dOPEN_WATCOM_INDUSTRIAL_PC_PORT -dUSE_STDIO -dDEBUG_BUILD -&
+j -zq -od -s -d2 -fpc -zu -1 -bt=dos -fo=.obj -ml
+
+C:\FREERTOS\DEMO\SIMPLE\rtosdemo.exe : C:\FREERTOS\DEMO\SIMPLE\list.obj C:\F&
+REERTOS\DEMO\SIMPLE\portcomn.obj C:\FREERTOS\DEMO\SIMPLE\port.obj C:\FREERTO&
+S\DEMO\SIMPLE\queue.obj C:\FREERTOS\DEMO\SIMPLE\tasks.obj C:\FREERTOS\DEMO\S&
+IMPLE\main.obj C:\FREERTOS\DEMO\SIMPLE\heap_3.obj C:\FREERTOS\SOURCE\INCLUDE&
+\FreeRTOS.h C:\FREERTOS\source\include\list.h C:\FREERTOS\source\include\por&
+table.h C:\FREERTOS\source\include\projdefs.h C:\FREERTOS\source\include\que&
+ue.h C:\FREERTOS\source\include\task.h C:\FREERTOS\source\portable\owatcom\1&
+6bitdos\common\portasm.h C:\FREERTOS\source\portable\owatcom\16bitdos\pc\por&
+tmacr.h C:\FREERTOS\DEMO\SIMPLE\FRConfig.h .AUTODEPEND
+ @C:
+ cd C:\FREERTOS\DEMO\SIMPLE
+ @%write rtosdemo.lk1 FIL list.obj,portcomn.obj,port.obj,queue.obj,tasks.obj&
+,heap_3.obj,main.obj
+ @%append rtosdemo.lk1 
+ *wlink name rtosdemo d dwarf d all sys dos op m op maxe=25 op q op symf @rt&
+osdemo.lk1
+
