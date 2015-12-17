@@ -13,7 +13,7 @@ int main(int argc, char **argv)
 	if(argc != 2)
 		goto help;
 
-	if(argv[1][0] != 'A' || argv[1][0] != 'a')
+	if(argv[1][0] != 'A' && argv[1][0] != 'a')
 	{
 		if(argv[1][0] < '0' || argv[1][0] > '6')
 			goto help;
