@@ -7,9 +7,9 @@
 ============================================================================
 
 
-                              DuinOS v1.00
+                              DuinOS v1.10
 
-                      README.TXT -- September 2015
+                       README.TXT -- December 2015
 
 INTRODUCTION
 ------------
@@ -32,9 +32,17 @@ SOFTWARE INCLUDED
     *FreeDOS 1.1
     *DJGPP 2.05
     *FreeBASIC 1.03.0
+    *OpenWATCOM 1.9
     *86Duino DOS SDK
     *86Duino DOS system tools
     *DOS device drivers for Vortex86EX
+    *FreeRTOS 8.2.2
+    *WinCE 6.0
+
+
+CHANGE LIST
+-----------
+v1.10 - add OpenWATCOM, FreeRTOS, WinCE, 86ADC, 86CLOCK, 86CRSBAR, 86INFO, 86IO
 
 
 *For more details, see the wbsite: http://www.86duino.com/
