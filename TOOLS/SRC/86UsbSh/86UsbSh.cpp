@@ -13,6 +13,7 @@ void to_lowercase(char *str);
 bool do_command(char *command);
 
 FILE *fp;
+int old_stderr, old_stdout;
 
 int main(int argc, char **argv) 
 { 
@@ -20,8 +21,9 @@ int main(int argc, char **argv)
 	int dont_support_command_num;
 	int rt_val;
 	int left, right, mid;
-	int old_stderr, old_stdout;
 	bool dont_support;
+	bool print_info = false;
+	bool have_command = false;
 	char input_command[128];
 	char buf_command[128];
 	char path[128];
@@ -35,6 +37,15 @@ int main(int argc, char **argv)
 	if(fp == NULL)
 		return EXIT_FAILURE;
 
+	printf("================================================================================\n");
+	printf("                      ___   __   ____        _\n");
+	printf("                     ( _ ) / /_ |  _ \\ _   _(_)_ __   ___\n");
+	printf("                     / _ \\| '_ \\| | | | | | | | '_ \\ / _ \\\n");
+	printf("                    | (_) | (_) | |_| | |_| | | | | | (_) |\n");
+	printf("                     \\___/ \\___/|____/ \\____|_|_| |_|\\___/\n");
+	printf("\n 86UsbSh v1.1, author: PING-HUI WEI, E-mail: greycookie@dmp.com.tw, 2015/12/25\n");
+	printf("================================================================================\n");
+
 	old_stderr = dup(fileno(stderr));
 	dup2(fileno(fp), fileno(stderr));
 	old_stdout = dup(fileno(stdout));
@@ -43,35 +54,65 @@ int main(int argc, char **argv)
 	dont_support = false;
 	dont_support_command_num = sizeof(dont_support_command) / sizeof(command);
 
-	while(kbhit() != 1)
+	// while(kbhit() != 1)
+	while(1)
 	{
-		if(!Serial)
+		if(kbhit() == 1)
 		{
-			while(!Serial)
-				;
-			getcwd(path, sizeof(path) / sizeof(char) - 1);
+			gets(input_command);
 
-			Serial.println("================================================================================");
-			Serial.println("                      ___   __   ____        _");
-			Serial.println("                     ( _ ) / /_ |  _ \\ _   _(_)_ __   ___");
-			Serial.println("                     / _ \\| '_ \\| | | | | | | | '_ \\ / _ \\");
-			Serial.println("                    | (_) | (_) | |_| | |_| | | | | | (_) |");
-			Serial.println("                     \\___/ \\___/|____/ \\____|_|_| |_|\\___/");
-			Serial.println("\n 86UsbSh v1.0, author: PING-HUI WEI, E-mail: greycookie@dmp.com.tw, 2015/09/17");
-			Serial.println("================================================================================");
-			Serial.println();
-			Serial.print(path);
-			Serial.println('>');
+			if(strcmp(input_command, "q") == 0 || strcmp(input_command, "Q") == 0)
+				break;
+
+			have_command = true;
+		}
+		else
+		{
+			if(!Serial)
+			{
+				print_info = false;
+			}
+			else
+			{
+				if(print_info == false)
+				{
+					getcwd(path, sizeof(path) / sizeof(char) - 1);
+
+					Serial.println("================================================================================");
+					Serial.println("                      ___   __   ____        _");
+					Serial.println("                     ( _ ) / /_ |  _ \\ _   _(_)_ __   ___");
+					Serial.println("                     / _ \\| '_ \\| | | | | | | | '_ \\ / _ \\");
+					Serial.println("                    | (_) | (_) | |_| | |_| | | | | | (_) |");
+					Serial.println("                     \\___/ \\___/|____/ \\____|_|_| |_|\\___/");
+					Serial.println("\n 86UsbSh v1.1, author: PING-HUI WEI, E-mail: greycookie@dmp.com.tw, 2015/12/25");
+					Serial.println("================================================================================");
+					Serial.println();
+					Serial.print(path);
+					Serial.println('>');			
+
+					print_info = true;
+				}
+			
+				rt_val = Serial.available();
+				if(rt_val > 127)
+					Serial.println("Command is too long!");
+				else if(rt_val > 0)
+				{
+					Serial.readBytes(input_command, rt_val);
+					input_command[rt_val] = '\0';
+					to_lowercase(input_command);
+
+					if(strcmp(input_command, "quit") == 0)
+						break;
+
+					have_command = true;
+				}
+			}
 		}
 
-		rt_val = Serial.available();
-		if(rt_val > 127)
-			Serial.println("Command is too long!");
-		else if(rt_val > 0)
+		if(have_command == true)
 		{
-			Serial.readBytes(input_command, rt_val);
-			input_command[rt_val] = '\0';
-			to_lowercase(input_command);
+			have_command = false;
 
 			for(i = 0; i < dont_support_command_num; i++)
 			{
@@ -109,7 +150,7 @@ int main(int argc, char **argv)
 
 			Serial.print(path);
 			Serial.println('>');
-		}
+		}		
 	}
 
 	dup2(old_stderr, fileno(stderr));
@@ -147,7 +188,15 @@ bool do_command(char* command)
 		rt_val = fread(buf, sizeof(char), 255, fp);
 		buf[rt_val] = '\0';
 		Serial.print(buf);
+
+		dup2(old_stdout, fileno(stdout));
+		printf("%s", buf);
+		dup2(fileno(fp), fileno(stdout));
 	}
+
+	dup2(old_stdout, fileno(stdout));
+	printf("\n\n");
+	dup2(fileno(fp), fileno(stdout));
 
 	ftruncate(fileno(fp), 0);
 	rewind(fp);
