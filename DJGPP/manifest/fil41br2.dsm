@@ -1,0 +1,74 @@
+#
+# DSM for fileutils 4.1 binaries
+# Written by Richard Dawe <richdawe@bigfoot.com> 2002-04-04
+#
+
+dsm-file-version: 1.2
+dsm-name: fil41b
+dsm-version: 0.6.0
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: fileutils
+version: 4.1 release 2
+type: binaries
+manifest: fil41b
+sources-dsm: fil41s
+documentation-dsm: fil41d
+short-description: GNU Fileutils
+
+porter: Richard Dawe
+porter-email: richdawe@bigfoot.com
+
+web-site: http://www.gnu.org/
+web-site: http://www.gnu.org/software/fileutils/doc/faq/
+ftp-site: ftp://ftp.gnu.org/
+
+mailing-list: bug-fileutils@gnu.org
+
+license: GNU General Public License
+
+simtelnet-path: v2gnu/
+zip: fil41b.zip
+
+pre-install-readme: gnu/filutil4.1/djgpp/readme.dos
+changelog: gnu/filutil4.1/news
+
+replaces: fileutils < 4.1 release 2
+requires: DPMI
+# For using 'ginstall' with COFF images
+depends-on: djdev
+# For using 'ginstall -s'
+depends-on: binutils
+# For reading docs
+depends-on: info-reader
+# For reading manual pages
+depends-on: man
+
+# Remove obsolete parser files from previous
+# ports located in non-canonical subdirs.
+builtin-pre-install-script: command:\
+ rm -f /dev/env/DJDIR/info/fileutils.info\
+ rm -f /dev/env/DJDIR/man/cat1/chgrp.1\
+ rm -f /dev/env/DJDIR/man/cat1/chmod.1\
+ rm -f /dev/env/DJDIR/man/cat1/chown.1\
+ rm -f /dev/env/DJDIR/man/cat1/cp.1\
+ rm -f /dev/env/DJDIR/man/cat1/dd.1\
+ rm -f /dev/env/DJDIR/man/cat1/df.1\
+ rm -f /dev/env/DJDIR/man/cat1/dir.1\
+ rm -f /dev/env/DJDIR/man/cat1/dircolors.1\
+ rm -f /dev/env/DJDIR/man/cat1/du.1\
+ rm -f /dev/env/DJDIR/man/cat1/install.1\
+ rm -f /dev/env/DJDIR/man/cat1/ln.1\
+ rm -f /dev/env/DJDIR/man/cat1/ls.1\
+ rm -f /dev/env/DJDIR/man/cat1/mkdir.1\
+ rm -f /dev/env/DJDIR/man/cat1/mkfifo.1\
+ rm -f /dev/env/DJDIR/man/cat1/mknod.1\
+ rm -f /dev/env/DJDIR/man/cat1/mv.1\
+ rm -f /dev/env/DJDIR/man/cat1/rm.1\
+ rm -f /dev/env/DJDIR/man/cat1/rmdir.1\
+ rm -f /dev/env/DJDIR/man/cat1/shred.1\
+ rm -f /dev/env/DJDIR/man/cat1/sync.1\
+ rm -f /dev/env/DJDIR/man/cat1/touch.1\
+ rm -f /dev/env/DJDIR/man/cat1/vdir.1

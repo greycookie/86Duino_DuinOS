@@ -1665,7 +1665,55 @@ functions could incorrectly return the number of matches instead of
 Now `assert' prints also the name of the function where an assertion
 fails, if that function is compiled with C99 features enabled.
 
-The C99 file `stdbool.h' was added.
+
+File: kb.info,  Node: Changes in 2.05,  Prev: Changes in 2.04,  Up: What Changed
+
+2.5 Changes in 2.05
+===================
+
+Here is a list of changes from DJGPP V2.04 to DJGPP V2.05
+
+DJGPP v2.04 was actually never released and stayed in beta stage much
+too long.
+
+Replacement of memory management with nmalloc.  One basic problem of
+DJGPP v2.04 was slow memory management, especially `free'. In DJGPP
+v2.05, memory management was replaced by the *nmalloc* implementation
+written by Charles B. Falconer (1931-2012).  nmalloc was already used
+for a rather long time for various DJGPP packages including DJGPP port
+of GCC.
+
+Updated handling of DXE search path for relative file names
+
+   * At first, directories from `LD_LIBRARY_PATH' are tried. The
+     predefined value of `LD_LIBRARY_PATH' is currently kept for
+     compatibility with old builds of DJGPP software. Users can use this
+     environment variable to specify DXE search directories in addition
+     to DJGPP's own ones.
+
+   * After that, directories from `SYSTEM_DXE_PATH' are tried. The
+     value of `SYSTEM_DXE_PATH' is predefined and contains the list of
+     directories where DJGPP's own DXE files can be found.
+
+Both environment variables contain *;* separated lists of directories.
+Before DJGPP-v2.05, only `LD_LIBRARY_PATH' was used. The result was DXE
+lookup failure when `LD_LIBRARY_PATH' was redefined by user.
+
+`dir.h': Fixed a wrong structure packing directive (bug introduced by
+djgpp-v2.01 back in 1996) that would infect other sources and headers
+with potentially adverse effects. NOTE: You might want to recompile
+your libraries.
+
+The order of arguments passed to the `sincos' function has been changed
+to match the order used by the function version as implemented in GNU
+systems.
+
+In `errno.h', do not exclude errno macros for C++ when -std=c++0x,
+-std=c++11, or newer C++ standards are being used.
+
+dxe3gen now responds to `DXE_CC', `DXE_AS', `DXE_AR' and `DXE_LD'
+environment variables to pick required build tools, and to `DXE_SC'
+environment variable to pick the required linker script.
 
 The POSIX functions `asctime_r', `ctime_r', `gmtime_r', `hcreate',
 `hdestroy', `hsearch', `lfind', `lsearch', `localtime_r', `strtok_r' and
@@ -1862,51 +1910,13 @@ and directories that cannot be created when extracting.  Thus neither
 existing files will be overwritten nor the user will be prompted for
 changing the file name.
 
-
-File: kb.info,  Node: Changes in 2.05,  Prev: Changes in 2.04,  Up: What Changed
+The C99 file `stdbool.h' was added.
 
-2.5 Changes in 2.05
-===================
+The base 2 logarithm function for arguments of type `double' and `float'
+have been added to the mathematical library `libm.a'.
 
-Here is a list of changes from DJGPP V2.04 to DJGPP V2.05
-
-DJGPP v2.04 was actually never released and stayed in beta stage much
-too long.
-
-Replacement of memory management with nmalloc.  One basic problem of
-DJGPP v2.04 was slow memory management, especially `free'. In DJGPP
-v2.05, memory management was replaced by the *nmalloc* implementation
-written by Charles B. Falconer (1931-2012).  nmalloc was already used
-for a rather long time for various DJGPP packages including DJGPP port
-of GCC.
-
-Updated handling of DXE search path for relative file names
-
-   * At first, directories from `LD_LIBRARY_PATH' are tried. The
-     predefined value of `LD_LIBRARY_PATH' is currently kept for
-     compatibility with old builds of DJGPP software. Users can use this
-     environment variable to specify DXE search directories in addition
-     to DJGPP's own ones.
-
-   * After that, directories from `SYSTEM_DXE_PATH' are tried. The
-     value of `SYSTEM_DXE_PATH' is predefined and contains the list of
-     directories where DJGPP's own DXE files can be found.
-
-Both environment variables contain *;* separated lists of directories.
-Before DJGPP-v2.05, only `LD_LIBRARY_PATH' was used. The result was DXE
-lookup failure when `LD_LIBRARY_PATH' was redefined by user.
-
-`dir.h': Fixed a wrong structure packing directive (bug introduced by
-djgpp-v2.01 back in 1996) that would infect other sources and headers
-with potentially adverse effects. NOTE: You might want to recompile
-your libraries.
-
-The order of arguments passed to the `sincos' function has been changed
-to match the order used by the function version as implemented in GNU
-systems.
-
-In `errno.h', do not exclude errno macros for C++ when -std=c++0x,
--std=c++11, or newer C++ standards are being used.
+The function `dlopen' no longer fails to reload an available DXE module
+a second time.
 
 
 File: kb.info,  Node: Known Bugs,  Next: Known Anti-Bugs,  Prev: What Changed,  Up: Top
@@ -2803,10 +2813,10 @@ File: kb.info,  Node: Index,  Up: Top
 * ^Z character, at end of a response file: Changes in 2.03.   (line  94)
 * _8087:                                 Changes in 2.03.     (line 164)
 * __bss_count and restarted programs:    Development.         (line 107)
-* __canonicalize_path, and no longer report ENOSYS on plain DOS: Changes in 2.04.
-                                                              (line 721)
-* __canonicalize_path, and Windows 2000/XP root directories and drive specifier character case: Changes in 2.04.
-                                                              (line 726)
+* __canonicalize_path, and no longer report ENOSYS on plain DOS: Changes in 2.05.
+                                                              (line 103)
+* __canonicalize_path, and Windows 2000/XP root directories and drive specifier character case: Changes in 2.05.
+                                                              (line 108)
 * __crt0_load_environment_file:          Changes in 2.03.     (line 111)
 * __djgpp_clock_tick_interval, introduced: Changes in 2.03.   (line 300)
 * __djgpp_ds_alias, moved to crt0:       Changes in 2.04.     (line 568)
@@ -2839,27 +2849,27 @@ File: kb.info,  Node: Index,  Up: Top
 * __install_dev_zero, install support for /dev/zero: Changes in 2.04.
                                                               (line 469)
 * __internal_readlink, added to the library: Changes in 2.04. (line  59)
-* __set_need_fake_dot_dotdot, fixed malformed path string for symlinks: Changes in 2.04.
-                                                              (line 731)
-* __signbitd added to the library:       Changes in 2.04.     (line 691)
-* __signbitf added to the library:       Changes in 2.04.     (line 691)
-* __signbitld added to the library:      Changes in 2.04.     (line 691)
+* __set_need_fake_dot_dotdot, fixed malformed path string for symlinks: Changes in 2.05.
+                                                              (line 113)
+* __signbitd, added to the library:      Changes in 2.05.     (line  73)
+* __signbitf, added to the library:      Changes in 2.05.     (line  73)
+* __signbitld, added to the library:     Changes in 2.05.     (line  73)
 * __solve_dir_symlinks, added to the library: Changes in 2.04.
                                                               (line  59)
 * __solve_symlinks, added to the library: Changes in 2.04.    (line  59)
 * __tb_size added:                       Changes in 2.04.     (line 623)
-* _atold, [+|-]0xH.HHHp[+|-]DDD in input: Changes in 2.04.    (line 697)
+* _atold, [+|-]0xH.HHHp[+|-]DDD in input: Changes in 2.05.    (line  79)
 * _check_v2_prog, leaks file descriptor: Changes in 2.03.     (line 293)
-* _chmod, LFN support on plain DOS with DOSLFN and other LFN drivers: Changes in 2.04.
-                                                              (line 756)
+* _chmod, LFN support on plain DOS with DOSLFN and other LFN drivers: Changes in 2.05.
+                                                              (line 138)
 * _close:                                Changes in 2.02.     (line  76)
 * _creat:                                Changes in 2.02.     (line  76)
 * _creat, and FAT32:                     Changes in 2.04.     (line  10)
 * _creat, and Windows 2000/XP:           Changes in 2.04.     (line 403)
-* _creat, LFN support on plain DOS with DOSLFN and other LFN drivers: Changes in 2.04.
-                                                              (line 756)
-* _creat_n, LFN support on plain DOS with DOSLFN and other LFN drivers: Changes in 2.04.
-                                                              (line 756)
+* _creat, LFN support on plain DOS with DOSLFN and other LFN drivers: Changes in 2.05.
+                                                              (line 138)
+* _creat_n, LFN support on plain DOS with DOSLFN and other LFN drivers: Changes in 2.05.
+                                                              (line 138)
 * _creatnew:                             Changes in 2.02.     (line 237)
 * _creatnew, and FAT32:                  Changes in 2.04.     (line  10)
 * _creatnew, and Windows 2000/XP:        Changes in 2.04.     (line 403)
@@ -2867,23 +2877,23 @@ File: kb.info,  Node: Index,  Up: Top
 * _crt0_startup_flags, the _CRT0_FLAG_KEEP_QUOTES flag: Changes in 2.02.
                                                               (line 308)
 * _doprnt:                               Changes in 2.02.     (line 331)
-* _doprnt, and C99 conversion flags:     Changes in 2.04.     (line 701)
+* _doprnt, and C99 conversion flags:     Changes in 2.05.     (line  83)
 * _doprnt, and C99 conversion qualifiers: Changes in 2.04.    (line 525)
-* _doprnt, and C99 conversion specifiers: Changes in 2.04.    (line 709)
-* _doprnt, and numeric conversion specifiers: Changes in 2.04.
-                                                              (line 712)
-* _doprnt, and return string for special numbers like pseudo-nan: Changes in 2.04.
-                                                              (line 704)
+* _doprnt, and C99 conversion specifiers: Changes in 2.05.    (line  91)
+* _doprnt, and numeric conversion specifiers: Changes in 2.05.
+                                                              (line  94)
+* _doprnt, and return string for special numbers like pseudo-nan: Changes in 2.05.
+                                                              (line  86)
 * _doprnt, and the decimal point:        Changes in 2.04.     (line 646)
 * _dos_ds:                               Changes in 2.01.     (line  24)
 * _dos_findfirst:                        Changes in 2.02.     (line  97)
 * _dos_lk64:                             Changes in 2.04.     (line 197)
 * _dos_unlk64:                           Changes in 2.04.     (line 197)
 * _doscan, and C99 conversion qualifiers: Changes in 2.04.    (line 525)
-* _doscan, and C99 conversion specifiers: Changes in 2.04.    (line 794)
-* _doscan, and C99 numeric conversion specifiers: Changes in 2.04.
-                                                              (line 801)
-* _doscan, and m modifier character:     Changes in 2.04.     (line 797)
+* _doscan, and C99 conversion specifiers: Changes in 2.05.    (line 176)
+* _doscan, and C99 numeric conversion specifiers: Changes in 2.05.
+                                                              (line 183)
+* _doscan, and m modifier character:     Changes in 2.05.     (line 179)
 * _doscan, and the decimal point:        Changes in 2.04.     (line 646)
 * _doserrno:                             Changes in 2.02.     (line 289)
 * _Exit:                                 Changes in 2.04.     (line 514)
@@ -2892,10 +2902,10 @@ File: kb.info,  Node: Index,  Up: Top
 * _filbuf:                               Changes in 2.03.     (line 124)
 * _fixpath:                              Changes in 2.02.     (line  59)
 * _fixpath, and long named directories:  Changes in 2.04.     (line 413)
-* _fixpath, and no longer report ENOSYS on plain DOS: Changes in 2.04.
-                                                              (line 721)
-* _fixpath, and Windows 2000/XP root directories and drive specifier character case: Changes in 2.04.
-                                                              (line 726)
+* _fixpath, and no longer report ENOSYS on plain DOS: Changes in 2.05.
+                                                              (line 103)
+* _fixpath, and Windows 2000/XP root directories and drive specifier character case: Changes in 2.05.
+                                                              (line 108)
 * _flsbuf:                               Changes in 2.03.     (line 124)
 * _flush_disk_cache:                     Changes in 2.02.     (line 170)
 * _get_dos_version, recognise FreeDOS:   Changes in 2.04.     (line 214)
@@ -2907,7 +2917,7 @@ File: kb.info,  Node: Index,  Up: Top
 * _go32_dpmi_free_real_mode_callback:    Changes in 2.01.     (line  62)
 * _go32_dpmi_lock_code:                  Changes in 2.02.     (line 108)
 * _go32_dpmi_lock_data:                  Changes in 2.02.     (line 108)
-* _hash2v, added to the library:         Changes in 2.04.     (line 672)
+* _hash2v, added to the library:         Changes in 2.05.     (line  54)
 * _invent_inode, and FAT32:              Changes in 2.04.     (line  20)
 * _is_cdrom_drive:                       Changes in 2.04.     (line  23)
 * _is_DOS83:                             Changes in 2.04.     (line 442)
@@ -2916,12 +2926,12 @@ File: kb.info,  Node: Index,  Up: Top
 * _is_ram_drive:                         Changes in 2.04.     (line  23)
 * _lfn_gen_short_name:                   Changes in 2.02.     (line  54)
 * _media_type:                           Changes in 2.04.     (line  23)
-* _O_TEMPORARY, new flag accepted by open: Changes in 2.04.   (line 743)
+* _O_TEMPORARY, new flag accepted by open: Changes in 2.05.   (line 125)
 * _open:                                 Changes in 2.02.     (line  76)
 * _open, and FAT32:                      Changes in 2.04.     (line  10)
 * _open, and Windows 2000/XP:            Changes in 2.04.     (line 403)
-* _open, LFN support on plain DOS with DOSLFN and other LFN drivers: Changes in 2.04.
-                                                              (line 756)
+* _open, LFN support on plain DOS with DOSLFN and other LFN drivers: Changes in 2.05.
+                                                              (line 138)
 * _os_trueversion, added to the library: Changes in 2.04.     (line 430)
 * _osmajor:                              Changes in 2.02.     (line 130)
 * _osminor:                              Changes in 2.02.     (line 130)
@@ -2935,12 +2945,12 @@ File: kb.info,  Node: Index,  Up: Top
 * _rename, and Windows 2000:             Changes in 2.04.     (line 142)
 * _rename, change letter-case of a file name: Changes in 2.04.
                                                               (line 106)
-* _rename, LFN support on plain DOS with DOSLFN and other LFN drivers: Changes in 2.04.
-                                                              (line 756)
+* _rename, LFN support on plain DOS with DOSLFN and other LFN drivers: Changes in 2.05.
+                                                              (line 138)
 * _rename, on Windows ME:                Changes in 2.04.     (line 223)
 * _set_break_DPMI, and Windows 2000/XP breakpoints: Changes in 2.04.
                                                               (line 408)
-* _strtold, [+|-]0xH.HHHp[+|-]DDD in input: Changes in 2.04.  (line 697)
+* _strtold, [+|-]0xH.HHHp[+|-]DDD in input: Changes in 2.05.  (line  79)
 * _strtold, and the decimal point:       Changes in 2.04.     (line 646)
 * _strtold, Inf and NaN in input:        Changes in 2.04.     (line 629)
 * _sys_siglist:                          Changes in 2.02.     (line 228)
@@ -2951,8 +2961,8 @@ File: kb.info,  Node: Index,  Up: Top
 * _use_lfn:                              Changes in 2.02.     (line  83)
 * _USE_LFN, and invalid drives:          Changes in 2.03.     (line 466)
 * _use_lfn, and invalid drives:          Changes in 2.03.     (line 466)
-* _use_lfn, LFN support on plain DOS with DOSLFN and other LFN drivers: Changes in 2.04.
-                                                              (line 756)
+* _use_lfn, LFN support on plain DOS with DOSLFN and other LFN drivers: Changes in 2.05.
+                                                              (line 138)
 * _v2_prog_type:                         Changes in 2.02.     (line 149)
 * _write:                                Changes in 2.02.     (line  76)
 * _write, security fix:                  Changes in 2.04.     (line 229)
@@ -2967,17 +2977,17 @@ File: kb.info,  Node: Index,  Up: Top
                                                               (line 376)
 * alarm:                                 Changes in 2.03.     (line  20)
 * array of DPMI memory block sizes:      Changes in 2.04.     (line 383)
-* asctime_r, added to the library:       Changes in 2.04.     (line 668)
+* asctime_r, added to the library:       Changes in 2.05.     (line  50)
 * asin, accuracy of emulation:           Changes in 2.03.     (line 437)
 * asinh, Inf orNaN operands in emulator: Changes in 2.03.     (line 421)
-* asnprintf, added to the library:       Changes in 2.04.     (line 694)
-* asprintf, added to the library:        Changes in 2.04.     (line 694)
+* asnprintf, added to the library:       Changes in 2.05.     (line  76)
+* asprintf, added to the library:        Changes in 2.05.     (line  76)
 * assert:                                Changes in 2.02.     (line 134)
 * assert, and function name:             Changes in 2.04.     (line 663)
 * Assertions:                            Development.         (line  98)
 * atan, accuracy of emulation:           Changes in 2.03.     (line 437)
 * atan2, accuracy of emulation:          Changes in 2.03.     (line 437)
-* atof, [+|-]0xH.HHHp[+|-]DDD in input:  Changes in 2.04.     (line 697)
+* atof, [+|-]0xH.HHHp[+|-]DDD in input:  Changes in 2.05.     (line  79)
 * atoi, and 8-bit characters:            Changes in 2.04.     (line 216)
 * atol, and 8-bit characters:            Changes in 2.04.     (line 216)
 * atoll:                                 Changes in 2.04.     (line 516)
@@ -2989,23 +2999,23 @@ File: kb.info,  Node: Index,  Up: Top
 * bioscom:                               Changes in 2.02.     (line  79)
 * blkcnt_t:                              Changes in 2.04.     (line 452)
 * blksize_t:                             Changes in 2.04.     (line 452)
-* BSD/GNU compatibility, math.h:         Changes in 2.04.     (line 833)
+* BSD/GNU compatibility, math.h:         Changes in 2.05.     (line 215)
 * bzip2 archives:                        Changes in 2.04.     (line  90)
 * C libraries and profiling:             Changes in 2.04.     (line 455)
 * C++ compliance, errno.h:               Changes in 2.05.     (line  43)
 * C99 compliance, locale.h:              Changes in 2.04.     (line 510)
-* C99 compliance, math.h:                Changes in 2.04.     (line 767)
+* C99 compliance, math.h:                Changes in 2.05.     (line 149)
 * C99 compliance, mathematics:           Changes in 2.04.     (line 553)
 * C99 compliance, new header files:      Changes in 2.04.     (line 205)
-* C99 compliance, stdbool.h:             Changes in 2.04.     (line 666)
-* C99 compliance, stdlib.h:              Changes in 2.04.     (line 836)
+* C99 compliance, stdbool.h:             Changes in 2.05.     (line 245)
+* C99 compliance, stdlib.h:              Changes in 2.05.     (line 218)
 * C99 compliance, struct lconv:          Changes in 2.04.     (line 510)
 * calloc, replacement of memory management with nmalloc: Changes in 2.05.
                                                               (line  11)
 * cbrt:                                  Changes in 2.03.     (line 282)
 * ceil, for negative arguments, emulation: Changes in 2.03.   (line 426)
-* chdir, LFN support on plain DOS with DOSLFN and other LFN drivers: Changes in 2.04.
-                                                              (line 756)
+* chdir, LFN support on plain DOS with DOSLFN and other LFN drivers: Changes in 2.05.
+                                                              (line 138)
 * closedir, does not lose search handles: Changes in 2.02.    (line 343)
 * CMDLINE, environment variable:         Changes in 2.04.     (line  93)
 * coff2exe, documentation:               Changes in 2.04.     (line 565)
@@ -3026,7 +3036,7 @@ File: kb.info,  Node: Index,  Up: Top
 * ctime <1>:                             Changes in 2.03.     (line  24)
 * ctime:                                 Changes in 2.02.     (line 101)
 * ctime, and calls to getenv:            Changes in 2.04.     (line 544)
-* ctime_r, added to the library:         Changes in 2.04.     (line 668)
+* ctime_r, added to the library:         Changes in 2.05.     (line  50)
 * dbgcom.c:                              Changes in 2.02.     (line  44)
 * debug support, and file redirection:   Changes in 2.03.     (line 232)
 * debug support, and floating-point code: Changes in 2.03.    (line 227)
@@ -3050,7 +3060,7 @@ File: kb.info,  Node: Index,  Up: Top
 * div, and negative arguments:           Changes in 2.04.     (line  35)
 * djasm <1>:                             Changes in 2.02.     (line 147)
 * djasm:                                 Changes in 2.01.     (line  84)
-* djasm, cr4 register:                   Changes in 2.04.     (line 689)
+* djasm, cr4 register:                   Changes in 2.05.     (line  71)
 * djasm, documentation:                  Changes in 2.04.     (line 150)
 * djasm, double-precision shift:         Changes in 2.04.     (line 252)
 * djasm, double-precision shift reinstated: Changes in 2.04.  (line 315)
@@ -3071,35 +3081,37 @@ File: kb.info,  Node: Index,  Up: Top
                                                               (line 312)
 * djmerge, preserves file's time stamp:  Changes in 2.04.     (line 131)
 * djsplit, preserves file's time stamp:  Changes in 2.04.     (line 131)
-* djtar, and empty lines in the file to change filenames: Changes in 2.04.
-                                                              (line 752)
+* djtar, and empty lines in the file to change filenames: Changes in 2.05.
+                                                              (line 134)
 * djtar, and single-span spanned archives: Changes in 2.04.   (line 627)
 * djtar, and the tarchange.lst file:     Changes in 2.03.     (line 338)
 * djtar, DOS batch file conversion:      Changes in 2.04.     (line 233)
 * djtar, file-name conversions:          Changes in 2.03.     (line 385)
 * djtar, multiple -o and -e options:     Changes in 2.04.     (line 433)
-* djtar, new option -a:                  Changes in 2.04.     (line 858)
+* djtar, new option -a:                  Changes in 2.05.     (line 240)
 * djtar, new option -e:                  Changes in 2.04.     (line 433)
-* djtar, new options -!s and -v:         Changes in 2.04.     (line 786)
-* djtar, support for tar archives with pax headers: Changes in 2.04.
-                                                              (line 786)
+* djtar, new options -!s and -v:         Changes in 2.05.     (line 168)
+* djtar, support for tar archives with pax headers: Changes in 2.05.
+                                                              (line 168)
 * djtar, support for unpacking bzip2 archives: Changes in 2.04.
                                                               (line  90)
 * dlclose, added to the library:         Changes in 2.04.     (line 613)
 * dlerror, added to the library:         Changes in 2.04.     (line 613)
 * dlopen, added to the library:          Changes in 2.04.     (line 613)
+* dlopen, failing to reload DXE module with ELOOP: Changes in 2.05.
+                                                              (line 250)
 * dlsym, added to the library:           Changes in 2.04.     (line 613)
 * doprnt:                                Changes in 2.03.     (line  45)
 * dos.h:                                 Changes in 2.01.     (line  56)
 * doscan:                                Changes in 2.01.     (line  31)
-* dosexec, LFN support on plain DOS with DOSLFN and other LFN drivers: Changes in 2.04.
-                                                              (line 756)
+* dosexec, LFN support on plain DOS with DOSLFN and other LFN drivers: Changes in 2.05.
+                                                              (line 138)
 * dosexterr:                             Changes in 2.04.     (line 190)
 * dosmemput:                             Changes in 2.01.     (line  52)
 * dostrerr:                              Changes in 2.04.     (line 190)
 * DPMI memory block allocation sizes dynamic: Changes in 2.04.
                                                               (line 386)
-* dprintf added to the library:          Changes in 2.04.     (line 852)
+* dprintf, added to the library:         Changes in 2.05.     (line 234)
 * drand48, increased speed:              Changes in 2.04.     (line  43)
 * dtou:                                  Changes in 2.03.     (line 118)
 * dtou, new command-line options:        Changes in 2.04.     (line  81)
@@ -3107,8 +3119,10 @@ File: kb.info,  Node: Index,  Up: Top
 * dup, duplicates FSEXT hooks:           Changes in 2.04.     (line 391)
 * dup2, duplicates FSEXT hooks:          Changes in 2.04.     (line 391)
 * dxe3gen added:                         Changes in 2.04.     (line 613)
-* dxe3gen, resolving __[de]register_frame_info symbols in DXE moduls: Changes in 2.04.
-                                                              (line 770)
+* dxe3gen, and new environment variables DXE_CC, DXE_AS, DXE_AR, DXE_LD and DXE_SC: Changes in 2.05.
+                                                              (line  46)
+* dxe3gen, resolving __[de]register_frame_info symbols in DXE moduls: Changes in 2.05.
+                                                              (line 152)
 * dxe3res added:                         Changes in 2.04.     (line 613)
 * dxegen, documentation:                 Changes in 2.04.     (line 565)
 * dxeload:                               Changes in 2.01.     (line   8)
@@ -3153,8 +3167,8 @@ File: kb.info,  Node: Index,  Up: Top
 * expm1:                                 Changes in 2.03.     (line 282)
 * fchdir:                                Changes in 2.04.     (line 597)
 * fchmod:                                Changes in 2.04.     (line 587)
-* fchmod, LFN support on plain DOS with DOSLFN and other LFN drivers: Changes in 2.04.
-                                                              (line 756)
+* fchmod, LFN support on plain DOS with DOSLFN and other LFN drivers: Changes in 2.05.
+                                                              (line 138)
 * fchown:                                Changes in 2.04.     (line 484)
 * fclose, and directories:               Changes in 2.04.     (line 597)
 * fcntl:                                 Changes in 2.01.     (line  70)
@@ -3171,29 +3185,29 @@ File: kb.info,  Node: Index,  Up: Top
 * fflush, no longer uses _IOAPPEND flag: Changes in 2.04.     (line 268)
 * ffs:                                   Changes in 2.02.     (line  81)
 * fgetpos:                               Changes in 2.04.     (line 438)
-* fgets, and stream error condition:     Changes in 2.04.     (line 811)
+* fgets, and stream error condition:     Changes in 2.05.     (line 193)
 * file locking functions:                Changes in 2.04.     (line 165)
 * FILE objects, allocation:              Changes in 2.03.     (line 178)
 * File System Extensions, and chmod:     Changes in 2.04.     (line 579)
 * File System Extensions, and chown:     Changes in 2.04.     (line 579)
 * File System Extensions, and large numbers of file descriptors: Changes in 2.04.
                                                               (line 486)
-* filelen, LFN support on plain DOS with DOSLFN and other LFN drivers: Changes in 2.04.
-                                                              (line 756)
+* filelen, LFN support on plain DOS with DOSLFN and other LFN drivers: Changes in 2.05.
+                                                              (line 138)
 * Filesystem extensions facility:        Features.            (line 192)
-* findfirs, LFN support on plain DOS with DOSLFN and other LFN drivers: Changes in 2.04.
-                                                              (line 756)
+* findfirs, LFN support on plain DOS with DOSLFN and other LFN drivers: Changes in 2.05.
+                                                              (line 138)
 * findfirst <1>:                         Changes in 2.04.     (line 501)
 * findfirst:                             Changes in 2.01.     (line  15)
-* findnext, LFN support on plain DOS with DOSLFN and other LFN drivers: Changes in 2.04.
-                                                              (line 756)
-* finitel, added to the math library:    Changes in 2.04.     (line 833)
-* fixpath, LFN support on plain DOS with DOSLFN and other LFN drivers: Changes in 2.04.
-                                                              (line 756)
+* findnext, LFN support on plain DOS with DOSLFN and other LFN drivers: Changes in 2.05.
+                                                              (line 138)
+* finitel, added to the math library:    Changes in 2.05.     (line 215)
+* fixpath, LFN support on plain DOS with DOSLFN and other LFN drivers: Changes in 2.05.
+                                                              (line 138)
 * flock:                                 Changes in 2.04.     (line 185)
 * flsbuf, no longer uses _IOAPPEND flag: Changes in 2.04.     (line 268)
-* flushdc, LFN support on plain DOS with DOSLFN and other LFN drivers: Changes in 2.04.
-                                                              (line 756)
+* flushdc, LFN support on plain DOS with DOSLFN and other LFN drivers: Changes in 2.05.
+                                                              (line 138)
 * flushing buffered output:              Changes in 2.03.     (line 174)
 * fmod, emulation for negative arguments: Changes in 2.03.    (line 445)
 * fnsplit:                               Changes in 2.02.     (line  46)
@@ -3220,9 +3234,9 @@ File: kb.info,  Node: Index,  Up: Top
 * fputc:                                 Changes in 2.03.     (line  39)
 * fputc, append mode:                    Changes in 2.04.     (line 262)
 * fputs:                                 Changes in 2.03.     (line  99)
-* fputs, and stream error condition:     Changes in 2.04.     (line 811)
+* fputs, and stream error condition:     Changes in 2.05.     (line 193)
 * fread:                                 Changes in 2.03.     (line 124)
-* fread, and stream error condition:     Changes in 2.04.     (line 811)
+* fread, and stream error condition:     Changes in 2.05.     (line 193)
 * fread, return value documented:        Changes in 2.02.     (line 153)
 * free:                                  Changes in 2.02.     (line 192)
 * free, replacement of memory management with nmalloc: Changes in 2.05.
@@ -3263,15 +3277,15 @@ File: kb.info,  Node: Index,  Up: Top
 * fstat, and directories:                Changes in 2.04.     (line 597)
 * fstat, and inodes:                     Changes in 2.04.     (line 603)
 * fstat, and Windows 2000/XP:            Changes in 2.04.     (line 396)
-* fstat, LFN support on plain DOS with DOSLFN and other LFN drivers: Changes in 2.04.
-                                                              (line 756)
+* fstat, LFN support on plain DOS with DOSLFN and other LFN drivers: Changes in 2.05.
+                                                              (line 138)
 * fstatvfs:                              Changes in 2.04.     (line 466)
 * fsync, and directories:                Changes in 2.04.     (line 597)
 * ftell, and directories:                Changes in 2.04.     (line 597)
 * ftruncate, and directories:            Changes in 2.04.     (line 597)
 * ftruncate, and file pointer position:  Changes in 2.03.     (line 308)
 * fwrite:                                Changes in 2.03.     (line 124)
-* fwrite, and stream error condition:    Changes in 2.04.     (line 811)
+* fwrite, and stream error condition:    Changes in 2.05.     (line 193)
 * fwrite, append mode:                   Changes in 2.04.     (line 262)
 * fwrite, return value documented:       Changes in 2.02.     (line 153)
 * FXCH instruction, emulation, abnormal operands: Changes in 2.03.
@@ -3286,8 +3300,8 @@ File: kb.info,  Node: Index,  Up: Top
 * getche:                                Changes in 2.03.     (line 174)
 * getcwd, and Windows 2000/XP long named directories: Changes in 2.04.
                                                               (line 413)
-* getcwd, LFN support on plain DOS with DOSLFN and other LFN drivers: Changes in 2.04.
-                                                              (line 756)
+* getcwd, LFN support on plain DOS with DOSLFN and other LFN drivers: Changes in 2.05.
+                                                              (line 138)
 * gethostname:                           Changes in 2.02.     (line 166)
 * getitimer:                             Changes in 2.03.     (line  18)
 * getitimer, and system clock granularity: Changes in 2.03.   (line 300)
@@ -3308,19 +3322,19 @@ File: kb.info,  Node: Index,  Up: Top
                                                               (line  79)
 * glob, fixed buffer overrun:            Changes in 2.04.     (line 360)
 * Globbing:                              Features.            (line  70)
-* gmtime_r, added to the library:        Changes in 2.04.     (line 668)
+* gmtime_r, added to the library:        Changes in 2.05.     (line  50)
 * go32-v2 <1>:                           Changes in 2.02.     (line  52)
 * go32-v2:                               Changes in 2.01.     (line  82)
 * go32-v2, documentation:                Changes in 2.04.     (line 565)
 * gxx <1>:                               Changes in 2.02.     (line  95)
 * gxx:                                   Changes in 2.01.     (line  10)
 * gxx, and missing libgpp.a:             Changes in 2.03.     (line 392)
-* hcreate, added to the library:         Changes in 2.04.     (line 668)
-* hdestroy, added to the library:        Changes in 2.04.     (line 668)
+* hcreate, added to the library:         Changes in 2.05.     (line  50)
+* hdestroy, added to the library:        Changes in 2.05.     (line  50)
 * header files and GCC:                  Changes in 2.04.     (line  86)
 * Header files, compatibility:           Features.            (line  14)
 * hidden features, documentation:        Changes in 2.03.     (line  74)
-* hsearch, added to the library:         Changes in 2.04.     (line 668)
+* hsearch, added to the library:         Changes in 2.05.     (line  50)
 * HUGE_VALF:                             Changes in 2.04.     (line 553)
 * HUGE_VALL:                             Changes in 2.04.     (line 553)
 * imaxabs:                               Changes in 2.04.     (line 533)
@@ -3337,33 +3351,33 @@ File: kb.info,  Node: Index,  Up: Top
 * ioctl, emulation:                      Features.            (line 207)
 * isatty, and invalid file descriptors:  Changes in 2.04.     (line 581)
 * isblank:                               Changes in 2.04.     (line 508)
-* isfinite, added to the library:        Changes in 2.04.     (line 807)
-* isgreater, added to the library:       Changes in 2.04.     (line 807)
-* isgreaterequal, added to the library:  Changes in 2.04.     (line 807)
-* isinf, added to the library:           Changes in 2.04.     (line 807)
-* isinfl, added to the math library:     Changes in 2.04.     (line 833)
-* isless, added to the library:          Changes in 2.04.     (line 807)
-* islessequal, added to the library:     Changes in 2.04.     (line 807)
-* islessgreater, added to the library:   Changes in 2.04.     (line 807)
-* isnan, added to the library:           Changes in 2.04.     (line 807)
-* isnanl, added to the math library:     Changes in 2.04.     (line 833)
-* isnormal, added to the library:        Changes in 2.04.     (line 807)
-* isunordered, added to the library:     Changes in 2.04.     (line 807)
+* isfinite, added to the library:        Changes in 2.05.     (line 189)
+* isgreater, added to the library:       Changes in 2.05.     (line 189)
+* isgreaterequal, added to the library:  Changes in 2.05.     (line 189)
+* isinf, added to the library:           Changes in 2.05.     (line 189)
+* isinfl, added to the math library:     Changes in 2.05.     (line 215)
+* isless, added to the library:          Changes in 2.05.     (line 189)
+* islessequal, added to the library:     Changes in 2.05.     (line 189)
+* islessgreater, added to the library:   Changes in 2.05.     (line 189)
+* isnan, added to the library:           Changes in 2.05.     (line 189)
+* isnanl, added to the math library:     Changes in 2.05.     (line 215)
+* isnormal, added to the library:        Changes in 2.05.     (line 189)
+* isunordered, added to the library:     Changes in 2.05.     (line 189)
 * kill, signals to other programs:       Changes in 2.03.     (line 320)
 * l64a, added to the library:            Changes in 2.04.     (line 321)
 * lchown, added to the library:          Changes in 2.04.     (line  59)
 * lconv:                                 Changes in 2.02.     (line 126)
 * ldexp:                                 Changes in 2.01.     (line  64)
 * ldiv, and negative arguments:          Changes in 2.04.     (line  35)
-* lfilelen, LFN support on plain DOS with DOSLFN and other LFN drivers: Changes in 2.04.
-                                                              (line 756)
+* lfilelen, LFN support on plain DOS with DOSLFN and other LFN drivers: Changes in 2.05.
+                                                              (line 138)
 * lfilelength, and FAT32:                Changes in 2.04.     (line 147)
-* lfind, added to the library:           Changes in 2.04.     (line 668)
+* lfind, added to the library:           Changes in 2.05.     (line  50)
 * lfn:                                   Changes in 2.01.     (line  78)
 * LFN API:                               Features.            (line 225)
 * LFN support and invalid drives:        Changes in 2.03.     (line 466)
-* lfnshort, LFN support on plain DOS with DOSLFN and other LFN drivers: Changes in 2.04.
-                                                              (line 756)
+* lfnshort, LFN support on plain DOS with DOSLFN and other LFN drivers: Changes in 2.05.
+                                                              (line 138)
 * lib/djgpp.djl, polluting the namespace unnecessarily: Changes in 2.04.
                                                               (line  76)
 * libc and profiling:                    Changes in 2.04.     (line 455)
@@ -3387,28 +3401,30 @@ File: kb.info,  Node: Index,  Up: Top
 * Links, emulation:                      Features.            (line 253)
 * lldiv, and negative arguments:         Changes in 2.04.     (line  35)
 * llockf:                                Changes in 2.04.     (line 185)
-* llrint added to the math library:      Changes in 2.04.     (line 816)
-* llrintf added to the math library:     Changes in 2.04.     (line 816)
-* llrintl added to the math library:     Changes in 2.04.     (line 816)
-* llround added to the math library:     Changes in 2.04.     (line 824)
-* llroundf added to the math library:    Changes in 2.04.     (line 824)
-* llroundl added to the math library:    Changes in 2.04.     (line 824)
+* llrint, added to the math library:     Changes in 2.05.     (line 198)
+* llrintf, added to the math library:    Changes in 2.05.     (line 198)
+* llrintl, added to the math library:    Changes in 2.05.     (line 198)
+* llround, added to the math library:    Changes in 2.05.     (line 206)
+* llroundf, added to the math library:   Changes in 2.05.     (line 206)
+* llroundl, added to the math library:   Changes in 2.05.     (line 206)
 * llseek, and FAT32:                     Changes in 2.04.     (line  14)
 * localtime:                             Changes in 2.03.     (line  24)
-* localtime_r, added to the library:     Changes in 2.04.     (line 668)
+* localtime_r, added to the library:     Changes in 2.05.     (line  50)
 * lock:                                  Changes in 2.02.     (line  85)
 * lock64:                                Changes in 2.04.     (line 197)
 * lockf:                                 Changes in 2.04.     (line 185)
+* log2, added log2 to libm.a:            Changes in 2.05.     (line 247)
+* log2f, added log2f to libm.a:          Changes in 2.05.     (line 247)
 * Long command lines:                    Features.            (line  49)
 * Long file name support:                Features.            (line 242)
 * lowvideo:                              Changes in 2.03.     (line  89)
-* lrint added to the math library:       Changes in 2.04.     (line 816)
-* lrintf added to the math library:      Changes in 2.04.     (line 816)
-* lrintl added to the math library:      Changes in 2.04.     (line 816)
-* lround added to the math library:      Changes in 2.04.     (line 824)
-* lroundf added to the math library:     Changes in 2.04.     (line 824)
-* lroundl added to the math library:     Changes in 2.04.     (line 824)
-* lsearch, added to the library:         Changes in 2.04.     (line 668)
+* lrint, added to the math library:      Changes in 2.05.     (line 198)
+* lrintf, added to the math library:     Changes in 2.05.     (line 198)
+* lrintl, added to the math library:     Changes in 2.05.     (line 198)
+* lround, added to the math library:     Changes in 2.05.     (line 206)
+* lroundf, added to the math library:    Changes in 2.05.     (line 206)
+* lroundl, added to the math library:    Changes in 2.05.     (line 206)
+* lsearch, added to the library:         Changes in 2.05.     (line  50)
 * lseek, and directories:                Changes in 2.04.     (line 597)
 * lstat, added to the library:           Changes in 2.04.     (line  59)
 * lstat, and block size:                 Changes in 2.04.     (line 448)
@@ -3427,27 +3443,28 @@ File: kb.info,  Node: Index,  Up: Top
 * malloc_verify, added to the library:   Changes in 2.04.     (line 288)
 * mallocmap, added to the library:       Changes in 2.04.     (line 288)
 * math functions, improved versions:     Changes in 2.03.     (line 274)
+* math.h, added log2f and log2:          Changes in 2.05.     (line 247)
 * math.h, order of arguments of sincos changed: Changes in 2.05.
                                                               (line  39)
 * math_errhandling, added to the library: Changes in 2.04.    (line 656)
 * mcount.c:                              Changes in 2.02.     (line  13)
 * memalign, added to the library:        Changes in 2.04.     (line 128)
-* memalign, and argument order:          Changes in 2.04.     (line 836)
+* memalign, and argument order:          Changes in 2.05.     (line 218)
 * memchr:                                Changes in 2.02.     (line  27)
 * memicmp:                               Changes in 2.02.     (line  87)
 * memicmp, included in the library:      Changes in 2.03.     (line 343)
 * merge:                                 Changes in 2.02.     (line 143)
-* mkdir, LFN support on plain DOS with DOSLFN and other LFN drivers: Changes in 2.04.
-                                                              (line 756)
+* mkdir, LFN support on plain DOS with DOSLFN and other LFN drivers: Changes in 2.05.
+                                                              (line 138)
 * mkdir, on Windows ME:                  Changes in 2.04.     (line 223)
 * mkdoc, clearer style for portability information: Changes in 2.04.
                                                               (line 473)
 * mkdoc, support for multiple versions of standards: Changes in 2.04.
                                                               (line 473)
-* mkdtemp added to the library:          Changes in 2.04.     (line 855)
+* mkdtemp, added to the library:         Changes in 2.05.     (line 237)
 * mkstemp:                               Changes in 2.02.     (line 253)
-* mkstemp, and SUS compliance:           Changes in 2.04.     (line 738)
-* mktemp, and SUS compliance:            Changes in 2.04.     (line 738)
+* mkstemp, and SUS compliance:           Changes in 2.05.     (line 120)
+* mktemp, and SUS compliance:            Changes in 2.05.     (line 120)
 * mktime <1>:                            Changes in 2.03.     (line  24)
 * mktime:                                Changes in 2.02.     (line 183)
 * mntent:                                Changes in 2.01.     (line  76)
@@ -3472,14 +3489,15 @@ File: kb.info,  Node: Index,  Up: Top
 * open, and Windows 2000/XP:             Changes in 2.04.     (line 403)
 * open, race conditions:                 Changes in 2.02.     (line 249)
 * open, supports symlinks:               Changes in 2.04.     (line  64)
+* open, supports temporary files <1>:    Changes in 2.05.     (line 125)
 * open, supports temporary files:        Changes in 2.04.     (line 220)
 * open, when there are no more file handles: Changes in 2.03. (line 156)
 * opendir:                               Changes in 2.02.     (line  63)
 * opendir, does not lose search handles: Changes in 2.02.     (line 343)
-* opendir, fixed malformed path string for symlinks: Changes in 2.04.
-                                                              (line 731)
-* opendir, LFN support on plain DOS with DOSLFN and other LFN drivers: Changes in 2.04.
-                                                              (line 756)
+* opendir, fixed malformed path string for symlinks: Changes in 2.05.
+                                                              (line 113)
+* opendir, LFN support on plain DOS with DOSLFN and other LFN drivers: Changes in 2.05.
+                                                              (line 138)
 * Opening directories with open:         Changes in 2.04.     (line 597)
 * outp:                                  Changes in 2.01.     (line  60)
 * outportsb:                             Changes in 2.02.     (line 299)
@@ -3502,7 +3520,7 @@ File: kb.info,  Node: Index,  Up: Top
 * popen:                                 Changes in 2.01.     (line  54)
 * popen, some extensions excluded from PATH search: Changes in 2.04.
                                                               (line 113)
-* POSIX compliance, string.h:            Changes in 2.04.     (line 830)
+* POSIX compliance, string.h:            Changes in 2.05.     (line 212)
 * Post-mortem debugging:                 Features.            (line 366)
 * pow:                                   Changes in 2.04.     (line 494)
 * powi:                                  Changes in 2.03.     (line 282)
@@ -3510,13 +3528,13 @@ File: kb.info,  Node: Index,  Up: Top
 * printf <1>:                            Changes in 2.03.     (line  45)
 * printf <2>:                            Changes in 2.02.     (line 174)
 * printf:                                Changes in 2.01.     (line  80)
-* printf, and C99 conversion flags:      Changes in 2.04.     (line 701)
+* printf, and C99 conversion flags:      Changes in 2.05.     (line  83)
 * printf, and C99 conversion qualifiers: Changes in 2.04.     (line 525)
-* printf, and C99 conversion specifiers: Changes in 2.04.     (line 709)
+* printf, and C99 conversion specifiers: Changes in 2.05.     (line  91)
 * printf, and negative zero:             Changes in 2.03.     (line 285)
-* printf, and numeric conversion specifiers: Changes in 2.04. (line 712)
-* printf, and return string for special numbers like pseudo-nan: Changes in 2.04.
-                                                              (line 704)
+* printf, and numeric conversion specifiers: Changes in 2.05. (line  94)
+* printf, and return string for special numbers like pseudo-nan: Changes in 2.05.
+                                                              (line  86)
 * printf, and the decimal point:         Changes in 2.04.     (line 646)
 * profiling <1>:                         Changes in 2.03.     (line  10)
 * profiling:                             Changes in 2.02.     (line 324)
@@ -3535,27 +3553,27 @@ File: kb.info,  Node: Index,  Up: Top
 * read, and directories:                 Changes in 2.04.     (line 597)
 * readdir <1>:                           Changes in 2.02.     (line  59)
 * readdir:                               Changes in 2.01.     (line 109)
-* readdir, fixed malformed path string for symlinks: Changes in 2.04.
-                                                              (line 731)
+* readdir, fixed malformed path string for symlinks: Changes in 2.05.
+                                                              (line 113)
 * readdir, reports file types:           Changes in 2.04.     (line 278)
 * readlink, added to the library:        Changes in 2.04.     (line  59)
 * readv:                                 Changes in 2.04.     (line 591)
 * realloc, crashes when memory is exhausted: Changes in 2.03. (line 331)
 * realpath, added to library to increase POSIX compliance: Changes in 2.04.
                                                               (line 505)
-* realpath, and no longer report ENOSYS on plain DOS: Changes in 2.04.
-                                                              (line 721)
-* realpath, and POSIX.1-2008 compliance: Changes in 2.04.     (line 747)
-* realpath, and Windows 2000/XP root directories and drive specifier character case: Changes in 2.04.
-                                                              (line 726)
+* realpath, and no longer report ENOSYS on plain DOS: Changes in 2.05.
+                                                              (line 103)
+* realpath, and POSIX.1-2008 compliance: Changes in 2.05.     (line 129)
+* realpath, and Windows 2000/XP root directories and drive specifier character case: Changes in 2.05.
+                                                              (line 108)
 * recode, on Windows 2000 and XP:        Changes in 2.04.     (line 369)
 * redir <1>:                             Changes in 2.03.     (line  77)
 * redir:                                 Changes in 2.02.     (line 317)
 * redir, and FP emulation:               Changes in 2.03.     (line 357)
 * Redirecting stderr:                    Features.            (line 350)
 * remove, and write-protected floppies:  Changes in 2.04.     (line  38)
-* remove, LFN support on plain DOS with DOSLFN and other LFN drivers: Changes in 2.04.
-                                                              (line 756)
+* remove, LFN support on plain DOS with DOSLFN and other LFN drivers: Changes in 2.05.
+                                                              (line 138)
 * rename <1>:                            Changes in 2.03.     (line 102)
 * rename:                                Changes in 2.02.     (line  65)
 * rename, and moving directories into themselves: Changes in 2.04.
@@ -3570,13 +3588,13 @@ File: kb.info,  Node: Index,  Up: Top
 * rewind, and directories:               Changes in 2.04.     (line 597)
 * rewinddir, and . and .. entries:       Changes in 2.02.     (line 343)
 * rewinddir, does not lose search handles: Changes in 2.02.   (line 343)
-* rintl added to the math library:       Changes in 2.04.     (line 828)
-* rlim_t:                                Changes in 2.04.     (line 804)
-* rmdir, LFN support on plain DOS with DOSLFN and other LFN drivers: Changes in 2.04.
-                                                              (line 756)
-* round added to the math library:       Changes in 2.04.     (line 821)
-* roundf added to the math library:      Changes in 2.04.     (line 821)
-* roundl added to the math library:      Changes in 2.04.     (line 821)
+* rintl, added to the math library:      Changes in 2.05.     (line 210)
+* rlim_t:                                Changes in 2.05.     (line 186)
+* rmdir, LFN support on plain DOS with DOSLFN and other LFN drivers: Changes in 2.05.
+                                                              (line 138)
+* round, added to the math library:      Changes in 2.05.     (line 203)
+* roundf, added to the math library:     Changes in 2.05.     (line 203)
+* roundl, added to the math library:     Changes in 2.05.     (line 203)
 * s_ceil:                                Changes in 2.02.     (line  57)
 * s_floor:                               Changes in 2.02.     (line  57)
 * S_IFLNK, added to the library:         Changes in 2.04.     (line  59)
@@ -3588,10 +3606,10 @@ File: kb.info,  Node: Index,  Up: Top
 * scanf:                                 Changes in 2.02.     (line 128)
 * scanf, and assignment suppression:     Changes in 2.04.     (line 658)
 * scanf, and C99 conversion qualifiers:  Changes in 2.04.     (line 525)
-* scanf, and C99 conversion specifiers:  Changes in 2.04.     (line 794)
-* scanf, and C99 numeric conversion specifiers: Changes in 2.04.
-                                                              (line 801)
-* scanf, and m modifier character:       Changes in 2.04.     (line 797)
+* scanf, and C99 conversion specifiers:  Changes in 2.05.     (line 176)
+* scanf, and C99 numeric conversion specifiers: Changes in 2.05.
+                                                              (line 183)
+* scanf, and m modifier character:       Changes in 2.05.     (line 179)
 * scanf, and octal conversions:          Changes in 2.03.     (line 311)
 * scanf, and the decimal point:          Changes in 2.04.     (line 646)
 * scanf, and the X type conversion and C99: Changes in 2.04.  (line 520)
@@ -3614,8 +3632,8 @@ File: kb.info,  Node: Index,  Up: Top
 * setitimer, and zero it_interval.tv_usec: Changes in 2.04.   (line  54)
 * setitimer, when called with NULL argument: Changes in 2.03. (line 296)
 * setjmp, also a macro:                  Changes in 2.04.     (line 211)
-* setlocale, standard and current locales supported: Changes in 2.04.
-                                                              (line 674)
+* setlocale, standard and current locales supported: Changes in 2.05.
+                                                              (line  56)
 * setmode, and termios:                  Changes in 2.03.     (line 204)
 * sf_ceil:                               Changes in 2.02.     (line  57)
 * sf_floor:                              Changes in 2.02.     (line  57)
@@ -3630,7 +3648,7 @@ File: kb.info,  Node: Index,  Up: Top
 * SIGINT:                                Changes in 2.01.     (line  17)
 * SIGINT and SIGQUIT, PC98:              Changes in 2.03.     (line  36)
 * sigismember:                           Changes in 2.02.     (line  68)
-* signbit added to the library:          Changes in 2.04.     (line 691)
+* signbit, added to the library:         Changes in 2.05.     (line  73)
 * sigpending:                            Changes in 2.02.     (line  68)
 * sigprocmask:                           Changes in 2.02.     (line  68)
 * SIGPROF:                               Changes in 2.02.     (line 324)
@@ -3677,32 +3695,32 @@ File: kb.info,  Node: Index,  Up: Top
 * statvfs:                               Changes in 2.04.     (line 466)
 * stdarg.h, implemented with GCC builtins: Changes in 2.04.   (line  28)
 * stdaux:                                Changes in 2.01.     (line  50)
-* stdbool.h added:                       Changes in 2.04.     (line 666)
+* stdbool.h added:                       Changes in 2.05.     (line 245)
 * stdprn:                                Changes in 2.01.     (line  50)
 * stpncpy, added to the library:         Changes in 2.04.     (line  51)
 * strerror, and C99 compliance:          Changes in 2.04.     (line 558)
-* strerror_r, added to the library:      Changes in 2.04.     (line 668)
-* strftime, and C99 conversion modifiers: Changes in 2.04.    (line 715)
-* strftime, and C99 conversion specifiers: Changes in 2.04.   (line 718)
+* strerror_r, added to the library:      Changes in 2.05.     (line  50)
+* strftime, and C99 conversion modifiers: Changes in 2.05.    (line  97)
+* strftime, and C99 conversion specifiers: Changes in 2.05.   (line 100)
 * strftime, and the X type conversion:   Changes in 2.04.     (line 650)
 * strftime, and the x type conversion:   Changes in 2.04.     (line 650)
 * strftime, and z format:                Changes in 2.04.     (line 461)
 * strlcat:                               Changes in 2.04.     (line 549)
 * strlcpy:                               Changes in 2.04.     (line 549)
-* strndup added to the library:          Changes in 2.04.     (line 830)
-* strnlen added to the library:          Changes in 2.04.     (line 830)
-* strtod, [+|-]0xH.HHHp[+|-]DDD in input: Changes in 2.04.    (line 697)
+* strndup, added to the library:         Changes in 2.05.     (line 212)
+* strnlen, added to the library:         Changes in 2.05.     (line 212)
+* strtod, [+|-]0xH.HHHp[+|-]DDD in input: Changes in 2.05.    (line  79)
 * strtod, and the decimal point:         Changes in 2.04.     (line 646)
 * strtod, Inf and NaN in input:          Changes in 2.04.     (line 629)
 * strtof:                                Changes in 2.04.     (line 547)
-* strtof, [+|-]0xH.HHHp[+|-]DDD in input: Changes in 2.04.    (line 697)
+* strtof, [+|-]0xH.HHHp[+|-]DDD in input: Changes in 2.05.    (line  79)
 * strtof, and the decimal point:         Changes in 2.04.     (line 646)
 * strtof, Inf and NaN in input:          Changes in 2.04.     (line 629)
 * strtoimax:                             Changes in 2.04.     (line 533)
-* strtok_r, added to the library:        Changes in 2.04.     (line 668)
+* strtok_r, added to the library:        Changes in 2.05.     (line  50)
 * strtol, and 8-bit characters:          Changes in 2.04.     (line 216)
 * strtold:                               Changes in 2.04.     (line 518)
-* strtold, [+|-]0xH.HHHp[+|-]DDD in input: Changes in 2.04.   (line 697)
+* strtold, [+|-]0xH.HHHp[+|-]DDD in input: Changes in 2.05.   (line  79)
 * strtold, and the decimal point:        Changes in 2.04.     (line 646)
 * strtold, Inf and NaN in input:         Changes in 2.04.     (line 629)
 * strtoll, and 8-bit characters:         Changes in 2.04.     (line 216)
@@ -3714,7 +3732,7 @@ File: kb.info,  Node: Index,  Up: Top
 * struct lconv:                          Changes in 2.04.     (line 510)
 * struct passwd, added pw_gecos field:   Changes in 2.04.     (line 335)
 * struct passwd, added pw_passwd field:  Changes in 2.04.     (line 335)
-* struct rlimit, and rlim_t:             Changes in 2.04.     (line 804)
+* struct rlimit, and rlim_t:             Changes in 2.05.     (line 186)
 * struct stat, and blksize_t:            Changes in 2.04.     (line 452)
 * stub:                                  Changes in 2.02.     (line 157)
 * stub.asm:                              Changes in 2.02.     (line  17)
@@ -3726,10 +3744,10 @@ File: kb.info,  Node: Index,  Up: Top
 * stubify, documentation:                Changes in 2.04.     (line 565)
 * stubify, on Windows ME:                Changes in 2.04.     (line 223)
 * stubs:                                 Development.         (line  47)
-* STYP_NRELOC_OVFL, new flag bit added to s_flags of COFF section header: Changes in 2.04.
-                                                              (line 781)
-* SUS compliance, stdio.h:               Changes in 2.04.     (line 852)
-* SUS compliance, stdlib.h:              Changes in 2.04.     (line 855)
+* STYP_NRELOC_OVFL, new flag bit added to s_flags of COFF section header: Changes in 2.05.
+                                                              (line 163)
+* SUS compliance, stdio.h:               Changes in 2.05.     (line 234)
+* SUS compliance, stdlib.h:              Changes in 2.05.     (line 237)
 * symify, and long file/function names:  Changes in 2.03.     (line 472)
 * symify, crashes for large programs:    Changes in 2.04.     (line  71)
 * symify, documentation:                 Changes in 2.04.     (line 565)
@@ -3779,11 +3797,11 @@ File: kb.info,  Node: Index,  Up: Top
 * tolower:                               Changes in 2.03.     (line  54)
 * touch, on Windows 2000 and XP:         Changes in 2.04.     (line 369)
 * toupper:                               Changes in 2.03.     (line  54)
-* truename, LFN support on plain DOS with DOSLFN and other LFN drivers: Changes in 2.04.
-                                                              (line 756)
-* trunc added to the math library:       Changes in 2.04.     (line 767)
-* truncf added to the math library:      Changes in 2.04.     (line 767)
-* truncl added to the math library:      Changes in 2.04.     (line 767)
+* truename, LFN support on plain DOS with DOSLFN and other LFN drivers: Changes in 2.05.
+                                                              (line 138)
+* trunc, added to the math library:      Changes in 2.05.     (line 149)
+* truncf, added to the math library:     Changes in 2.05.     (line 149)
+* truncl, added to the math library:     Changes in 2.05.     (line 149)
 * TZ:                                    Changes in 2.03.     (line  24)
 * tzname:                                Changes in 2.02.     (line 145)
 * uclock:                                Changes in 2.03.     (line  20)
@@ -3817,11 +3835,11 @@ File: kb.info,  Node: Index,  Up: Top
 * va_start:                              Changes in 2.01.     (line  90)
 * va_start, implemented with GCC builtins: Changes in 2.04.   (line  28)
 * valloc, added to the library:          Changes in 2.04.     (line 128)
-* valloc, and argument order:            Changes in 2.04.     (line 836)
+* valloc, and argument order:            Changes in 2.05.     (line 218)
 * varargs.h, implemented with GCC builtins: Changes in 2.04.  (line  28)
-* vasnprintf, added to the library:      Changes in 2.04.     (line 694)
-* vasprintf, added to the library:       Changes in 2.04.     (line 694)
-* vdprintf added to the library:         Changes in 2.04.     (line 852)
+* vasnprintf, added to the library:      Changes in 2.05.     (line  76)
+* vasprintf, added to the library:       Changes in 2.05.     (line  76)
+* vdprintf, added to the library:        Changes in 2.05.     (line 234)
 * vfprintf:                              Changes in 2.03.     (line  45)
 * vfscanf:                               Changes in 2.03.     (line 105)
 * vfscanf, and octal conversions:        Changes in 2.03.     (line 311)
@@ -3858,14 +3876,14 @@ Node: Changes in 2.011308
 Node: Changes in 2.024264
 Node: Changes in 2.0317606
 Node: Changes in 2.0439821
-Node: Changes in 2.0578651
-Node: Known Bugs80535
-Node: Known Anti-Bugs80653
-Node: Hidden Features80784
-Node: Features81357
-Ref: Features-Footnote-1106231
-Node: DJGPP.ENV106457
-Node: Development108380
-Node: Index118851
+Node: Changes in 2.0569378
+Node: Known Bugs80943
+Node: Known Anti-Bugs81061
+Node: Hidden Features81192
+Node: Features81765
+Ref: Features-Footnote-1106639
+Node: DJGPP.ENV106865
+Node: Development108788
+Node: Index119259
 
 End Tag Table

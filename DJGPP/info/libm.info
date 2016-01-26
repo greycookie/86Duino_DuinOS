@@ -98,6 +98,7 @@ available when you include `math.h' instead of `libm/math.h'.
 * llround::	Round to nearest integer
 * log::		Natural logarithms
 * log10::	Base 10 logarithms
+* log2::	Base 2 logarithms
 * log1p::	Log of 1 + X
 * lrint::	Round to integer
 * lround::	Round to nearest integer
@@ -1066,7 +1067,7 @@ Portability
 `log' is ANSI, `logf' is an extension.
 
 
-File: libm.info,  Node: log10,  Next: log1p,  Prev: log,  Up: Math
+File: libm.info,  Node: log10,  Next: log2,  Prev: log,  Up: Math
 
 1.27 `log10', `log10f'--base 10 logarithms
 ==========================================
@@ -1099,9 +1100,42 @@ Portability
 `log10' is ANSI C.  `log10f' is an extension.
 
 
-File: libm.info,  Node: log1p,  Next: lrint,  Prev: log10,  Up: Math
+File: libm.info,  Node: log2,  Next: log1p,  Prev: log10,  Up: Math
 
-1.28 `log1p', `log1pf'--log of `1 + X'
+1.28 `log2', `log2f'--base 2 logarithms
+=======================================
+
+Syntax
+------
+
+     #include <math.h>
+     double log2(double X);
+     float log2f(float X);
+
+Description
+
+
+`log2' returns the base 2 logarithm of X.  It is implemented as `log(X)
+/ log(2)'.
+
+   `log2f' is identical, save that it takes and returns `float' values.
+
+Return Value
+
+
+`log2' and `log2f' return the calculated value.
+
+   See the description of `log' for information on errors.
+
+Portability
+
+
+`log2' is ANSI C.  `log2f' is an extension.
+
+
+File: libm.info,  Node: log1p,  Next: lrint,  Prev: log2,  Up: Math
+
+1.29 `log1p', `log1pf'--log of `1 + X'
 ======================================
 
 Syntax
@@ -1135,7 +1169,7 @@ Interface Definition (Issue 2).
 
 File: libm.info,  Node: matherr,  Next: modf,  Prev: lround,  Up: Math
 
-1.29 `matherr'--modifiable math error handler
+1.30 `matherr'--modifiable math error handler
 =============================================
 
 Syntax
@@ -1230,7 +1264,7 @@ Portability
 
 File: libm.info,  Node: modf,  Next: nan,  Prev: matherr,  Up: Math
 
-1.30 `modf', `modff'--split fractional and integer parts
+1.31 `modf', `modff'--split fractional and integer parts
 ========================================================
 
 Syntax
@@ -1265,7 +1299,7 @@ Portability
 
 File: libm.info,  Node: nan,  Next: nextafter,  Prev: modf,  Up: Math
 
-1.31 `nan', `nanf'--representation of infinity
+1.32 `nan', `nanf'--representation of infinity
 ==============================================
 
 Syntax
@@ -1284,7 +1318,7 @@ precision arithmetic respectivly.
 
 File: libm.info,  Node: nextafter,  Next: pow,  Prev: nan,  Up: Math
 
-1.32 `nextafter', `nextafterf'--get next number
+1.33 `nextafter', `nextafterf'--get next number
 ===============================================
 
 Syntax
@@ -1317,7 +1351,7 @@ System V Interface Definition (Issue 2).
 
 File: libm.info,  Node: pow,  Next: rint,  Prev: nextafter,  Up: Math
 
-1.33 `pow', `powf'--x to the power y
+1.34 `pow', `powf'--x to the power y
 ====================================
 
 Syntax
@@ -1352,7 +1386,7 @@ Portability
 
 File: libm.info,  Node: rint,  Next: round,  Prev: pow,  Up: Math
 
-1.34 `rint', `rintf', `rintl', `remainder', `remainderf'--round and  remainder
+1.35 `rint', `rintf', `rintl', `remainder', `remainderf'--round and  remainder
 ==============================================================================
 
 Syntax
@@ -1386,7 +1420,7 @@ Portability
 
 File: libm.info,  Node: scalbn,  Next: sin,  Prev: round,  Up: Math
 
-1.35 `scalbn', `scalbnf'--scale by integer
+1.36 `scalbn', `scalbnf'--scale by integer
 ==========================================
 
 Syntax
@@ -1417,7 +1451,7 @@ Interface Definition (Issue 2).
 
 File: libm.info,  Node: sqrt,  Next: tan,  Prev: sinh,  Up: Math
 
-1.36 `sqrt', `sqrtf'--positive square root
+1.37 `sqrt', `sqrtf'--positive square root
 ==========================================
 
 Syntax
@@ -1448,7 +1482,7 @@ Portability
 
 File: libm.info,  Node: sin,  Next: sinh,  Prev: scalbn,  Up: Math
 
-1.37 `sin', `sinf', `cos', `cosf'--sine or cosine
+1.38 `sin', `sinf', `cos', `cosf'--sine or cosine
 =================================================
 
 Syntax
@@ -1482,7 +1516,7 @@ Portability
 
 File: libm.info,  Node: sinh,  Next: sqrt,  Prev: sin,  Up: Math
 
-1.38 `sinh', `sinhf'--hyperbolic sine
+1.39 `sinh', `sinhf'--hyperbolic sine
 =====================================
 
 Syntax
@@ -1520,7 +1554,7 @@ Portability
 
 File: libm.info,  Node: tan,  Next: tanh,  Prev: sqrt,  Up: Math
 
-1.39 `tan', `tanf'--tangent
+1.40 `tan', `tanf'--tangent
 ===========================
 
 Syntax
@@ -1551,7 +1585,7 @@ Portability
 
 File: libm.info,  Node: tanh,  Next: trunc,  Prev: tan,  Up: Math
 
-1.40 `tanh', `tanhf'--hyperbolic tangent
+1.41 `tanh', `tanhf'--hyperbolic tangent
 ========================================
 
 Syntax
@@ -1584,7 +1618,7 @@ Portability
 
 File: libm.info,  Node: trunc,  Prev: tanh,  Up: Math
 
-1.41 `trunc', `truncf', `truncl'-round to integer, towards zero
+1.42 `trunc', `truncf', `truncl'-round to integer, towards zero
 ===============================================================
 
 Syntax
@@ -1616,7 +1650,7 @@ ANSI C, POSIX
 
 File: libm.info,  Node: lrint,  Next: lround,  Prev: log1p,  Up: Math
 
-1.42 `lrint', `lrintf', `lrintl'-round to nearest integer value using current rounding direction
+1.43 `lrint', `lrintf', `lrintl'-round to nearest integer value using current rounding direction
 ================================================================================================
 
 Syntax
@@ -1653,7 +1687,7 @@ ANSI C, POSIX
 
 File: libm.info,  Node: llrint,  Next: llround,  Prev: ldexp,  Up: Math
 
-1.43 `llrint', `llrintf', `llrintl'-round to nearest integer value using current rounding direction
+1.44 `llrint', `llrintf', `llrintl'-round to nearest integer value using current rounding direction
 ===================================================================================================
 
 Syntax
@@ -1690,7 +1724,7 @@ ANSI C, POSIX
 
 File: libm.info,  Node: round,  Next: scalbn,  Prev: rint,  Up: Math
 
-1.44 `round', `roundf', `roundl'-round to nearest integer
+1.45 `round', `roundf', `roundl'-round to nearest integer
 =========================================================
 
 Syntax
@@ -1725,7 +1759,7 @@ ANSI C, POSIX
 
 File: libm.info,  Node: lround,  Next: matherr,  Prev: lrint,  Up: Math
 
-1.45 `lround', `lroundf', `lroundl'-round to integer, to nearest
+1.46 `lround', `lroundf', `lroundl'-round to integer, to nearest
 ================================================================
 
 Syntax
@@ -1759,7 +1793,7 @@ ANSI C, POSIX
 
 File: libm.info,  Node: llround,  Next: log,  Prev: llrint,  Up: Math
 
-1.46 `llround', `llroundf', `llroundl'-round to integer, to nearest
+1.47 `llround', `llroundf', `llroundl'-round to integer, to nearest
 ===================================================================
 
 Syntax
@@ -1901,6 +1935,8 @@ Index
 * log10f:                                log10.                 (line 6)
 * log1p:                                 log1p.                 (line 6)
 * log1pf:                                log1p.                 (line 6)
+* log2:                                  log2.                  (line 6)
+* log2f:                                 log2.                  (line 6)
 * logf:                                  log.                   (line 6)
 * lrint:                                 lrint.                 (line 6)
 * lrintf:                                lrint.                 (line 6)
@@ -1954,53 +1990,54 @@ Index
 Tag Table:
 Node: Top1179
 Node: Math1395
-Node: version4097
-Node: acos5504
-Node: acosh6297
-Node: asin7129
-Node: asinh7927
-Node: atan8509
-Node: atan29038
-Node: atanh9845
-Node: jN10712
-Node: cbrt12006
-Node: copysign12416
-Node: cosh13252
-Node: erf14074
-Node: exp15116
-Node: expm115907
-Node: fabs16645
-Node: floor17190
-Node: fmod17904
-Node: frexp18685
-Node: gamma19634
-Node: hypot21859
-Node: ilogb22596
-Node: infinity23466
-Node: isnan23888
-Node: ldexp25498
-Node: log26211
-Node: log1027103
-Node: log1p27718
-Node: matherr28464
-Node: modf31027
-Node: nan31978
-Node: nextafter32352
-Node: pow33162
-Node: rint33987
-Node: scalbn34819
-Node: sqrt35464
-Node: sin36110
-Node: sinh36769
-Node: tan37599
-Node: tanh38083
-Node: trunc38674
-Node: lrint39360
-Node: llrint40289
-Node: round41245
-Node: lround42116
-Node: llround42980
-Node: Reentrancy43869
-Node: Index44698
+Node: version4124
+Node: acos5531
+Node: acosh6324
+Node: asin7156
+Node: asinh7954
+Node: atan8536
+Node: atan29065
+Node: atanh9872
+Node: jN10739
+Node: cbrt12033
+Node: copysign12443
+Node: cosh13279
+Node: erf14101
+Node: exp15143
+Node: expm115934
+Node: fabs16672
+Node: floor17217
+Node: fmod17931
+Node: frexp18712
+Node: gamma19661
+Node: hypot21886
+Node: ilogb22623
+Node: infinity23493
+Node: isnan23915
+Node: ldexp25525
+Node: log26238
+Node: log1027130
+Node: log227744
+Node: log1p28344
+Node: matherr29089
+Node: modf31652
+Node: nan32603
+Node: nextafter32977
+Node: pow33787
+Node: rint34612
+Node: scalbn35444
+Node: sqrt36089
+Node: sin36735
+Node: sinh37394
+Node: tan38224
+Node: tanh38708
+Node: trunc39299
+Node: lrint39985
+Node: llrint40914
+Node: round41870
+Node: lround42741
+Node: llround43605
+Node: Reentrancy44494
+Node: Index45323
 
 End Tag Table

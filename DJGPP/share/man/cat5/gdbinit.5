@@ -1,7 +1,5 @@
+GDBINIT(5)                   GNU Development Tools                  GDBINIT(5)
 
-
-
-GDBINIT(5)            GNU Development Tools            GDBINIT(5)
 
 
 NNAAMMEE
@@ -13,120 +11,60 @@ SSYYNNOOPPSSIISS
        ./.gdbinit
 
 DDEESSCCRRIIPPTTIIOONN
-       These  files contain GDB commands to automatically execute
-       during GDB startup.  The  lines  of  contents  are  canned
-       sequences of commands, described in the GDB manual in node
-       "Sequences" -- shell command "info -f gdb -n Sequences".
+       These  files  contain  GDB commands to automatically execute during GDB
+       startup.  The lines of  contents  are  canned  sequences  of  commands,
+       described  in the GDB manual in node "Sequences" -- shell command "info
+       -f gdb -n Sequences".
 
-       Please read more in the GDB manual in  node  "Startup"  --
-       shell command "info -f gdb -n Startup".
+       Please read more in the GDB manual in node "Startup" --  shell  command
+       "info -f gdb -n Startup".
 
-       ((nnoott eennaabblleedd wwiitthh ""----wwiitthh--ssyysstteemm--ggddbbiinniitt"" dduurriinngg
-       ccoommppiillaattiioonn))
-           System-wide  initialization  file.   It  is   executed
-           unless  user  specified GDB option "-nx" or "-n".  See
-           more  in  the  GDB   manual   in   node   "System-wide
-           configuration"  --  shell  command  "info  -f  gdb  -n
-           'System-wide configuration'".
+       ((nnoott eennaabblleedd wwiitthh ""----wwiitthh--ssyysstteemm--ggddbbiinniitt"" dduurriinngg ccoommppiillaattiioonn))
+           System-wide initialization file.  It is executed unless user speci-
+           fied GDB option "-nx" or "-n".  See more in the GDB manual in  node
+           "System-wide  configuration" -- shell command "info -f gdb -n 'Sys-
+           tem-wide configuration'".
 
        ~~//..ggddbbiinniitt
-           User initialization file.  It is executed unless  user
-           specified GDB options "-nx", "-n" or "-nh".
+           User initialization file.  It is executed unless user specified GDB
+           options "-nx", "-n" or "-nh".
 
        ..//..ggddbbiinniitt
-           Initialization  file  for  current  directory.  It may
-           need to be enabled  with  GDB  security  command  "set
-           auto-load  local-gdbinit".  See more in the GDB manual
-           in node "Init File in the Current Directory" --  shell
-           command  "info  -f  gdb  -n  'Init File in the Current
+           Initialization  file  for  current  directory.   It  may need to be
+           enabled with GDB security command  "set  auto-load  local-gdbinit".
+           See more in the GDB manual in node "Init File in the Current Direc-
+           tory" -- shell command "info -f gdb -n 'Init File  in  the  Current
            Directory'".
 
 OOPPTTIIOONNSS
 SSEEEE AALLSSOO
        _g_d_b(1), "info -f gdb -n Startup"
 
-       The full documentation for GDB is maintained as a  Texinfo
-       manual.   If  the  "info"  and  "gdb"  programs  and GDB's
-       Texinfo documentation are properly installed at your site,
-       the command
+       The  full  documentation for GDB is maintained as a Texinfo manual.  If
+       the "info" and "gdb" programs and GDB's Texinfo documentation are prop-
+       erly installed at your site, the command
 
                info gdb
 
        should give you access to the complete manual.
 
-       _U_s_i_n_g  _G_D_B_:  _A  _G_u_i_d_e  _t_o  _t_h_e  _G_N_U _S_o_u_r_c_e_-_L_e_v_e_l _D_e_b_u_g_g_e_r,
-       Richard M. Stallman and Roland H. Pesch, July 1991.
-
-
-
-
-
-gdb-7.9.1                   2015-07-02                          1
-
-
-
-
-
-GDBINIT(5)            GNU Development Tools            GDBINIT(5)
-
+       _U_s_i_n_g  _G_D_B_: _A _G_u_i_d_e _t_o _t_h_e _G_N_U _S_o_u_r_c_e_-_L_e_v_e_l _D_e_b_u_g_g_e_r, Richard M. Stall-
+       man and Roland H. Pesch, July 1991.
 
 CCOOPPYYRRIIGGHHTT
        Copyright (c) 1988-2015 Free Software Foundation, Inc.
 
-       Permission is granted to copy,  distribute  and/or  modify
-       this   document   under   the   terms   of  the  GNU  Free
-       Documentation License, Version 1.3 or  any  later  version
-       published  by  the  Free  Software  Foundation;  with  the
-       Invariant  Sections  being  "Free  Software"   and   "Free
-       Software  Needs  Free Documentation", with the Front-Cover
-       Texts being "A GNU Manual," and with the Back-Cover  Texts
-       as in (a) below.
+       Permission is granted to copy, distribute and/or modify  this  document
+       under  the  terms of the GNU Free Documentation License, Version 1.3 or
+       any later version published by the Free Software Foundation;  with  the
+       Invariant  Sections being "Free Software" and "Free Software Needs Free
+       Documentation", with the Front-Cover Texts being "A  GNU  Manual,"  and
+       with the Back-Cover Texts as in (a) below.
 
-       (a)  The  FSF's  Back-Cover Text is: "You are free to copy
-       and modify this GNU Manual.  Buying copies from GNU  Press
-       supports  the FSF in developing GNU and promoting software
-       freedom."
+       (a) The FSF's Back-Cover Text is: "You are free to copy and modify this
+       GNU Manual.  Buying copies from GNU Press supports the FSF in  develop-
+       ing GNU and promoting software freedom."
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-gdb-7.9.1                   2015-07-02                          2
-
-
+gdb-7.10.1                        2016-01-10                        GDBINIT(5)

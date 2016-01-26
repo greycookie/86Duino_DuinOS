@@ -34,6 +34,10 @@ DDEESSCCRRIIPPTTIIOONN
               add  the contents of script-file to the commands to
               be executed
 
+       ----ffoollllooww--ssyymmlliinnkkss
+
+              follow symlinks when processing in place
+
        --ii[[SSUUFFFFIIXX]], ----iinn--ppllaaccee[=_S_U_F_F_I_X]
 
               edit files in place (makes backup  if  SUFFIX  sup-
@@ -55,13 +59,9 @@ DDEESSCCRRIIPPTTIIOONN
 
        --rr, ----rreeggeexxpp--eexxtteennddeedd
 
-              use extended regular expressions in the script.
-
-       --ss, ----sseeppaarraattee
 
 
-
-sed 4.2.2                 February 2013                         1
+sed 4.2.2                   June 2015                           1
 
 
 
@@ -69,6 +69,10 @@ sed 4.2.2                 February 2013                         1
 
 SED(1)                    User Commands                    SED(1)
 
+
+              use extended regular expressions in the script.
+
+       --ss, ----sseeppaarraattee
 
               consider  files as separate rather than as a single
               continuous long stream.
@@ -120,14 +124,10 @@ CCOOMMMMAANNDD SSYYNNOOPPSSIISS
 
        a \
 
-       _t_e_x_t   Append  _t_e_x_t,  which has each embedded newline pre-
-              ceded by a backslash.
-
-       i \
 
 
 
-sed 4.2.2                 February 2013                         2
+sed 4.2.2                   June 2015                           2
 
 
 
@@ -135,6 +135,11 @@ sed 4.2.2                 February 2013                         2
 
 SED(1)                    User Commands                    SED(1)
 
+
+       _t_e_x_t   Append  _t_e_x_t,  which has each embedded newline pre-
+              ceded by a backslash.
+
+       i \
 
        _t_e_x_t   Insert _t_e_x_t, which has each embedded  newline  pre-
               ceded by a backslash.
@@ -184,16 +189,11 @@ SED(1)                    User Commands                    SED(1)
        l      List out the current line in a ``visually unambigu-
               ous'' form.
 
-       l _w_i_d_t_h
-              List out the current line in a ``visually unambigu-
-              ous'' form, breaking it at _w_i_d_t_h characters.   This
-              is a GNU extension.
-
-       n N    Read/append the next line of input into the pattern
 
 
 
-sed 4.2.2                 February 2013                         3
+
+sed 4.2.2                   June 2015                           3
 
 
 
@@ -202,6 +202,12 @@ sed 4.2.2                 February 2013                         3
 SED(1)                    User Commands                    SED(1)
 
 
+       l _w_i_d_t_h
+              List out the current line in a ``visually unambigu-
+              ous'' form, breaking it at _w_i_d_t_h characters.   This
+              is a GNU extension.
+
+       n N    Read/append the next line of input into the pattern
               space.
 
        p      Print the current pattern space.
@@ -250,16 +256,10 @@ AAddddrreesssseess
        _S_e_d commands can be given with no addresses, in which case
        the command will be executed for all input lines; with one
        address, in which case the command will only  be  executed
-       for  input  lines  which  match  that address; or with two
-       addresses, in which case the command will be executed  for
-       all  input  lines which match the inclusive range of lines
-       starting from the first address and continuing to the sec-
-       ond  address.   Three things to note about address ranges:
-       the  syntax  is  _a_d_d_r_1,_a_d_d_r_2  (i.e.,  the  addresses   are
 
 
 
-sed 4.2.2                 February 2013                         4
+sed 4.2.2                   June 2015                           4
 
 
 
@@ -268,7 +268,13 @@ sed 4.2.2                 February 2013                         4
 SED(1)                    User Commands                    SED(1)
 
 
-       separated  by  a comma); the line which _a_d_d_r_1 matched will
+       for  input  lines  which  match  that address; or with two
+       addresses, in which case the command will be executed  for
+       all  input  lines which match the inclusive range of lines
+       starting from the first address and continuing to the sec-
+       ond  address.   Three things to note about address ranges:
+       the syntax is _a_d_d_r_1,_a_d_d_r_2 (i.e., the addresses  are  sepa-
+       rated  by  a  comma);  the  line  which _a_d_d_r_1 matched will
        always be accepted, even if _a_d_d_r_2 selects an earlier line;
        and  if  _a_d_d_r_2  is a _r_e_g_e_x_p, it will not be tested against
        the line that _a_d_d_r_1 matched.
@@ -316,16 +322,10 @@ SED(1)                    User Commands                    SED(1)
        _a_d_d_r_1,+_N
               Will match _a_d_d_r_1 and the _N lines following _a_d_d_r_1.
 
-       _a_d_d_r_1,~_N
-              Will  match  _a_d_d_r_1  and  the  lines following _a_d_d_r_1
-              until the next line whose input line  number  is  a
-              multiple of _N.
 
 
 
-
-
-sed 4.2.2                 February 2013                         5
+sed 4.2.2                   June 2015                           5
 
 
 
@@ -333,6 +333,11 @@ sed 4.2.2                 February 2013                         5
 
 SED(1)                    User Commands                    SED(1)
 
+
+       _a_d_d_r_1,~_N
+              Will  match  _a_d_d_r_1  and  the  lines following _a_d_d_r_1
+              until the next line whose input line  number  is  a
+              multiple of _N.
 
 RREEGGUULLAARR EEXXPPRREESSSSIIOONNSS
        POSIX.2  BREs  _s_h_o_u_l_d  be  supported, but they aren't com-
@@ -386,11 +391,6 @@ SSEEEE AALLSSOO
 
 
 
-
-
-
-
-
-sed 4.2.2                 February 2013                         6
+sed 4.2.2                   June 2015                           6
 
 

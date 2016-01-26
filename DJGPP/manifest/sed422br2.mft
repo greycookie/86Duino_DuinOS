@@ -1,0 +1,12 @@
+bin/sed.exe
+gnu/sed-4.2.2/ChangeLog
+gnu/sed-4.2.2/djgpp/README
+gnu/sed-4.2.2/NEWS
+gnu/sed-4.2.2/po/ChangeLog
+gnu/sed-4.2.2/README
+manifest/sed422br2.dsm
+manifest/sed422br2.mft
+manifest/sed422br2.ver
+share/info/sed.info
+share/man/cat1/sed.1
+gnu/sed-4.2.2

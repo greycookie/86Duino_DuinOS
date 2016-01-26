@@ -35,7 +35,7 @@ SECTIONS
     *(.data.*)
     /* Ugly workaround to prevent entire .bss to have attribute CONTENT */
     /* for C++ executables. */
-    *( .bss.*)
+    *(.bss.*)
     *(.gcc_exc*)
     ___EH_FRAME_BEGIN__ = . ;
     *(.eh_fram*)

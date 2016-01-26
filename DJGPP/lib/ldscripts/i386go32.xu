@@ -18,7 +18,7 @@ SECTIONS
     *(.data)
     /* Ugly workaround to prevent entire .bss to have attribute CONTENT */
     /* for C++ executables. */
-    *()
+    *(.bss.*)
   }
   .ctor : {
     *(SORT(.ctors.*))

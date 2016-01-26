@@ -1,0 +1,76 @@
+#
+# DSM for GNU sed 4.2.2 binaries.
+# Written by Juan Manuel Guerrero <juan.guerrero@gmx.de> 2015-06-27
+#
+
+dsm-file-version: 1.3
+dsm-name: sed422br2
+dsm-version: 0.6.1
+
+type: binaries
+
+dsm-author: Juan Manuel Guerrero
+dsm-author-email: juan.guerrero@gmx.de
+
+name: sed
+version: 4.2.2 release 2
+manifest: sed422br2
+documentation-dsm: sed422dr2
+sources-dsm: sed422sr2
+short-description: Binaries for GNU sed version 4.2.2
+long-description: GNU sed is the GNU implementation of the\n\
+POSIX stream editor `sed'.
+
+license: GNU GPL
+# author.
+author: Jay Fenlason
+# author.
+author: Tom Lord
+maintainer: Ken Pizzini
+maintainer-email: ken@gnu.org
+maintainer: Paolo Bonzini
+maintainer-email: bonzini@gnu.org
+# For reporting bugs.
+mailing-list: bonzini@gnu.org
+# The home page of GNU sed.
+web-site: http://www.gnu.org/software/sed
+# The ftp site of GNU sed.
+ftp-site: ftp://ftp.gnu.org/pub/gnu/sed
+# For discussing DJGPP- and DOS/Windows-specific aspects.
+mailing-list: djgpp@delorie.com
+newsgroup: comp.os.msdos.djgpp
+
+porter: Juan Manuel Guerrero
+porter-email: juan.guerrero@gmx.de
+
+simtelnet-path: v2gnu/
+zip: sed422br2.zip
+
+changelog: gnu/sed-4.2.2/ChangeLog
+
+post-install-readme: gnu/sed-4.2.2/NEWS
+post-install-readme: gnu/sed-4.2.2/README
+post-install-readme: gnu/sed-4.2.2/djgpp/README
+
+# These are required to use GNU sed:
+requires: DPMI 0.9
+
+replaces: sed < 4.2.2 release 2
+
+# For reading the docs.
+depends-on: info-reader
+depends-on: man
+depends-on: less
+
+# For NLS support.
+# If gettext and/or libiconv has been compiled
+# as DXE3 module then it is mandatory to install
+# the .dxe libraries.
+# For generating the .gmo files:
+requires: gettext >= 0.19.2 release 1
+# For recoding the .gmo files from unix to dos charset:
+requires: libiconv >= 1.14 release 2
+
+# This updates the info/DIR main menu
+builtin-post-install-script: command:\
+ install-info --info-dir=/dev/env/DJDIR/info /dev/env/DJDIR/share/info/sed.info

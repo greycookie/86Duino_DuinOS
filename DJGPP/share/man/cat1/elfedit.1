@@ -1,7 +1,5 @@
+ELFEDIT(1)                   GNU Development Tools                  ELFEDIT(1)
 
-
-
-ELFEDIT(1)            GNU Development Tools            ELFEDIT(1)
 
 
 NNAAMMEE
@@ -19,70 +17,49 @@ SSYYNNOOPPSSIISS
                _e_l_f_f_i_l_e...
 
 DDEESSCCRRIIPPTTIIOONN
-       eellffeeddiitt updates the ELF header of ELF files which have the
-       matching ELF machine and file types.  The options control
-       how and which fields in the ELF header should be updated.
+       eellffeeddiitt updates the ELF header of ELF files which have the matching ELF
+       machine and file types.  The options control how and which fields in
+       the ELF header should be updated.
 
-       _e_l_f_f_i_l_e... are the ELF files to be updated.  32-bit and
-       64-bit ELF files are supported, as are archives containing
-       ELF files.
+       _e_l_f_f_i_l_e... are the ELF files to be updated.  32-bit and 64-bit ELF
+       files are supported, as are archives containing ELF files.
 
 OOPPTTIIOONNSS
-       The long and short forms of options, shown here as
-       alternatives, are equivalent. At least one of the
-       ----oouuttppuutt--mmaacchh, ----oouuttppuutt--ttyyppee and ----oouuttppuutt--oossaabbii options
-       must be given.
+       The long and short forms of options, shown here as alternatives, are
+       equivalent. At least one of the ----oouuttppuutt--mmaacchh, ----oouuttppuutt--ttyyppee and
+       ----oouuttppuutt--oossaabbii options must be given.
 
        ----iinnppuutt--mmaacchh==_m_a_c_h_i_n_e
-           Set the matching input ELF machine type to _m_a_c_h_i_n_e.
-           If ----iinnppuutt--mmaacchh isn't specified, it will match any ELF
-           machine types.
+           Set the matching input ELF machine type to _m_a_c_h_i_n_e.  If
+           ----iinnppuutt--mmaacchh isn't specified, it will match any ELF machine types.
 
-           The supported ELF machine types are, _L_1_O_M, _K_1_O_M and
-           _x_8_6_-_6_4.
+           The supported ELF machine types are, _L_1_O_M, _K_1_O_M and _x_8_6_-_6_4.
 
        ----oouuttppuutt--mmaacchh==_m_a_c_h_i_n_e
-           Change the ELF machine type in the ELF header to
-           _m_a_c_h_i_n_e.  The supported ELF machine types are the same
-           as ----iinnppuutt--mmaacchh.
+           Change the ELF machine type in the ELF header to _m_a_c_h_i_n_e.  The
+           supported ELF machine types are the same as ----iinnppuutt--mmaacchh.
 
        ----iinnppuutt--ttyyppee==_t_y_p_e
-           Set the matching input ELF file type to _t_y_p_e.  If
-           ----iinnppuutt--ttyyppee isn't specified, it will match any ELF
-           file types.
+           Set the matching input ELF file type to _t_y_p_e.  If ----iinnppuutt--ttyyppee
+           isn't specified, it will match any ELF file types.
 
            The supported ELF file types are, _r_e_l, _e_x_e_c and _d_y_n.
 
        ----oouuttppuutt--ttyyppee==_t_y_p_e
-           Change the ELF file type in the ELF header to _t_y_p_e.
-           The supported ELF types are the same as ----iinnppuutt--ttyyppee.
-
-
-
-
-
-binutils-2.25               2014-12-23                          1
-
-
-
-
-
-ELFEDIT(1)            GNU Development Tools            ELFEDIT(1)
-
+           Change the ELF file type in the ELF header to _t_y_p_e.  The supported
+           ELF types are the same as ----iinnppuutt--ttyyppee.
 
        ----iinnppuutt--oossaabbii==_o_s_a_b_i
-           Set the matching input ELF file OSABI to _o_s_a_b_i.  If
-           ----iinnppuutt--oossaabbii isn't specified, it will match any ELF
-           OSABIs.
+           Set the matching input ELF file OSABI to _o_s_a_b_i.  If ----iinnppuutt--oossaabbii
+           isn't specified, it will match any ELF OSABIs.
 
-           The supported ELF OSABIs are, _n_o_n_e, _H_P_U_X, _N_e_t_B_S_D, _G_N_U,
-           _L_i_n_u_x (alias for _G_N_U), _S_o_l_a_r_i_s, _A_I_X, _I_r_i_x, _F_r_e_e_B_S_D,
-           _T_R_U_6_4, _M_o_d_e_s_t_o, _O_p_e_n_B_S_D, _O_p_e_n_V_M_S, _N_S_K, _A_R_O_S and
-           _F_e_n_i_x_O_S.
+           The supported ELF OSABIs are, _n_o_n_e, _H_P_U_X, _N_e_t_B_S_D, _G_N_U, _L_i_n_u_x (alias
+           for _G_N_U), _S_o_l_a_r_i_s, _A_I_X, _I_r_i_x, _F_r_e_e_B_S_D, _T_R_U_6_4, _M_o_d_e_s_t_o, _O_p_e_n_B_S_D,
+           _O_p_e_n_V_M_S, _N_S_K, _A_R_O_S and _F_e_n_i_x_O_S.
 
        ----oouuttppuutt--oossaabbii==_o_s_a_b_i
-           Change the ELF OSABI in the ELF header to _o_s_a_b_i.  The
-           supported ELF OSABI are the same as ----iinnppuutt--oossaabbii.
+           Change the ELF OSABI in the ELF header to _o_s_a_b_i.  The supported ELF
+           OSABI are the same as ----iinnppuutt--oossaabbii.
 
        --vv
        ----vveerrssiioonn
@@ -90,23 +67,20 @@ ELFEDIT(1)            GNU Development Tools            ELFEDIT(1)
 
        --hh
        ----hheellpp
-           Display the command line options understood by
-           eellffeeddiitt.
+           Display the command line options understood by eellffeeddiitt.
 
        @@_f_i_l_e
-           Read command-line options from _f_i_l_e.  The options read
-           are inserted in place of the original @_f_i_l_e option.
-           If _f_i_l_e does not exist, or cannot be read, then the
-           option will be treated literally, and not removed.
+           Read command-line options from _f_i_l_e.  The options read are inserted
+           in place of the original @_f_i_l_e option.  If _f_i_l_e does not exist, or
+           cannot be read, then the option will be treated literally, and not
+           removed.
 
-           Options in _f_i_l_e are separated by whitespace.  A
-           whitespace character may be included in an option by
-           surrounding the entire option in either single or
-           double quotes.  Any character (including a backslash)
-           may be included by prefixing the character to be
-           included with a backslash.  The _f_i_l_e may itself
-           contain additional @_f_i_l_e options; any such options
-           will be processed recursively.
+           Options in _f_i_l_e are separated by whitespace.  A whitespace
+           character may be included in an option by surrounding the entire
+           option in either single or double quotes.  Any character (including
+           a backslash) may be included by prefixing the character to be
+           included with a backslash.  The _f_i_l_e may itself contain additional
+           @_f_i_l_e options; any such options will be processed recursively.
 
 SSEEEE AALLSSOO
        _r_e_a_d_e_l_f(1), and the Info entries for _b_i_n_u_t_i_l_s.
@@ -114,19 +88,13 @@ SSEEEE AALLSSOO
 CCOOPPYYRRIIGGHHTT
        Copyright (c) 1991-2014 Free Software Foundation, Inc.
 
-       Permission is granted to copy, distribute and/or modify
-       this document under the terms of the GNU Free
-       Documentation License, Version 1.3 or any later version
-       published by the Free Software Foundation; with no
-       Invariant Sections, with no Front-Cover Texts, and with no
-       Back-Cover Texts.  A copy of the license is included in
-       the section entitled "GNU Free Documentation License".
+       Permission is granted to copy, distribute and/or modify this document
+       under the terms of the GNU Free Documentation License, Version 1.3 or
+       any later version published by the Free Software Foundation; with no
+       Invariant Sections, with no Front-Cover Texts, and with no Back-Cover
+       Texts.  A copy of the license is included in the section entitled "GNU
+       Free Documentation License".
 
 
 
-
-
-
-binutils-2.25               2014-12-23                          2
-
-
+binutils-2.25                     2014-12-23                        ELFEDIT(1)

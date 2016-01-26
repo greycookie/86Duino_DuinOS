@@ -1,7 +1,5 @@
+READELF(1)                   GNU Development Tools                  READELF(1)
 
-
-
-READELF(1)            GNU Development Tools            READELF(1)
 
 
 NNAAMMEE
@@ -25,10 +23,8 @@ SSYYNNOOPPSSIISS
                [--AA|----aarrcchh--ssppeecciiffiicc]
                [--DD|----uussee--ddyynnaammiicc]
                [--xx <number or name>|----hheexx--dduummpp==<number or name>]
-               [--pp <number or name>|----ssttrriinngg--dduummpp==<number or
-       name>]
-               [--RR <number or name>|----rreellooccaatteedd--dduummpp==<number or
-       name>]
+               [--pp <number or name>|----ssttrriinngg--dduummpp==<number or name>]
+               [--RR <number or name>|----rreellooccaatteedd--dduummpp==<number or name>]
                [--cc|----aarrcchhiivvee--iinnddeexx]
                [--ww[[llLLiiaapprrmmffFFssooRRtt]]|
                 ----ddeebbuugg--dduummpp[=rawline,=decodedline,=info,=abbrev,=pubnames,=aranges,=macro,=frames,=frames-interp,=str,=loc,=Ranges,=pubtypes,=trace_info,=trace_abbrev,=trace_aranges,=gdb_index]]
@@ -41,62 +37,47 @@ SSYYNNOOPPSSIISS
                _e_l_f_f_i_l_e...
 
 DDEESSCCRRIIPPTTIIOONN
-       rreeaaddeellff displays information about one or more ELF format
-       object files.  The options control what particular
-       information to display.
+       rreeaaddeellff displays information about one or more ELF format object files.
+       The options control what particular information to display.
 
-       _e_l_f_f_i_l_e... are the object files to be examined.  32-bit
-       and 64-bit ELF files are supported, as are archives
-       containing ELF files.
+       _e_l_f_f_i_l_e... are the object files to be examined.  32-bit and 64-bit ELF
+       files are supported, as are archives containing ELF files.
 
-       This program performs a similar function to oobbjjdduummpp but it
-       goes into more detail and it exists independently of the
-       BFD library, so if there is a bug in BFD then readelf will
-       not be affected.
+       This program performs a similar function to oobbjjdduummpp but it goes into
+       more detail and it exists independently of the BFD library, so if there
+       is a bug in BFD then readelf will not be affected.
 
 OOPPTTIIOONNSS
-       The long and short forms of options, shown here as
-       alternatives, are equivalent.  At least one option besides
-       --vv or --HH must be given.
-
-
-
-binutils-2.25               2014-12-23                          1
-
-
-
-
-
-READELF(1)            GNU Development Tools            READELF(1)
-
+       The long and short forms of options, shown here as alternatives, are
+       equivalent.  At least one option besides --vv or --HH must be given.
 
        --aa
        ----aallll
-           Equivalent to specifying ----ffiillee--hheeaaddeerr,
-           ----pprrooggrraamm--hheeaaddeerrss, ----sseeccttiioonnss, ----ssyymmbboollss, ----rreellooccss,
-           ----ddyynnaammiicc, ----nnootteess and ----vveerrssiioonn--iinnffoo.
+           Equivalent to specifying ----ffiillee--hheeaaddeerr, ----pprrooggrraamm--hheeaaddeerrss,
+           ----sseeccttiioonnss, ----ssyymmbboollss, ----rreellooccss, ----ddyynnaammiicc, ----nnootteess and
+           ----vveerrssiioonn--iinnffoo.
 
        --hh
        ----ffiillee--hheeaaddeerr
-           Displays the information contained in the ELF header
-           at the start of the file.
+           Displays the information contained in the ELF header at the start
+           of the file.
 
        --ll
        ----pprrooggrraamm--hheeaaddeerrss
        ----sseeggmmeennttss
-           Displays the information contained in the file's
-           segment headers, if it has any.
+           Displays the information contained in the file's segment headers,
+           if it has any.
 
        --SS
        ----sseeccttiioonnss
        ----sseeccttiioonn--hheeaaddeerrss
-           Displays the information contained in the file's
-           section headers, if it has any.
+           Displays the information contained in the file's section headers,
+           if it has any.
 
        --gg
        ----sseeccttiioonn--ggrroouuppss
-           Displays the information contained in the file's
-           section groups, if it has any.
+           Displays the information contained in the file's section groups, if
+           it has any.
 
        --tt
        ----sseeccttiioonn--ddeettaaiillss
@@ -105,173 +86,123 @@ READELF(1)            GNU Development Tools            READELF(1)
        --ss
        ----ssyymmbboollss
        ----ssyymmss
-           Displays the entries in symbol table section of the
-           file, if it has one.
+           Displays the entries in symbol table section of the file, if it has
+           one.
 
        ----ddyynn--ssyymmss
-           Displays the entries in dynamic symbol table section
-           of the file, if it has one.
+           Displays the entries in dynamic symbol table section of the file,
+           if it has one.
 
        --ee
        ----hheeaaddeerrss
-           Display all the headers in the file.  Equivalent to --hh
-           --ll --SS.
+           Display all the headers in the file.  Equivalent to --hh --ll --SS.
 
        --nn
        ----nnootteess
-           Displays the contents of the NOTE segments and/or
-           sections, if any.
+           Displays the contents of the NOTE segments and/or sections, if any.
 
        --rr
-
-
-
-
-binutils-2.25               2014-12-23                          2
-
-
-
-
-
-READELF(1)            GNU Development Tools            READELF(1)
-
-
        ----rreellooccss
-           Displays the contents of the file's relocation
-           section, if it has one.
+           Displays the contents of the file's relocation section, if it has
+           one.
 
        --uu
        ----uunnwwiinndd
-           Displays the contents of the file's unwind section, if
-           it has one.  Only the unwind sections for IA64 ELF
-           files, as well as ARM unwind tables (".ARM.exidx" /
-           ".ARM.extab") are currently supported.
+           Displays the contents of the file's unwind section, if it has one.
+           Only the unwind sections for IA64 ELF files, as well as ARM unwind
+           tables (".ARM.exidx" / ".ARM.extab") are currently supported.
 
        --dd
        ----ddyynnaammiicc
-           Displays the contents of the file's dynamic section,
-           if it has one.
+           Displays the contents of the file's dynamic section, if it has one.
 
        --VV
        ----vveerrssiioonn--iinnffoo
-           Displays the contents of the version sections in the
-           file, it they exist.
+           Displays the contents of the version sections in the file, it they
+           exist.
 
        --AA
        ----aarrcchh--ssppeecciiffiicc
-           Displays architecture-specific information in the
-           file, if there is any.
+           Displays architecture-specific information in the file, if there is
+           any.
 
        --DD
        ----uussee--ddyynnaammiicc
-           When displaying symbols, this option makes rreeaaddeellff use
-           the symbol hash tables in the file's dynamic section,
-           rather than the symbol table sections.
+           When displaying symbols, this option makes rreeaaddeellff use the symbol
+           hash tables in the file's dynamic section, rather than the symbol
+           table sections.
 
        --xx <<nnuummbbeerr oorr nnaammee>>
        ----hheexx--dduummpp==<<nnuummbbeerr oorr nnaammee>>
-           Displays the contents of the indicated section as a
-           hexadecimal bytes.  A number identifies a particular
-           section by index in the section table; any other
-           string identifies all sections with that name in the
-           object file.
+           Displays the contents of the indicated section as a hexadecimal
+           bytes.  A number identifies a particular section by index in the
+           section table; any other string identifies all sections with that
+           name in the object file.
 
        --RR <<nnuummbbeerr oorr nnaammee>>
        ----rreellooccaatteedd--dduummpp==<<nnuummbbeerr oorr nnaammee>>
-           Displays the contents of the indicated section as a
-           hexadecimal bytes.  A number identifies a particular
-           section by index in the section table; any other
-           string identifies all sections with that name in the
-           object file.  The contents of the section will be
+           Displays the contents of the indicated section as a hexadecimal
+           bytes.  A number identifies a particular section by index in the
+           section table; any other string identifies all sections with that
+           name in the object file.  The contents of the section will be
            relocated before they are displayed.
 
        --pp <<nnuummbbeerr oorr nnaammee>>
        ----ssttrriinngg--dduummpp==<<nnuummbbeerr oorr nnaammee>>
-           Displays the contents of the indicated section as
-           printable strings.  A number identifies a particular
-           section by index in the section table; any other
-
-
-
-binutils-2.25               2014-12-23                          3
-
-
-
-
-
-READELF(1)            GNU Development Tools            READELF(1)
-
-
-           string identifies all sections with that name in the
-           object file.
+           Displays the contents of the indicated section as printable
+           strings.  A number identifies a particular section by index in the
+           section table; any other string identifies all sections with that
+           name in the object file.
 
        --cc
        ----aarrcchhiivvee--iinnddeexx
-           Displays the file symbol index information contained
-           in the header part of binary archives.  Performs the
-           same function as the tt command to aarr, but without
-           using the BFD library.
+           Displays the file symbol index information contained in the header
+           part of binary archives.  Performs the same function as the tt
+           command to aarr, but without using the BFD library.
 
        --ww[[llLLiiaapprrmmffFFssooRRtt]]
        ----ddeebbuugg--dduummpp[[==rraawwlliinnee,,==ddeeccooddeeddlliinnee,,==iinnffoo,,==aabbbbrreevv,,==ppuubbnnaammeess,,==aarraannggeess,,==mmaaccrroo,,==ffrraammeess,,==ffrraammeess--iinntteerrpp,,==ssttrr,,==lloocc,,==RRaannggeess,,==ppuubbttyyppeess,,==ttrraaccee__iinnffoo,,==ttrraaccee__aabbbbrreevv,,==ttrraaccee__aarraannggeess,,==ggddbb__iinnddeexx]]
-           Displays the contents of the debug sections in the
-           file, if any are present.  If one of the optional
-           letters or words follows the switch then only data
-           found in those specific sections will be dumped.
+           Displays the contents of the debug sections in the file, if any are
+           present.  If one of the optional letters or words follows the
+           switch then only data found in those specific sections will be
+           dumped.
 
-           Note that there is no single letter option to display
-           the content of trace sections or .gdb_index.
+           Note that there is no single letter option to display the content
+           of trace sections or .gdb_index.
 
-           Note: the ==ddeeccooddeeddlliinnee option will display the
-           interpreted contents of a .debug_line section whereas
-           the ==rraawwlliinnee option dumps the contents in a raw
-           format.
+           Note: the ==ddeeccooddeeddlliinnee option will display the interpreted contents
+           of a .debug_line section whereas the ==rraawwlliinnee option dumps the
+           contents in a raw format.
 
-           Note: the ==ffrraammeess--iinntteerrpp option will display the
-           interpreted contents of a .debug_frame section whereas
-           the ==ffrraammeess option dumps the contents in a raw format.
+           Note: the ==ffrraammeess--iinntteerrpp option will display the interpreted
+           contents of a .debug_frame section whereas the ==ffrraammeess option dumps
+           the contents in a raw format.
 
-           Note: the output from the ==iinnffoo option can also be
-           affected by the options ----ddwwaarrff--ddeepptthh and
-           ----ddwwaarrff--ssttaarrtt.
+           Note: the output from the ==iinnffoo option can also be affected by the
+           options ----ddwwaarrff--ddeepptthh and ----ddwwaarrff--ssttaarrtt.
 
        ----ddwwaarrff--ddeepptthh==_n
-           Limit the dump of the ".debug_info" section to _n
-           children.  This is only useful with ----ddeebbuugg--dduummpp==iinnffoo.
-           The default is to print all DIEs; the special value 0
-           for _n will also have this effect.
+           Limit the dump of the ".debug_info" section to _n children.  This is
+           only useful with ----ddeebbuugg--dduummpp==iinnffoo.  The default is to print all
+           DIEs; the special value 0 for _n will also have this effect.
 
-           With a non-zero value for _n, DIEs at or deeper than _n
-           levels will not be printed.  The range for _n is zero-
-           based.
+           With a non-zero value for _n, DIEs at or deeper than _n levels will
+           not be printed.  The range for _n is zero-based.
 
        ----ddwwaarrff--ssttaarrtt==_n
-           Print only DIEs beginning with the DIE numbered _n.
-           This is only useful with ----ddeebbuugg--dduummpp==iinnffoo.
+           Print only DIEs beginning with the DIE numbered _n.  This is only
+           useful with ----ddeebbuugg--dduummpp==iinnffoo.
 
-           If specified, this option will suppress printing of
-           any header information and all DIEs before the DIE
-           numbered _n.  Only siblings and children of the
-           specified DIE will be printed.
+           If specified, this option will suppress printing of any header
+           information and all DIEs before the DIE numbered _n.  Only siblings
+           and children of the specified DIE will be printed.
 
            This can be used in conjunction with ----ddwwaarrff--ddeepptthh.
 
-
-
-
-binutils-2.25               2014-12-23                          4
-
-
-
-
-
-READELF(1)            GNU Development Tools            READELF(1)
-
-
        --II
        ----hhiissttooggrraamm
-           Display a histogram of bucket list lengths when
-           displaying the contents of the symbol tables.
+           Display a histogram of bucket list lengths when displaying the
+           contents of the symbol tables.
 
        --vv
        ----vveerrssiioonn
@@ -279,33 +210,28 @@ READELF(1)            GNU Development Tools            READELF(1)
 
        --WW
        ----wwiiddee
-           Don't break output lines to fit into 80 columns. By
-           default rreeaaddeellff breaks section header and segment
-           listing lines for 64-bit ELF files, so that they fit
-           into 80 columns. This option causes rreeaaddeellff to print
-           each section header resp. each segment one a single
-           line, which is far more readable on terminals wider
-           than 80 columns.
+           Don't break output lines to fit into 80 columns. By default rreeaaddeellff
+           breaks section header and segment listing lines for 64-bit ELF
+           files, so that they fit into 80 columns. This option causes rreeaaddeellff
+           to print each section header resp. each segment one a single line,
+           which is far more readable on terminals wider than 80 columns.
 
        --HH
        ----hheellpp
-           Display the command line options understood by
-           rreeaaddeellff.
+           Display the command line options understood by rreeaaddeellff.
 
        @@_f_i_l_e
-           Read command-line options from _f_i_l_e.  The options read
-           are inserted in place of the original @_f_i_l_e option.
-           If _f_i_l_e does not exist, or cannot be read, then the
-           option will be treated literally, and not removed.
+           Read command-line options from _f_i_l_e.  The options read are inserted
+           in place of the original @_f_i_l_e option.  If _f_i_l_e does not exist, or
+           cannot be read, then the option will be treated literally, and not
+           removed.
 
-           Options in _f_i_l_e are separated by whitespace.  A
-           whitespace character may be included in an option by
-           surrounding the entire option in either single or
-           double quotes.  Any character (including a backslash)
-           may be included by prefixing the character to be
-           included with a backslash.  The _f_i_l_e may itself
-           contain additional @_f_i_l_e options; any such options
-           will be processed recursively.
+           Options in _f_i_l_e are separated by whitespace.  A whitespace
+           character may be included in an option by surrounding the entire
+           option in either single or double quotes.  Any character (including
+           a backslash) may be included by prefixing the character to be
+           included with a backslash.  The _f_i_l_e may itself contain additional
+           @_f_i_l_e options; any such options will be processed recursively.
 
 SSEEEE AALLSSOO
        _o_b_j_d_u_m_p(1), and the Info entries for _b_i_n_u_t_i_l_s.
@@ -313,18 +239,13 @@ SSEEEE AALLSSOO
 CCOOPPYYRRIIGGHHTT
        Copyright (c) 1991-2014 Free Software Foundation, Inc.
 
-       Permission is granted to copy, distribute and/or modify
-       this document under the terms of the GNU Free
-       Documentation License, Version 1.3 or any later version
-       published by the Free Software Foundation; with no
-       Invariant Sections, with no Front-Cover Texts, and with no
-       Back-Cover Texts.  A copy of the license is included in
-       the section entitled "GNU Free Documentation License".
+       Permission is granted to copy, distribute and/or modify this document
+       under the terms of the GNU Free Documentation License, Version 1.3 or
+       any later version published by the Free Software Foundation; with no
+       Invariant Sections, with no Front-Cover Texts, and with no Back-Cover
+       Texts.  A copy of the license is included in the section entitled "GNU
+       Free Documentation License".
 
 
 
-
-
-binutils-2.25               2014-12-23                          5
-
-
+binutils-2.25                     2014-12-23                        READELF(1)

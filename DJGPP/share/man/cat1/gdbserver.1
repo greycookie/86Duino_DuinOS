@@ -1,7 +1,5 @@
+GDBSERVER(1)                 GNU Development Tools                GDBSERVER(1)
 
-
-
-GDBSERVER(1)          GNU Development Tools          GDBSERVER(1)
 
 
 NNAAMMEE
@@ -15,22 +13,20 @@ SSYYNNOOPPSSIISS
        gdbserver --multi _c_o_m_m
 
 DDEESSCCRRIIPPTTIIOONN
-       ggddbbsseerrvveerr  is  a  program  that allows you to run GDB on a
-       different machine  than  the  one  which  is  running  the
-       program being debugged.
+       ggddbbsseerrvveerr  is  a  program  that  allows  you  to run GDB on a different
+       machine than the one which is running the program being debugged.
 
        Usage (server (target) side):
 
-       First,  you need to have a copy of the program you want to
-       debug put onto the target  system.   The  program  can  be
-       stripped  to  save  space  if needed, as ggddbbsseerrvveerr doesn't
-       care about symbols.  All symbol handling is taken care  of
-       by the GDB running on the host system.
+       First, you need to have a copy of the program you  want  to  debug  put
+       onto  the  target system.  The program can be stripped to save space if
+       needed, as ggddbbsseerrvveerr doesn't care about symbols.  All  symbol  handling
+       is taken care of by the GDB running on the host system.
 
-       To  use  the  server, you log on to the target system, and
-       run the ggddbbsseerrvveerr program.  You must tell it  (a)  how  to
-       communicate  with  GDB,  (b) the name of your program, and
-       (c) its arguments.  The general syntax is:
+       To  use  the  server, you log on to the target system, and run the ggddbb--
+       sseerrvveerr program.  You must tell it (a) how to communicate with GDB,  (b)
+       the  name  of  your program, and (c) its arguments.  The general syntax
+       is:
 
                target> gdbserver <comm> <program> [<args> ...]
 
@@ -38,145 +34,106 @@ DDEESSCCRRIIPPTTIIOONN
 
                target> gdbserver /dev/com1 emacs foo.txt
 
-       This tells ggddbbsseerrvveerr to debug emacs with  an  argument  of
-       foo.txt,  and  to  communicate  with  GDB  via  _/_d_e_v_/_c_o_m_1.
-       ggddbbsseerrvveerr  now  waits  patiently  for  the  host  GDB   to
-       communicate with it.
+       This tells ggddbbsseerrvveerr to debug emacs with an argument of foo.txt, and to
+       communicate  with GDB via _/_d_e_v_/_c_o_m_1.  ggddbbsseerrvveerr now waits patiently for
+       the host GDB to communicate with it.
 
        To use a TCP connection, you could say:
 
                target> gdbserver host:2345 emacs foo.txt
 
-       This  says pretty much the same thing as the last example,
-       except that we are going to communicate  with  the  "host"
-       GDB  via  TCP.  The "host:2345" argument means that we are
-       expecting to see a TCP connection from "host" to local TCP
-       port  2345.  (Currently, the "host" part is ignored.)  You
-       can choose any number you want for the port number as long
-       as it does not conflict with any existing TCP ports on the
-       target system.  This same port number must be used in  the
-       host GDBs "target remote" command, which will be described
-       shortly.  Note that  if  you  chose  a  port  number  that
-       conflicts  with  another  service, ggddbbsseerrvveerr will print an
+       This says pretty much the same thing as the last example,  except  that
+       we  are  going  to  communicate  with  the  "host"  GDB  via  TCP.  The
+       "host:2345" argument means that we are expecting to see a  TCP  connec-
+       tion  from  "host" to local TCP port 2345.  (Currently, the "host" part
+       is ignored.)  You can choose any number you want for the port number as
+       long  as it does not conflict with any existing TCP ports on the target
+       system.  This same port number must be used in the  host  GDBs  "target
+       remote"  command,  which  will  be described shortly.  Note that if you
+       chose a port number that conflicts with another service, ggddbbsseerrvveerr will
+       print an error message and exit.
 
-
-
-gdb-7.9.1                   2015-07-02                          1
-
-
-
-
-
-GDBSERVER(1)          GNU Development Tools          GDBSERVER(1)
-
-
-       error message and exit.
-
-       ggddbbsseerrvveerr can also attach to running  programs.   This  is
-       accomplished via the ----aattttaacchh argument.  The syntax is:
+       ggddbbsseerrvveerr  can  also  attach to running programs.  This is accomplished
+       via the ----aattttaacchh argument.  The syntax is:
 
                target> gdbserver --attach <comm> <pid>
 
-       _p_i_d  is the process ID of a currently running process.  It
-       isn't necessary to point ggddbbsseerrvveerr at  a  binary  for  the
-       running process.
+       _p_i_d is the process ID of a currently running process.  It isn't  neces-
+       sary to point ggddbbsseerrvveerr at a binary for the running process.
 
-       To  start "gdbserver" without supplying an initial command
-       to run or process ID to attach, use  the  ----mmuullttii  command
-       line  option.   In  such  case  you  should  connect using
-       "target extended-remote" to start the program you want  to
-       debug.
+       To  start  "gdbserver"  without  supplying an initial command to run or
+       process ID to attach, use the ----mmuullttii command  line  option.   In  such
+       case  you  should  connect  using "target extended-remote" to start the
+       program you want to debug.
 
                target> gdbserver --multi <comm>
 
        Usage (host side):
 
-       You  need an unstripped copy of the target program on your
-       host system, since GDB needs to examine it's symbol tables
-       and  such.   Start  up GDB as you normally would, with the
-       target program as the first argument.  (You  may  need  to
-       use  the  ----bbaauudd  option  if the serial line is running at
-       anything except 9600 baud.)  That is "gdb TARGET-PROG", or
-       "gdb  --baud  BAUD TARGET-PROG".  After that, the only new
-       command you need to know  about  is  "target  remote"  (or
-       "target  extended-remote").   Its  argument  is  either  a
-       device name (usually a serial device, like _/_d_e_v_/_t_t_y_b),  or
-       a "HOST:PORT" descriptor.  For example:
+       You need an unstripped copy of the target program on your host  system,
+       since  GDB  needs to examine it's symbol tables and such.  Start up GDB
+       as you normally would, with the target program as the  first  argument.
+       (You may need to use the ----bbaauudd option if the serial line is running at
+       anything except 9600 baud.)  That is "gdb TARGET-PROG", or "gdb  --baud
+       BAUD  TARGET-PROG".   After that, the only new command you need to know
+       about is "target remote" (or "target extended-remote").   Its  argument
+       is either a device name (usually a serial device, like _/_d_e_v_/_t_t_y_b), or a
+       "HOST:PORT" descriptor.  For example:
 
                (gdb) target remote /dev/ttyb
 
-       communicates  with  the  server via serial line _/_d_e_v_/_t_t_y_b,
-       and:
+       communicates with the server via serial line _/_d_e_v_/_t_t_y_b, and:
 
                (gdb) target remote the-target:2345
 
-       communicates via a TCP connection to  port  2345  on  host
-       `the-target',  where  you  previously started up ggddbbsseerrvveerr
-       with the same port number.  Note that for TCP connections,
-       you  must  start  up  ggddbbsseerrvveerr prior to using the `target
-       remote' command, otherwise you may get an error that looks
-       something like `Connection refused'.
+       communicates via a TCP connection to port 2345  on  host  `the-target',
+       where  you  previously  started up ggddbbsseerrvveerr with the same port number.
+       Note that for TCP connections, you must start  up  ggddbbsseerrvveerr  prior  to
+       using  the `target remote' command, otherwise you may get an error that
+       looks something like `Connection refused'.
 
-       ggddbbsseerrvveerr  can  also  debug  multiple  inferiors  at once,
-       described  in  the  GDB  manual  in  node  "Inferiors  and
-       Programs"  -- shell command "info -f gdb -n 'Inferiors and
-       Programs'".  In such case use  the  "extended-remote"  GDB
-       command variant:
+       ggddbbsseerrvveerr can also debug multiple inferiors at once, described  in  the
+       GDB  manual  in node "Inferiors and Programs" -- shell command "info -f
+       gdb  -n  'Inferiors   and   Programs'".    In   such   case   use   the
+       "extended-remote" GDB command variant:
 
                (gdb) target extended-remote the-target:2345
 
-
-
-gdb-7.9.1                   2015-07-02                          2
-
-
-
-
-
-GDBSERVER(1)          GNU Development Tools          GDBSERVER(1)
-
-
-       The  ggddbbsseerrvveerr  option  ----mmuullttii  may or may not be used in
-       such case.
+       The ggddbbsseerrvveerr option ----mmuullttii may or may not be used in such case.
 
 OOPPTTIIOONNSS
        There are three different modes for invoking ggddbbsseerrvveerr:
 
-       +o   Debug a specific  program  specified  by  its  program
-           name:
+       +o   Debug a specific program specified by its program name:
 
                    gdbserver <comm> <prog> [<args>...]
 
-           The  _c_o_m_m  parameter  specifies  how should the server
-           communicate with GDB; it is either a device  name  (to
-           use  a  serial  line), a TCP port number (":1234"), or
-           "-" or "stdio" to  use  stdin/stdout  of  "gdbserver".
-           Specify the name of the program to debug in _p_r_o_g.  Any
-           remaining arguments will  be  passed  to  the  program
-           verbatim.   When the program exits, GDB will close the
-           connection, and "gdbserver" will exit.
+           The _c_o_m_m parameter specifies how should the server communicate with
+           GDB; it is either a device name (to use a serial line), a TCP  port
+           number  (":1234"),  or  "-" or "stdio" to use stdin/stdout of "gdb-
+           server".  Specify the name of the program to debug  in  _p_r_o_g.   Any
+           remaining  arguments  will be passed to the program verbatim.  When
+           the program exits, GDB will close the connection,  and  "gdbserver"
+           will exit.
 
-       +o   Debug a specific program by specifying the process  ID
-           of a running program:
+       +o   Debug  a specific program by specifying the process ID of a running
+           program:
 
                    gdbserver --attach <comm> <pid>
 
-           The  _c_o_m_m parameter is as described above.  Supply the
-           process ID of a running program in _p_i_d;  GDB  will  do
-           everything  else.   Like  with the previous mode, when
-           the process _p_i_d exits, GDB will close the  connection,
-           and "gdbserver" will exit.
+           The _c_o_m_m parameter is as described above.  Supply the process ID of
+           a  running  program in _p_i_d; GDB will do everything else.  Like with
+           the previous mode, when the process _p_i_d exits, GDB will  close  the
+           connection, and "gdbserver" will exit.
 
-       +o   Multi-process    mode   --   debug   more   than   one
-           program/process:
+       +o   Multi-process mode -- debug more than one program/process:
 
                    gdbserver --multi <comm>
 
-           In  this  mode,  GDB  can  instruct  ggddbbsseerrvveerr   which
-           command(s) to run.  Unlike the other 2 modes, GDB will
-           not close the connection when a process being debugged
-           exits,  so you can debug several processes in the same
-           session.
+           In  this  mode, GDB can instruct ggddbbsseerrvveerr which command(s) to run.
+           Unlike the other 2 modes, GDB will not close the connection when  a
+           process being debugged exits, so you can debug several processes in
+           the same session.
 
        In each of the modes you may specify these options:
 
@@ -184,147 +141,76 @@ OOPPTTIIOONNSS
            List all options, with brief explanations.
 
        ----vveerrssiioonn
-           This option causes  ggddbbsseerrvveerr  to  print  its  version
-           number and exit.
+           This option causes ggddbbsseerrvveerr to print its version number and exit.
 
        ----aattttaacchh
-           ggddbbsseerrvveerr  will  attach  to  a  running  program.  The
-           syntax is:
-
-
-
-gdb-7.9.1                   2015-07-02                          3
-
-
-
-
-
-GDBSERVER(1)          GNU Development Tools          GDBSERVER(1)
-
+           ggddbbsseerrvveerr will attach to a running program.  The syntax is:
 
                    target> gdbserver --attach <comm> <pid>
 
-           _p_i_d is the process ID of a currently running  process.
-           It  isn't necessary to point ggddbbsseerrvveerr at a binary for
-           the running process.
+           _p_i_d is the process ID of a currently  running  process.   It  isn't
+           necessary to point ggddbbsseerrvveerr at a binary for the running process.
 
        ----mmuullttii
-           To start  "gdbserver"  without  supplying  an  initial
-           command  to  run  or  process  ID  to attach, use this
-           command line  option.   Then  you  can  connect  using
-           "target  extended-remote"  and  start  the program you
+           To start "gdbserver" without supplying an initial command to run or
+           process ID to attach, use this command line option.  Then  you  can
+           connect  using  "target  extended-remote" and start the program you
            want to debug.  The syntax is:
 
                    target> gdbserver --multi <comm>
 
        ----ddeebbuugg
-           Instruct   "gdbserver"   to   display   extra   status
-           information  about the debugging process.  This option
-           is intended for "gdbserver" development  and  for  bug
-           reports to the developers.
+           Instruct "gdbserver" to display extra status information about  the
+           debugging  process.  This option is intended for "gdbserver" devel-
+           opment and for bug reports to the developers.
 
        ----rreemmoottee--ddeebbuugg
-           Instruct  "gdbserver" to display remote protocol debug
-           output.   This  option  is  intended  for  "gdbserver"
-           development and for bug reports to the developers.
+           Instruct "gdbserver" to display remote protocol debug output.  This
+           option  is intended for "gdbserver" development and for bug reports
+           to the developers.
 
        ----ddeebbuugg--ffoorrmmaatt==ooppttiioonn11[,,ooppttiioonn22,,......]
-           Instruct  "gdbserver"  to include extra information in
-           each line of debugging output.
+           Instruct "gdbserver" to include extra information in each  line  of
+           debugging output.
 
        ----wwrraappppeerr
-           Specify a wrapper to launch  programs  for  debugging.
-           The  option  should  be  followed  by  the name of the
-           wrapper, then any command-line arguments  to  pass  to
-           the  wrapper,  then  "--"  indicating  the  end of the
-           wrapper arguments.
+           Specify  a  wrapper  to  launch programs for debugging.  The option
+           should be followed by the name of the wrapper,  then  any  command-
+           line arguments to pass to the wrapper, then "--" indicating the end
+           of the wrapper arguments.
 
        ----oonnccee
-           By default, ggddbbsseerrvveerr keeps  the  listening  TCP  port
-           open,  so  that  additional  connections are possible.
-           However, if you  start  "gdbserver"  with  the  ----oonnccee
-           option,   it  will  stop  listening  for  any  further
-           connection attempts after connecting to the first  GDB
-           session.
+           By default, ggddbbsseerrvveerr keeps the listening TCP port  open,  so  that
+           additional  connections  are possible.  However, if you start "gdb-
+           server" with the ----oonnccee option, it will stop listening for any fur-
+           ther connection attempts after connecting to the first GDB session.
 
 SSEEEE AALLSSOO
-       The  full documentation for GDB is maintained as a Texinfo
-       manual.  If  the  "info"  and  "gdb"  programs  and  GDB's
-       Texinfo documentation are properly installed at your site,
-       the command
+       The  full  documentation for GDB is maintained as a Texinfo manual.  If
+       the "info" and "gdb" programs and GDB's Texinfo documentation are prop-
+       erly installed at your site, the command
 
                info gdb
 
        should give you access to the complete manual.
 
-
-
-gdb-7.9.1                   2015-07-02                          4
-
-
-
-
-
-GDBSERVER(1)          GNU Development Tools          GDBSERVER(1)
-
-
-       _U_s_i_n_g _G_D_B_: _A  _G_u_i_d_e  _t_o  _t_h_e  _G_N_U  _S_o_u_r_c_e_-_L_e_v_e_l  _D_e_b_u_g_g_e_r,
-       Richard M. Stallman and Roland H. Pesch, July 1991.
+       _U_s_i_n_g  _G_D_B_: _A _G_u_i_d_e _t_o _t_h_e _G_N_U _S_o_u_r_c_e_-_L_e_v_e_l _D_e_b_u_g_g_e_r, Richard M. Stall-
+       man and Roland H. Pesch, July 1991.
 
 CCOOPPYYRRIIGGHHTT
        Copyright (c) 1988-2015 Free Software Foundation, Inc.
 
-       Permission  is  granted  to copy, distribute and/or modify
-       this  document  under  the   terms   of   the   GNU   Free
-       Documentation  License,  Version  1.3 or any later version
-       published  by  the  Free  Software  Foundation;  with  the
-       Invariant   Sections   being  "Free  Software"  and  "Free
-       Software Needs Free Documentation", with  the  Front-Cover
-       Texts  being "A GNU Manual," and with the Back-Cover Texts
-       as in (a) below.
+       Permission is granted to copy, distribute and/or modify  this  document
+       under  the  terms of the GNU Free Documentation License, Version 1.3 or
+       any later version published by the Free Software Foundation;  with  the
+       Invariant  Sections being "Free Software" and "Free Software Needs Free
+       Documentation", with the Front-Cover Texts being "A  GNU  Manual,"  and
+       with the Back-Cover Texts as in (a) below.
 
-       (a) The FSF's Back-Cover Text is: "You are  free  to  copy
-       and  modify this GNU Manual.  Buying copies from GNU Press
-       supports the FSF in developing GNU and promoting  software
-       freedom."
+       (a) The FSF's Back-Cover Text is: "You are free to copy and modify this
+       GNU Manual.  Buying copies from GNU Press supports the FSF in  develop-
+       ing GNU and promoting software freedom."
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-gdb-7.9.1                   2015-07-02                          5
-
-
+gdb-7.10.1                        2016-01-10                      GDBSERVER(1)

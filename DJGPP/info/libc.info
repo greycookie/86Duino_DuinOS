@@ -1015,10 +1015,12 @@ stdio functions
 * freopen::
 * fscanf::
 * fseek::
+* fseeko::
 * fsetpos::
 * fstat::
 * fsync::
 * ftell::
+* ftello::
 * ftruncate::
 * _fwalk::
 * fwrite::
@@ -1603,6 +1605,7 @@ Alphabetical List
 * frexp::
 * fscanf::
 * fseek::
+* fseeko::
 * fsetpos::
 * __FSEXT_add_open_handler::
 * __FSEXT_alloc_fd::
@@ -1615,6 +1618,7 @@ Alphabetical List
 * fstatvfs::
 * fsync::
 * ftell::
+* ftello::
 * ftime::
 * ftruncate::
 * ftw::
@@ -17868,7 +17872,7 @@ ANSI/ISO C   C89; C99
 POSIX        1003.2-1992; 1003.1-2001; 1003.1-2008
 
 
-File: libc.info,  Node: fseek,  Next: fsetpos,  Prev: fscanf,  Up: Alphabetical List
+File: libc.info,  Node: fseek,  Next: fseeko,  Prev: fscanf,  Up: Alphabetical List
 
 fseek
 =====
@@ -17930,7 +17934,73 @@ Example
      fseek(stdin, 12, SEEK_CUR); /* skip 12 bytes */
 
 
-File: libc.info,  Node: fsetpos,  Next: __FSEXT_add_open_handler,  Prev: fseek,  Up: Alphabetical List
+File: libc.info,  Node: fseeko,  Next: fsetpos,  Prev: fseek,  Up: Alphabetical List
+
+fseeko
+======
+
+Syntax
+------
+
+     #include <stdio.h>
+
+     int fseeko(FILE *file, off_t offset, int mode);
+
+Description
+-----------
+
+`fseeko' is a wrapper function of `fseek' (*note fseek::).  So it is
+identical to `fseek', except that the offset argument of `fseeko' is of
+type `off_t' instead of `long'.
+
+This function moves the file pointer for FILE according to MODE:
+
+`SEEK_SET'
+     The file pointer is moved to the offset specified.
+
+`SEEK_CUR'
+     The file pointer is moved relative to its current position.
+
+`SEEK_END'
+     The file pointer is moved to a position OFFSET bytes from the end
+     of the file.  The offset is usually nonpositive in this case.
+
+
+_Warning!_ The ANSI standard only allows values of zero for OFFSET when
+MODE is not `SEEK_SET' and the file has been opened as a text file.
+Although this restriction is not enforced, beware that there is not a
+one-to-one correspondence between file characters and text characters
+under MS-DOS, so some `fseeko' operations may not do exactly what you
+expect.
+
+Also, since `lseek' under DOS does not return an error indication when
+you try to move the file pointer before the beginning of the file,
+neither will `fseeko'.  Portable programs should call `ftello' after
+`fseeko' to get the actual position of the file pointer.
+
+Note that DOS does not mind if you seek before the beginning of the
+file, like seeking from the end of the file by more than the file's
+size.  Therefore, `lseek' will not return with an error in such cases
+either.
+
+Return Value
+------------
+
+Zero if successful, nonzero if not.
+
+Portability
+-----------
+
+ANSI/ISO C   C89; C99
+POSIX        1003.2-1992; 1003.1-2001; 1003.1-2008
+
+Example
+-------
+
+     fseeko(stdin, 12, SEEK_CUR); /* skip 12 bytes */
+
+
+File: libc.info,  Node: fsetpos,  Next: __FSEXT_add_open_handler,  Prev: fseeko,  Up: Alphabetical List
 
 fsetpos
 =======
@@ -18548,7 +18618,7 @@ Example
      fsync(fileno(stdout));
 
 
-File: libc.info,  Node: ftell,  Next: ftime,  Prev: fsync,  Up: Alphabetical List
+File: libc.info,  Node: ftell,  Next: ftello,  Prev: fsync,  Up: Alphabetical List
 
 ftell
 =====
@@ -18583,7 +18653,46 @@ Example
      long p = ftell(stdout);
 
 
-File: libc.info,  Node: ftime,  Next: ftruncate,  Prev: ftell,  Up: Alphabetical List
+File: libc.info,  Node: ftello,  Next: ftime,  Prev: ftell,  Up: Alphabetical List
+
+ftello
+======
+
+Syntax
+------
+
+     #include <stdio.h>
+
+     off_t ftello(FILE *file);
+
+Description
+-----------
+
+`ftello' is a wrapper function of `ftell' (*note ftell::).  So it is
+identical to `ftell', except that the return value of `ftello' is of
+type `off_t' instead of `long'.
+
+Returns the current file position for `file'.  This is suitable for a
+future call to `fseeko'.
+
+Return Value
+------------
+
+The file position, or -1 on error.
+
+Portability
+-----------
+
+ANSI/ISO C   C89; C99
+POSIX        1003.2-1992; 1003.1-2001; 1003.1-2008
+
+Example
+-------
+
+     off_t p = ftello(stdout);
+
+
+File: libc.info,  Node: ftime,  Next: ftruncate,  Prev: ftello,  Up: Alphabetical List
 
 ftime
 =====
@@ -46357,11 +46466,13 @@ Function Index
 * frexp:                                 frexp.                 (line 6)
 * fscanf:                                fscanf.                (line 6)
 * fseek:                                 fseek.                 (line 6)
+* fseeko:                                fseeko.                (line 6)
 * fsetpos:                               fsetpos.               (line 6)
 * fstat:                                 fstat.                 (line 6)
 * fstatvfs:                              fstatvfs.              (line 6)
 * fsync:                                 fsync.                 (line 6)
 * ftell:                                 ftell.                 (line 6)
+* ftello:                                ftello.                (line 6)
 * ftime:                                 ftime.                 (line 6)
 * ftruncate:                             ftruncate.             (line 6)
 * ftw:                                   ftw.                   (line 6)
@@ -47042,907 +47153,909 @@ Node: signal functions17668
 Node: sound functions18147
 Node: startup functions18334
 Node: stdio functions18623
-Node: string functions19701
-Node: sys functions20535
-Node: termios functions20704
-Node: time functions21146
-Node: unistd functions21638
-Node: unix functions21822
-Node: Alphabetical List22522
-Node: _808737163
-Node: a64l37741
-Node: abort39081
-Node: abs39892
-Node: access40285
-Node: acos41272
-Node: acosh41882
-Node: addmntent42349
-Node: alarm42828
-Node: alloca44040
-Node: asctime44609
-Node: asctime_r45633
-Node: asin46525
-Node: asinh47062
-Node: asnprintf47649
-Node: asprintf49932
-Node: assert51276
-Node: atan52575
-Node: atan253235
-Node: atanh54400
-Node: atexit55022
-Node: atof55839
-Node: atoi56502
-Node: atol57151
-Node: _atold57804
-Node: atoll58454
-Node: basename59156
-Node: bcmp60339
-Node: bcopy60998
-Node: bdos61527
-Node: bdosptr62356
-Node: _bios_disk63543
-Node: _bios_equiplist68403
-Node: _bios_keybrd69671
-Node: _bios_memsize73317
-Node: _bios_printer73836
-Node: _bios_serialcom75202
-Node: _bios_timeofday78165
-Node: bioscom79199
-Node: biosdisk81898
-Node: biosequip84016
-Node: bioskey85445
-Node: biosmemory88667
-Node: biosprint89296
-Node: biostime90124
-Node: blinkvideo90661
-Node: brk91665
-Node: bsearch92359
-Node: bzero93693
-Node: calloc94106
-Node: cbrt94925
-Node: ceil95497
-Node: cfgetispeed95945
-Node: cfgetospeed96673
-Node: cfmakeraw97405
-Node: cfree97924
-Node: cfsetispeed98387
-Node: cfsetospeed99109
-Node: cfsetspeed99837
-Node: cgets100399
-Node: chdir101648
-Node: _check_v2_prog102372
-Node: chmod106078
-Node: _chmod107407
-Node: chown108732
-Node: chsize109423
-Node: cleanup_client109797
-Node: _clear87110417
-Node: __clear_fd_flags110812
-Node: __clear_fd_properties111548
-Node: clearerr112346
-Node: clock112815
-Node: close113431
-Node: _close113933
-Node: closedir114466
-Node: clreol114907
-Node: clrscr115823
-Node: confstr116707
-Node: _conio_gettext118612
-Node: _conio_kbhit119044
-Node: _control87120252
-Node: cos124614
-Node: cosh125887
-Node: cprintf126602
-Node: cputs127751
-Node: creat128728
-Node: _creat129549
-Node: _creatnew130668
-Node: crlf2nl133606
-Node: __crt0_glob_function134047
-Node: __crt0_load_environment_file134881
-Node: __crt0_setup_arguments135662
-Node: _crt0_startup_flags136675
-Node: cscanf142749
-Node: ctermid143885
-Node: ctime144418
-Node: ctime_r145348
-Node: delay146184
-Node: delline147648
-Node: _detect_80387148583
-Node: difftime149173
-Node: dirname149768
-Node: disable150859
-Node: div151454
-Node: __djgpp_exception_toggle152263
-Node: __djgpp_map_physical_memory153226
-Node: __djgpp_memory_handle154918
-Node: __djgpp_memory_handle_list155612
-Node: __djgpp_memory_handle_size156604
-Node: __djgpp_nearptr_disable157553
-Node: __djgpp_nearptr_enable158013
-Node: __djgpp_set_ctrl_c159675
-Node: __djgpp_set_page_attributes161927
-Node: __djgpp_set_sigint_key163291
-Node: __djgpp_set_sigquit_key165548
-Node: __djgpp_share_flags167776
-Node: __djgpp_spawn169418
-Node: __djgpp_traceback_exit170607
-Node: _djstat_describe_lossage171446
-Node: _djstat_fail_bits173704
-Node: _djstat_flags177328
-Node: dlclose180529
-Node: dlerror181148
-Node: dlerrstatmod181677
-Node: dlerrstatsym182344
-Node: dlopen182862
-Node: dlregsym184276
-Node: dlsym185212
-Node: _dlsymresolver185976
-Node: dlunregsym187037
-Node: _doprnt187574
-Node: _dos_close188274
-Node: _dos_commit188996
-Node: _dos_creat189639
-Node: _dos_creatnew191156
-Node: _dos_findfirst192689
-Node: _dos_findnext194934
-Node: _dos_getdate195778
-Node: _dos_getdiskfree196590
-Node: _dos_getdrive197904
-Node: _dos_getfileattr198515
-Node: _dos_getftime200258
-Node: _dos_gettime202538
-Node: _dos_lk64203299
-Node: _dos_lock203948
-Node: _dos_open204376
-Node: _dos_read206307
-Node: _dos_setdate207783
-Node: _dos_setdrive208824
-Node: _dos_setfileattr209586
-Node: _dos_setftime210855
-Node: _dos_settime212657
-Node: _dos_unlk64213618
-Node: _dos_unlock214282
-Node: _dos_write214722
-Node: _doscan216241
-Node: _doserrno217090
-Node: __dosexec_find_on_path217767
-Node: dosexterr219779
-Node: dosmemget233948
-Node: dosmemgetb234877
-Node: dosmemgetl235851
-Node: dosmemgetw236844
-Node: dosmemput237833
-Node: dosmemputb238729
-Node: dosmemputl239699
-Node: dosmemputw240679
-Node: dostrerr241659
-Node: DPMI Overview244139
-Node: DPMI Specification249190
-Node: __dpmi_allocate_dos_memory249530
-Node: __dpmi_allocate_ldt_descriptors250601
-Node: __dpmi_allocate_linear_memory251513
-Node: __dpmi_allocate_memory252471
-Node: __dpmi_allocate_real_mode_callback253197
-Node: __dpmi_allocate_shared_memory254300
-Node: __dpmi_allocate_specific_ldt_descriptor255643
-Node: __dpmi_clear_debug_watchpoint256394
-Node: __dpmi_create_alias_descriptor257106
-Node: __dpmi_discard_page_contents257853
-Node: __dpmi_free_dos_memory258639
-Node: __dpmi_free_ldt_descriptor259410
-Node: __dpmi_free_memory260186
-Node: __dpmi_free_physical_address_mapping260859
-Node: __dpmi_free_real_mode_callback261728
-Node: __dpmi_free_serialization_on_shared_memory262477
-Node: __dpmi_free_shared_memory263657
-Node: __dpmi_get_and_disable_virtual_interrupt_state264521
-Node: __dpmi_get_and_enable_virtual_interrupt_state265326
-Node: __dpmi_get_and_set_virtual_interrupt_state266144
-Node: __dpmi_get_capabilities267151
-Node: __dpmi_get_coprocessor_status268416
-Node: __dpmi_get_descriptor269590
-Node: __dpmi_get_descriptor_access_rights275280
-Node: __dpmi_get_extended_exception_handler_vector_pm276157
-Node: __dpmi_get_extended_exception_handler_vector_rm277079
-Node: __dpmi_get_free_memory_information277994
-Node: __dpmi_get_memory_block_size_and_base278835
-Node: __dpmi_get_memory_information279654
-Node: __dpmi_get_multiple_descriptors282012
-Node: __dpmi_get_page_attributes283138
-Node: __dpmi_get_page_size284645
-Node: __dpmi_get_processor_exception_handler_vector285334
-Node: __dpmi_get_protected_mode_interrupt_vector286316
-Node: __dpmi_get_raw_mode_switch_addr287261
-Node: __dpmi_get_real_mode_interrupt_vector288052
-Node: __dpmi_get_segment_base_address289054
-Node: __dpmi_get_segment_limit289970
-Node: __dpmi_get_selector_increment_value290637
-Node: __dpmi_get_state_of_debug_watchpoint291396
-Node: __dpmi_get_state_save_restore_addr292270
-Node: __dpmi_get_vendor_specific_api_entry_point293088
-Node: __dpmi_get_version293939
-Node: __dpmi_get_virtual_interrupt_state294908
-Node: __dpmi_install_resident_service_provider_callback295632
-Node: __dpmi_int297289
-Node: __dpmi_lock_linear_region298396
-Node: __dpmi_map_conventional_memory_in_memory_block299175
-Node: __dpmi_map_device_in_memory_block300150
-Node: __dpmi_mark_page_as_demand_paging_candidate301151
-Node: __dpmi_mark_real_mode_region_as_pageable301998
-Node: __dpmi_physical_address_mapping302847
-Node: __dpmi_relock_real_mode_region303713
-Node: __dpmi_reset_debug_watchpoint304525
-Node: __dpmi_resize_dos_memory305245
-Node: __dpmi_resize_linear_memory306131
-Node: __dpmi_resize_memory307053
-Node: __dpmi_segment_to_descriptor307909
-Node: __dpmi_serialize_on_shared_memory308843
-Node: __dpmi_set_coprocessor_emulation310281
-Node: __dpmi_set_debug_watchpoint311526
-Node: __dpmi_set_descriptor312344
-Node: __dpmi_set_descriptor_access_rights313264
-Node: __dpmi_set_extended_exception_handler_vector_pm314791
-Node: __dpmi_set_extended_exception_handler_vector_rm315714
-Node: __dpmi_set_multiple_descriptors316628
-Node: __dpmi_set_page_attributes317641
-Node: __dpmi_set_processor_exception_handler_vector318982
-Node: __dpmi_set_protected_mode_interrupt_vector319885
-Node: __dpmi_set_real_mode_interrupt_vector321019
-Node: __dpmi_set_segment_base_address321972
-Node: __dpmi_set_segment_limit322735
-Node: __dpmi_simulate_real_mode_interrupt323742
-Node: __dpmi_simulate_real_mode_procedure_iret324723
-Node: __dpmi_simulate_real_mode_procedure_retf325633
-Node: __dpmi_simulate_real_mode_procedure_retf_stack326583
-Node: __dpmi_terminate_and_stay_resident328048
-Node: __dpmi_unlock_linear_region329498
-Node: __dpmi_yield330226
-Node: dprintf331165
-Node: DTTOIF331793
-Node: dup332673
-Node: dup2333176
-Node: __dup_fd_properties333815
-Node: _dxe_load334494
-Node: DXE_macros335326
-Node: ecvt336505
-Node: ecvtbuf337122
-Node: edi_init338712
-Node: enable339609
-Node: endgrent340207
-Node: endmntent340627
-Node: endpwent341051
-Node: errno341428
-Node: exec*348817
-Node: __exit350017
-Node: _exit350725
-Node: _Exit351444
-Node: exit352333
-Node: exp352947
-Node: exp10353848
-Node: exp2354621
-Node: expm1355392
-Node: fabs356341
-Node: _far*356882
-Node: fchdir359631
-Node: fchmod360181
-Node: fchown361985
-Node: fclose362656
-Node: fcntl363144
-Node: fcvt371825
-Node: fcvtbuf372437
-Node: fdopen374426
-Node: feof375063
-Node: ferror375570
-Node: fflush376098
-Node: ffs377314
-Node: fgetc377837
-Node: fgetgrent378371
-Node: fgetpos378728
-Node: fgets379231
-Node: File System Extensions380100
-Node: __file_exists388517
-Node: __file_tree_walk389286
-Node: filelength392050
-Node: fileno392953
-Node: findfirst393385
-Node: findnext396604
-Node: _fixpath397033
-Node: flock398596
-Node: floor401413
-Node: _flush_disk_cache401906
-Node: fmod402791
-Node: _fmode403412
-Node: fnmatch403916
-Node: fnmerge406945
-Node: fnsplit407835
-Node: fopen409239
-Node: fork411694
-Node: fpathconf412136
-Node: fpclassify412791
-Node: __fpclassifyd413659
-Node: __fpclassifyf414329
-Node: __fpclassifyld415003
-Node: _fpreset415697
-Node: fprintf415993
-Node: fpurge416444
-Node: fputc417005
-Node: fputs417486
-Node: fread418022
-Node: free418597
-Node: freopen419084
-Node: frexp419750
-Node: fscanf420485
-Node: fseek420997
-Node: fsetpos422646
-Node: __FSEXT_add_open_handler423177
-Node: __FSEXT_alloc_fd423905
-Node: __FSEXT_call_open_handlers425316
-Node: __FSEXT_get_data425922
-Node: __FSEXT_get_function426670
-Node: __FSEXT_set_data427436
-Node: __FSEXT_set_function430547
-Node: fstat432415
-Node: fstatvfs436687
-Node: fsync438287
-Node: ftell438897
-Node: ftime439394
-Node: ftruncate440218
-Node: ftw441030
-Node: _fwalk445472
-Node: fwrite445994
-Node: gcvt446579
-Node: _get_dev_info447639
-Node: _get_dos_version450563
-Node: __get_extended_key_string452674
-Node: _get_fat_size456320
-Node: __get_fd_flags457753
-Node: __get_fd_name458640
-Node: _get_fs_type459231
-Node: _get_volume_info461038
-Node: getc463279
-Node: getcbrk463778
-Node: getch464163
-Node: getchar465579
-Node: getche465971
-Node: getcwd467382
-Node: getdate468418
-Node: getdfree468974
-Node: getdisk469765
-Node: getdtablesize470198
-Node: getegid470581
-Node: getenv470938
-Node: geteuid471473
-Node: getftime471821
-Node: getgid472602
-Node: getgrent472950
-Node: getgrgid474140
-Node: getgrnam474643
-Node: getgroups475151
-Node: gethostname475587
-Node: getitimer476521
-Node: getkey477683
-Node: getlogin478312
-Node: getlongpass479144
-Node: getmntent480058
-Node: getopt484276
-Node: getpagesize486670
-Node: getpass487068
-Node: getpgrp487942
-Node: getpid488345
-Node: getppid488760
-Node: getpwent489217
-Node: getpwnam490938
-Node: getpwuid491452
-Node: getrlimit491959
-Node: getrusage493489
-Node: gets495225
-Node: gettext495901
-Node: gettextinfo497613
-Node: gettime499103
-Node: gettimeofday499722
-Node: getuid500876
-Node: getw501219
-Node: getwd501922
-Node: getxkey502383
-Node: glob503003
-Node: globfree509537
-Node: gmtime509947
-Node: gmtime_r511575
-Node: _go32_conventional_mem_selector512476
-Node: _go32_dpmi_allocate_dos_memory513630
-Node: _go32_dpmi_allocate_iret_wrapper514915
-Node: _go32_dpmi_allocate_real_mode_callback_iret516440
-Node: _go32_dpmi_allocate_real_mode_callback_retf518278
-Node: _go32_dpmi_chain_protected_mode_interrupt_vector519571
-Node: _go32_dpmi_free_dos_memory520724
-Node: _go32_dpmi_free_iret_wrapper521545
-Node: _go32_dpmi_free_real_mode_callback522251
-Node: _go32_dpmi_get_free_memory_information523039
-Node: _go32_dpmi_get_protected_mode_interrupt_vector524401
-Node: _go32_dpmi_get_real_mode_interrupt_vector525369
-Node: _go32_dpmi_lock_code526179
-Node: _go32_dpmi_lock_data526997
-Node: _go32_dpmi_remaining_physical_memory527723
-Node: _go32_dpmi_remaining_virtual_memory528272
-Node: _go32_dpmi_resize_dos_memory528825
-Node: _go32_dpmi_set_protected_mode_interrupt_vector529835
-Node: _go32_dpmi_set_real_mode_interrupt_vector531771
-Node: _go32_dpmi_simulate_fcall532593
-Node: _go32_dpmi_simulate_fcall_iret533775
-Node: _go32_dpmi_simulate_int534968
-Node: _go32_info_block536162
-Node: _go32_interrupt_stack_size539684
-Node: _go32_my_cs540109
-Node: _go32_my_ds540522
-Node: _go32_my_ss540905
-Node: _go32_rmcb_stack_size541298
-Node: _go32_want_ctrl_break541717
-Node: _go32_was_ctrl_break_hit542690
-Node: gotoxy543527
-Node: gppconio_init544509
-Node: __has_fd_properties545053
-Node: _hash2v545556
-Node: hasmntopt546550
-Node: hcreate547115
-Node: hdestroy548045
-Node: highvideo548951
-Node: hsearch549882
-Node: htonl552005
-Node: htons552566
-Node: hypot553122
-Node: imaxabs554273
-Node: imaxdiv554767
-Node: inb555654
-Node: index555972
-Node: initstate556580
-Node: inp557070
-Node: inportb557393
-Node: inportl557899
-Node: inportsb558423
-Node: inportsl558798
-Node: inportsw559175
-Node: inportw559571
-Node: inpw560081
-Node: insline560407
-Node: insque561375
-Node: __install_dev_full562034
-Node: __install_dev_zero562776
-Node: int386563506
-Node: int386x563951
-Node: int86564417
-Node: int86x568554
-Node: intdos569550
-Node: intdosx569955
-Node: intensevideo570387
-Node: __internal_readlink571440
-Node: _invent_inode572803
-Node: ioctl (DOS)573995
-Node: ioctl (General description)581288
-Node: ioctl (UNIX)581884
-Node: _is_cdrom_drive583384
-Node: _is_DOS83584217
-Node: _is_executable585799
-Node: _is_fat32587901
-Node: _is_ram_drive588797
-Node: _is_remote_drive589679
-Node: _is_remote_handle590440
-Node: isalnum591240
-Node: isalpha591658
-Node: isascii592046
-Node: isatty592414
-Node: isblank592912
-Node: iscntrl593386
-Node: isdigit593796
-Node: isfinite594183
-Node: isgraph594931
-Node: isgreater595386
-Node: isgreaterequal596296
-Node: isinf597254
-Node: isless597952
-Node: islessequal598830
-Node: islessgreater599766
-Node: islower600741
-Node: isnan601144
-Node: isnormal601763
-Node: isprint602540
-Node: ispunct602989
-Node: isspace603440
-Node: isunordered603911
-Node: isupper604531
-Node: isxdigit604948
-Node: itoa605394
-Node: kbhit606330
-Node: kill607156
-Node: l64a607580
-Node: labs609034
-Node: lchown609411
-Node: ldexp609902
-Node: ldiv610704
-Node: lfilelength611516
-Node: lfind612496
-Node: _lfn_gen_short_fname613876
-Node: _lfn_get_ftime616379
-Node: __libc_termios_exist_queue618094
-Node: __libc_termios_init618822
-Node: libm619430
-Node: link625576
-Node: llabs626160
-Node: lldiv626562
-Node: llockf627427
-Node: llrint631583
-Node: llrintf632524
-Node: llrintl633470
-Node: llseek634422
-Node: load_npx635793
-Node: localeconv637175
-Node: localtime640110
-Node: localtime_r640945
-Node: lock641603
-Node: lock64642432
-Node: lockf643384
-Node: log647051
-Node: log10647617
-Node: log1p648189
-Node: log2648793
-Node: longjmp649322
-Node: lowvideo650192
-Node: lrint651116
-Node: lrintf652042
-Node: lrintl652970
-Node: lsearch653906
-Node: lseek655624
-Node: lstat656495
-Ref: lstat-Footnote-1662189
-Node: malldbgdmpfile662411
-Node: malldbgdumpfile663081
-Node: mallinfo663601
-Node: malloc666490
-Node: malloc_debug667470
-Node: malloc_verify670017
-Node: mallocmap671312
-Node: mallsethook672000
-Node: math_errhandling676268
-Node: matherr677220
-Node: mblen681359
-Node: mbstowcs682034
-Node: mbtowc682631
-Node: _media_type683318
-Node: memalign684265
-Node: memccpy684832
-Node: memchr685854
-Node: memcmp686443
-Node: memcpy686943
-Node: memicmp687566
-Node: memmove688167
-Node: memset688815
-Node: mkdir689492
-Node: mkdtemp690241
-Node: mkfifo691642
-Node: mknod692058
-Node: mkstemp692903
-Node: mktemp694399
-Node: mktime695830
-Node: modf697492
-Node: modfl698270
-Node: moncontrol698736
-Node: _mono_clear700179
-Node: _mono_printf700495
-Node: _mono_putc700858
-Node: monstartup701193
-Node: movedata703110
-Node: movedatab704801
-Node: movedatal705194
-Node: movedataw705639
-Node: movetext706083
-Node: mprotect707134
-Node: _my_cs708377
-Node: _my_ds708762
-Node: _my_ss709145
-Node: nan709525
-Node: nanf710000
-Node: nanl710476
-Node: nice710966
-Node: normvideo711345
-Node: nosound712283
-Node: ntohl712562
-Node: ntohs713120
-Node: open713672
-Node: _open717617
-Node: opendir719354
-Node: outb721541
-Node: outp721875
-Node: outportb722211
-Node: outportl722679
-Node: outportsb723152
-Node: outportsl723546
-Node: outportsw723942
-Node: outportw724339
-Node: outpw724811
-Node: pathconf725155
-Node: pause727375
-Node: pclose727790
-Node: perror728449
-Node: pipe729188
-Node: popen731205
-Node: pow732702
-Node: pow10733863
-Node: pow2734639
-Node: powi735406
-Node: _preserve_fncase736221
-Node: PRI737812
-Node: printf740009
-Node: psignal747518
-Node: _put_path748308
-Node: putc755047
-Node: putch755529
-Node: putchar756653
-Node: putenv757129
-Node: puts758232
-Node: puttext758726
-Node: putw759745
-Node: pwrite760444
-Node: qsort762094
-Node: raise763668
-Node: rand764116
-Node: rand48765462
-Node: random767697
-Node: rawclock768158
-Node: _rdtsc768640
-Node: read770088
-Node: _read770882
-Node: read_child771493
-Node: read_sel_addr772378
-Node: readdir773125
-Node: readlink775209
-Node: readv776280
-Node: realloc777403
-Node: realpath778955
-Node: redir_cmdline_delete780885
-Node: redir_cmdline_parse781909
-Node: redir_debug_init784176
-Node: redir_to_child789156
-Node: redir_to_debugger790694
-Node: regcomp792199
-Node: regerror806988
-Node: regexec809401
-Node: regfree815353
-Node: remove815915
-Node: remque816475
-Node: _rename817091
-Node: rename818413
-Node: rewind820073
-Node: rewinddir820551
-Node: rindex821083
-Node: rmdir821689
-Node: run_child822190
-Node: save_npx825064
-Node: sbrk826428
-Node: scanf827367
-Ref: scanf-Footnote-1840113
-Node: SCN840242
-Node: Screen Variables842307
-Node: ScreenClear843491
-Node: ScreenCols844013
-Node: ScreenGetChar844729
-Node: ScreenGetCursor845786
-Node: ScreenMode846374
-Node: ScreenPutChar846885
-Node: ScreenPutString847580
-Node: ScreenRetrieve848376
-Node: ScreenRows849133
-Node: ScreenSetCursor849755
-Node: ScreenUpdate850329
-Node: ScreenUpdateLine850899
-Node: ScreenVisualBell851440
-Node: searchpath851983
-Node: seekdir853745
-Node: select854422
-Node: __set_fd_flags860420
-Node: __set_fd_properties861140
-Node: _set_screen_lines863215
-Node: setbuf865009
-Node: setbuffer865907
-Node: setcbrk866777
-Node: _setcursortype867212
-Node: setdate868311
-Node: setdisk868800
-Node: setenv869299
-Node: setftime870416
-Node: setgid871241
-Node: setgrent871749
-Node: setitimer872208
-Node: setjmp876454
-Node: setlinebuf877329
-Node: setlocale878048
-Node: setmntent880129
-Node: setmode881391
-Node: setpgid882821
-Node: setpwent883192
-Node: setrlimit883602
-Node: setsid884108
-Node: setstate884537
-Node: settime884972
-Node: settimeofday885460
-Node: setuid885967
-Node: setvbuf886477
-Node: sigaction887627
-Node: sigaddset889254
-Node: sigdelset889794
-Node: sigemptyset890344
-Node: sigfillset890998
-Node: sigismember891957
-Node: siglongjmp892567
-Node: signal892971
-Node: signbit902533
-Node: __signbitd903329
-Node: __signbitf904016
-Node: __signbitld904706
-Node: sigpending905412
-Node: sigprocmask906771
-Node: sigsetjmp910585
-Node: sin910926
-Node: sincos912192
-Node: sinh913179
-Node: sleep913945
-Node: snprintf914430
-Node: __solve_dir_symlinks915469
-Node: __solve_symlinks916549
-Node: sound917673
-Node: spawn*918043
-Node: sprintf924005
-Node: sqrt924553
-Node: srand925024
-Node: srandom925622
-Node: sscanf926152
-Node: Stack overflow handler926697
-Node: stackavail927281
-Node: stat927721
-Ref: stat-Footnote-1933375
-Node: statfs933596
-Node: _status87935036
-Node: statvfs936250
-Node: _stklen938386
-Node: stpcpy938853
-Node: stpncpy939269
-Node: strcasecmp939841
-Node: strcat940375
-Node: strchr940849
-Node: strcmp941452
-Node: strcoll942033
-Node: strcpy942663
-Node: strcspn943105
-Node: strdup943814
-Node: strerror944433
-Node: strerror_r945009
-Node: strftime946226
-Node: stricmp951624
-Node: strlcat952145
-Node: strlcpy954280
-Node: strlen956088
-Node: strlwr956592
-Node: strncasecmp957046
-Node: strncat957676
-Node: strncmp958169
-Node: strncpy958795
-Node: strndup959282
-Node: strnicmp959993
-Node: strnlen960609
-Node: strpbrk961315
-Node: strrchr961888
-Node: strsep962432
-Node: strspn963367
-Node: strstr964065
-Node: strtod964588
-Node: strtof967330
-Node: strtoimax970061
-Node: strtok971086
-Node: strtok_r972052
-Node: strtol973099
-Node: strtold974118
-Node: _strtold976801
-Node: strtoll979414
-Node: strtoul980427
-Node: strtoull981042
-Node: strtoumax981684
-Node: strupr982331
-Node: strxfrm982768
-Node: swab983456
-Node: symlink984081
-Node: syms_init984942
-Node: syms_line2val985891
-Node: syms_listwild987012
-Node: syms_module989315
-Node: syms_name2val990053
-Node: syms_val2line992342
-Node: syms_val2name993447
-Node: sync994850
-Node: sys_errlist995478
-Node: sys_nerr995902
-Node: sysconf996352
-Node: _sysmalloc997251
-Node: system999381
-Ref: system-Footnote-11007938
-Node: tan1008267
-Node: tanh1008942
-Node: tcdrain1009535
-Node: tcflow1010187
-Node: tcflush1011115
-Node: tcgetattr1011886
-Node: tcgetpgrp1012667
-Node: tcsendbreak1013434
-Node: tcsetattr1014053
-Node: tcsetpgrp1014951
-Node: tell1015921
-Node: telldir1016341
-Node: tempnam1016928
-Node: Termios functions1019215
-Node: textattr1024844
-Node: textbackground1026161
-Node: textcolor1027128
-Node: textmode1028080
-Node: time1029481
-Node: times1029943
-Node: tmpfile1030952
-Node: tmpnam1031568
-Node: toascii1033228
-Node: _tolower1033691
-Node: tolower1034341
-Node: _toupper1034864
-Node: toupper1035514
-Node: _truename1036037
-Node: _truename_sfn1038517
-Node: truncate1039282
-Node: ttyname1039738
-Node: tzset1040212
-Node: tzsetwall1040769
-Node: uclock1041250
-Node: umask1043643
-Node: uname1043996
-Node: ungetc1045049
-Node: ungetch1045603
-Node: unlink1046629
-Node: unlock1047884
-Node: unlock641048287
-Node: unsetenv1048900
-Node: _use_lfn1049797
-Node: usleep1053072
-Node: utime1053883
-Node: utimes1055070
-Node: v2loadimage1056362
-Node: valloc1058646
-Node: varargs1059185
-Node: vasnprintf1061250
-Node: vasprintf1063637
-Node: vdprintf1065075
-Node: vfork1065720
-Node: vfprintf1066133
-Node: vfscanf1066856
-Node: vprintf1067350
-Node: vscanf1067857
-Node: vsnprintf1068356
-Node: vsprintf1069422
-Node: vsscanf1070033
-Node: wait1070555
-Node: waitpid1071433
-Node: wcstombs1072115
-Node: wctomb1072674
-Node: wherex1073229
-Node: wherey1074144
-Node: wild1075054
-Node: window1075885
-Node: write1076913
-Node: _write1078767
-Node: write_child1080559
-Node: write_sel_addr1081580
-Node: writev1082421
-Node: xfree1083554
-Node: xmalloc1084258
-Node: xrealloc1085039
-Node: Unimplemented1085896
-Node: Function Index1088449
-Node: Variable Index1161571
-Node: Data Type Index1167711
-Node: Concept Index1173128
+Node: string functions19723
+Node: sys functions20557
+Node: termios functions20726
+Node: time functions21168
+Node: unistd functions21660
+Node: unix functions21844
+Node: Alphabetical List22544
+Node: _808737207
+Node: a64l37785
+Node: abort39125
+Node: abs39936
+Node: access40329
+Node: acos41316
+Node: acosh41926
+Node: addmntent42393
+Node: alarm42872
+Node: alloca44084
+Node: asctime44653
+Node: asctime_r45677
+Node: asin46569
+Node: asinh47106
+Node: asnprintf47693
+Node: asprintf49976
+Node: assert51320
+Node: atan52619
+Node: atan253279
+Node: atanh54444
+Node: atexit55066
+Node: atof55883
+Node: atoi56546
+Node: atol57195
+Node: _atold57848
+Node: atoll58498
+Node: basename59200
+Node: bcmp60383
+Node: bcopy61042
+Node: bdos61571
+Node: bdosptr62400
+Node: _bios_disk63587
+Node: _bios_equiplist68447
+Node: _bios_keybrd69715
+Node: _bios_memsize73361
+Node: _bios_printer73880
+Node: _bios_serialcom75246
+Node: _bios_timeofday78209
+Node: bioscom79243
+Node: biosdisk81942
+Node: biosequip84060
+Node: bioskey85489
+Node: biosmemory88711
+Node: biosprint89340
+Node: biostime90168
+Node: blinkvideo90705
+Node: brk91709
+Node: bsearch92403
+Node: bzero93737
+Node: calloc94150
+Node: cbrt94969
+Node: ceil95541
+Node: cfgetispeed95989
+Node: cfgetospeed96717
+Node: cfmakeraw97449
+Node: cfree97968
+Node: cfsetispeed98431
+Node: cfsetospeed99153
+Node: cfsetspeed99881
+Node: cgets100443
+Node: chdir101692
+Node: _check_v2_prog102416
+Node: chmod106122
+Node: _chmod107451
+Node: chown108776
+Node: chsize109467
+Node: cleanup_client109841
+Node: _clear87110461
+Node: __clear_fd_flags110856
+Node: __clear_fd_properties111592
+Node: clearerr112390
+Node: clock112859
+Node: close113475
+Node: _close113977
+Node: closedir114510
+Node: clreol114951
+Node: clrscr115867
+Node: confstr116751
+Node: _conio_gettext118656
+Node: _conio_kbhit119088
+Node: _control87120296
+Node: cos124658
+Node: cosh125931
+Node: cprintf126646
+Node: cputs127795
+Node: creat128772
+Node: _creat129593
+Node: _creatnew130712
+Node: crlf2nl133650
+Node: __crt0_glob_function134091
+Node: __crt0_load_environment_file134925
+Node: __crt0_setup_arguments135706
+Node: _crt0_startup_flags136719
+Node: cscanf142793
+Node: ctermid143929
+Node: ctime144462
+Node: ctime_r145392
+Node: delay146228
+Node: delline147692
+Node: _detect_80387148627
+Node: difftime149217
+Node: dirname149812
+Node: disable150903
+Node: div151498
+Node: __djgpp_exception_toggle152307
+Node: __djgpp_map_physical_memory153270
+Node: __djgpp_memory_handle154962
+Node: __djgpp_memory_handle_list155656
+Node: __djgpp_memory_handle_size156648
+Node: __djgpp_nearptr_disable157597
+Node: __djgpp_nearptr_enable158057
+Node: __djgpp_set_ctrl_c159719
+Node: __djgpp_set_page_attributes161971
+Node: __djgpp_set_sigint_key163335
+Node: __djgpp_set_sigquit_key165592
+Node: __djgpp_share_flags167820
+Node: __djgpp_spawn169462
+Node: __djgpp_traceback_exit170651
+Node: _djstat_describe_lossage171490
+Node: _djstat_fail_bits173748
+Node: _djstat_flags177372
+Node: dlclose180573
+Node: dlerror181192
+Node: dlerrstatmod181721
+Node: dlerrstatsym182388
+Node: dlopen182906
+Node: dlregsym184320
+Node: dlsym185256
+Node: _dlsymresolver186020
+Node: dlunregsym187081
+Node: _doprnt187618
+Node: _dos_close188318
+Node: _dos_commit189040
+Node: _dos_creat189683
+Node: _dos_creatnew191200
+Node: _dos_findfirst192733
+Node: _dos_findnext194978
+Node: _dos_getdate195822
+Node: _dos_getdiskfree196634
+Node: _dos_getdrive197948
+Node: _dos_getfileattr198559
+Node: _dos_getftime200302
+Node: _dos_gettime202582
+Node: _dos_lk64203343
+Node: _dos_lock203992
+Node: _dos_open204420
+Node: _dos_read206351
+Node: _dos_setdate207827
+Node: _dos_setdrive208868
+Node: _dos_setfileattr209630
+Node: _dos_setftime210899
+Node: _dos_settime212701
+Node: _dos_unlk64213662
+Node: _dos_unlock214326
+Node: _dos_write214766
+Node: _doscan216285
+Node: _doserrno217134
+Node: __dosexec_find_on_path217811
+Node: dosexterr219823
+Node: dosmemget233992
+Node: dosmemgetb234921
+Node: dosmemgetl235895
+Node: dosmemgetw236888
+Node: dosmemput237877
+Node: dosmemputb238773
+Node: dosmemputl239743
+Node: dosmemputw240723
+Node: dostrerr241703
+Node: DPMI Overview244183
+Node: DPMI Specification249234
+Node: __dpmi_allocate_dos_memory249574
+Node: __dpmi_allocate_ldt_descriptors250645
+Node: __dpmi_allocate_linear_memory251557
+Node: __dpmi_allocate_memory252515
+Node: __dpmi_allocate_real_mode_callback253241
+Node: __dpmi_allocate_shared_memory254344
+Node: __dpmi_allocate_specific_ldt_descriptor255687
+Node: __dpmi_clear_debug_watchpoint256438
+Node: __dpmi_create_alias_descriptor257150
+Node: __dpmi_discard_page_contents257897
+Node: __dpmi_free_dos_memory258683
+Node: __dpmi_free_ldt_descriptor259454
+Node: __dpmi_free_memory260230
+Node: __dpmi_free_physical_address_mapping260903
+Node: __dpmi_free_real_mode_callback261772
+Node: __dpmi_free_serialization_on_shared_memory262521
+Node: __dpmi_free_shared_memory263701
+Node: __dpmi_get_and_disable_virtual_interrupt_state264565
+Node: __dpmi_get_and_enable_virtual_interrupt_state265370
+Node: __dpmi_get_and_set_virtual_interrupt_state266188
+Node: __dpmi_get_capabilities267195
+Node: __dpmi_get_coprocessor_status268460
+Node: __dpmi_get_descriptor269634
+Node: __dpmi_get_descriptor_access_rights275324
+Node: __dpmi_get_extended_exception_handler_vector_pm276201
+Node: __dpmi_get_extended_exception_handler_vector_rm277123
+Node: __dpmi_get_free_memory_information278038
+Node: __dpmi_get_memory_block_size_and_base278879
+Node: __dpmi_get_memory_information279698
+Node: __dpmi_get_multiple_descriptors282056
+Node: __dpmi_get_page_attributes283182
+Node: __dpmi_get_page_size284689
+Node: __dpmi_get_processor_exception_handler_vector285378
+Node: __dpmi_get_protected_mode_interrupt_vector286360
+Node: __dpmi_get_raw_mode_switch_addr287305
+Node: __dpmi_get_real_mode_interrupt_vector288096
+Node: __dpmi_get_segment_base_address289098
+Node: __dpmi_get_segment_limit290014
+Node: __dpmi_get_selector_increment_value290681
+Node: __dpmi_get_state_of_debug_watchpoint291440
+Node: __dpmi_get_state_save_restore_addr292314
+Node: __dpmi_get_vendor_specific_api_entry_point293132
+Node: __dpmi_get_version293983
+Node: __dpmi_get_virtual_interrupt_state294952
+Node: __dpmi_install_resident_service_provider_callback295676
+Node: __dpmi_int297333
+Node: __dpmi_lock_linear_region298440
+Node: __dpmi_map_conventional_memory_in_memory_block299219
+Node: __dpmi_map_device_in_memory_block300194
+Node: __dpmi_mark_page_as_demand_paging_candidate301195
+Node: __dpmi_mark_real_mode_region_as_pageable302042
+Node: __dpmi_physical_address_mapping302891
+Node: __dpmi_relock_real_mode_region303757
+Node: __dpmi_reset_debug_watchpoint304569
+Node: __dpmi_resize_dos_memory305289
+Node: __dpmi_resize_linear_memory306175
+Node: __dpmi_resize_memory307097
+Node: __dpmi_segment_to_descriptor307953
+Node: __dpmi_serialize_on_shared_memory308887
+Node: __dpmi_set_coprocessor_emulation310325
+Node: __dpmi_set_debug_watchpoint311570
+Node: __dpmi_set_descriptor312388
+Node: __dpmi_set_descriptor_access_rights313308
+Node: __dpmi_set_extended_exception_handler_vector_pm314835
+Node: __dpmi_set_extended_exception_handler_vector_rm315758
+Node: __dpmi_set_multiple_descriptors316672
+Node: __dpmi_set_page_attributes317685
+Node: __dpmi_set_processor_exception_handler_vector319026
+Node: __dpmi_set_protected_mode_interrupt_vector319929
+Node: __dpmi_set_real_mode_interrupt_vector321063
+Node: __dpmi_set_segment_base_address322016
+Node: __dpmi_set_segment_limit322779
+Node: __dpmi_simulate_real_mode_interrupt323786
+Node: __dpmi_simulate_real_mode_procedure_iret324767
+Node: __dpmi_simulate_real_mode_procedure_retf325677
+Node: __dpmi_simulate_real_mode_procedure_retf_stack326627
+Node: __dpmi_terminate_and_stay_resident328092
+Node: __dpmi_unlock_linear_region329542
+Node: __dpmi_yield330270
+Node: dprintf331209
+Node: DTTOIF331837
+Node: dup332717
+Node: dup2333220
+Node: __dup_fd_properties333859
+Node: _dxe_load334538
+Node: DXE_macros335370
+Node: ecvt336549
+Node: ecvtbuf337166
+Node: edi_init338756
+Node: enable339653
+Node: endgrent340251
+Node: endmntent340671
+Node: endpwent341095
+Node: errno341472
+Node: exec*348861
+Node: __exit350061
+Node: _exit350769
+Node: _Exit351488
+Node: exit352377
+Node: exp352991
+Node: exp10353892
+Node: exp2354665
+Node: expm1355436
+Node: fabs356385
+Node: _far*356926
+Node: fchdir359675
+Node: fchmod360225
+Node: fchown362029
+Node: fclose362700
+Node: fcntl363188
+Node: fcvt371869
+Node: fcvtbuf372481
+Node: fdopen374470
+Node: feof375107
+Node: ferror375614
+Node: fflush376142
+Node: ffs377358
+Node: fgetc377881
+Node: fgetgrent378415
+Node: fgetpos378772
+Node: fgets379275
+Node: File System Extensions380144
+Node: __file_exists388561
+Node: __file_tree_walk389330
+Node: filelength392094
+Node: fileno392997
+Node: findfirst393429
+Node: findnext396648
+Node: _fixpath397077
+Node: flock398640
+Node: floor401457
+Node: _flush_disk_cache401950
+Node: fmod402835
+Node: _fmode403456
+Node: fnmatch403960
+Node: fnmerge406989
+Node: fnsplit407879
+Node: fopen409283
+Node: fork411738
+Node: fpathconf412180
+Node: fpclassify412835
+Node: __fpclassifyd413703
+Node: __fpclassifyf414373
+Node: __fpclassifyld415047
+Node: _fpreset415741
+Node: fprintf416037
+Node: fpurge416488
+Node: fputc417049
+Node: fputs417530
+Node: fread418066
+Node: free418641
+Node: freopen419128
+Node: frexp419794
+Node: fscanf420529
+Node: fseek421041
+Node: fseeko422689
+Node: fsetpos424521
+Node: __FSEXT_add_open_handler425053
+Node: __FSEXT_alloc_fd425781
+Node: __FSEXT_call_open_handlers427192
+Node: __FSEXT_get_data427798
+Node: __FSEXT_get_function428546
+Node: __FSEXT_set_data429312
+Node: __FSEXT_set_function432423
+Node: fstat434291
+Node: fstatvfs438563
+Node: fsync440163
+Node: ftell440773
+Node: ftello441271
+Node: ftime441947
+Node: ftruncate442772
+Node: ftw443584
+Node: _fwalk448026
+Node: fwrite448548
+Node: gcvt449133
+Node: _get_dev_info450193
+Node: _get_dos_version453117
+Node: __get_extended_key_string455228
+Node: _get_fat_size458874
+Node: __get_fd_flags460307
+Node: __get_fd_name461194
+Node: _get_fs_type461785
+Node: _get_volume_info463592
+Node: getc465833
+Node: getcbrk466332
+Node: getch466717
+Node: getchar468133
+Node: getche468525
+Node: getcwd469936
+Node: getdate470972
+Node: getdfree471528
+Node: getdisk472319
+Node: getdtablesize472752
+Node: getegid473135
+Node: getenv473492
+Node: geteuid474027
+Node: getftime474375
+Node: getgid475156
+Node: getgrent475504
+Node: getgrgid476694
+Node: getgrnam477197
+Node: getgroups477705
+Node: gethostname478141
+Node: getitimer479075
+Node: getkey480237
+Node: getlogin480866
+Node: getlongpass481698
+Node: getmntent482612
+Node: getopt486830
+Node: getpagesize489224
+Node: getpass489622
+Node: getpgrp490496
+Node: getpid490899
+Node: getppid491314
+Node: getpwent491771
+Node: getpwnam493492
+Node: getpwuid494006
+Node: getrlimit494513
+Node: getrusage496043
+Node: gets497779
+Node: gettext498455
+Node: gettextinfo500167
+Node: gettime501657
+Node: gettimeofday502276
+Node: getuid503430
+Node: getw503773
+Node: getwd504476
+Node: getxkey504937
+Node: glob505557
+Node: globfree512091
+Node: gmtime512501
+Node: gmtime_r514129
+Node: _go32_conventional_mem_selector515030
+Node: _go32_dpmi_allocate_dos_memory516184
+Node: _go32_dpmi_allocate_iret_wrapper517469
+Node: _go32_dpmi_allocate_real_mode_callback_iret518994
+Node: _go32_dpmi_allocate_real_mode_callback_retf520832
+Node: _go32_dpmi_chain_protected_mode_interrupt_vector522125
+Node: _go32_dpmi_free_dos_memory523278
+Node: _go32_dpmi_free_iret_wrapper524099
+Node: _go32_dpmi_free_real_mode_callback524805
+Node: _go32_dpmi_get_free_memory_information525593
+Node: _go32_dpmi_get_protected_mode_interrupt_vector526955
+Node: _go32_dpmi_get_real_mode_interrupt_vector527923
+Node: _go32_dpmi_lock_code528733
+Node: _go32_dpmi_lock_data529551
+Node: _go32_dpmi_remaining_physical_memory530277
+Node: _go32_dpmi_remaining_virtual_memory530826
+Node: _go32_dpmi_resize_dos_memory531379
+Node: _go32_dpmi_set_protected_mode_interrupt_vector532389
+Node: _go32_dpmi_set_real_mode_interrupt_vector534325
+Node: _go32_dpmi_simulate_fcall535147
+Node: _go32_dpmi_simulate_fcall_iret536329
+Node: _go32_dpmi_simulate_int537522
+Node: _go32_info_block538716
+Node: _go32_interrupt_stack_size542238
+Node: _go32_my_cs542663
+Node: _go32_my_ds543076
+Node: _go32_my_ss543459
+Node: _go32_rmcb_stack_size543852
+Node: _go32_want_ctrl_break544271
+Node: _go32_was_ctrl_break_hit545244
+Node: gotoxy546081
+Node: gppconio_init547063
+Node: __has_fd_properties547607
+Node: _hash2v548110
+Node: hasmntopt549104
+Node: hcreate549669
+Node: hdestroy550599
+Node: highvideo551505
+Node: hsearch552436
+Node: htonl554559
+Node: htons555120
+Node: hypot555676
+Node: imaxabs556827
+Node: imaxdiv557321
+Node: inb558208
+Node: index558526
+Node: initstate559134
+Node: inp559624
+Node: inportb559947
+Node: inportl560453
+Node: inportsb560977
+Node: inportsl561352
+Node: inportsw561729
+Node: inportw562125
+Node: inpw562635
+Node: insline562961
+Node: insque563929
+Node: __install_dev_full564588
+Node: __install_dev_zero565330
+Node: int386566060
+Node: int386x566505
+Node: int86566971
+Node: int86x571108
+Node: intdos572104
+Node: intdosx572509
+Node: intensevideo572941
+Node: __internal_readlink573994
+Node: _invent_inode575357
+Node: ioctl (DOS)576549
+Node: ioctl (General description)583842
+Node: ioctl (UNIX)584438
+Node: _is_cdrom_drive585938
+Node: _is_DOS83586771
+Node: _is_executable588353
+Node: _is_fat32590455
+Node: _is_ram_drive591351
+Node: _is_remote_drive592233
+Node: _is_remote_handle592994
+Node: isalnum593794
+Node: isalpha594212
+Node: isascii594600
+Node: isatty594968
+Node: isblank595466
+Node: iscntrl595940
+Node: isdigit596350
+Node: isfinite596737
+Node: isgraph597485
+Node: isgreater597940
+Node: isgreaterequal598850
+Node: isinf599808
+Node: isless600506
+Node: islessequal601384
+Node: islessgreater602320
+Node: islower603295
+Node: isnan603698
+Node: isnormal604317
+Node: isprint605094
+Node: ispunct605543
+Node: isspace605994
+Node: isunordered606465
+Node: isupper607085
+Node: isxdigit607502
+Node: itoa607948
+Node: kbhit608884
+Node: kill609710
+Node: l64a610134
+Node: labs611588
+Node: lchown611965
+Node: ldexp612456
+Node: ldiv613258
+Node: lfilelength614070
+Node: lfind615050
+Node: _lfn_gen_short_fname616430
+Node: _lfn_get_ftime618933
+Node: __libc_termios_exist_queue620648
+Node: __libc_termios_init621376
+Node: libm621984
+Node: link628130
+Node: llabs628714
+Node: lldiv629116
+Node: llockf629981
+Node: llrint634137
+Node: llrintf635078
+Node: llrintl636024
+Node: llseek636976
+Node: load_npx638347
+Node: localeconv639729
+Node: localtime642664
+Node: localtime_r643499
+Node: lock644157
+Node: lock64644986
+Node: lockf645938
+Node: log649605
+Node: log10650171
+Node: log1p650743
+Node: log2651347
+Node: longjmp651876
+Node: lowvideo652746
+Node: lrint653670
+Node: lrintf654596
+Node: lrintl655524
+Node: lsearch656460
+Node: lseek658178
+Node: lstat659049
+Ref: lstat-Footnote-1664743
+Node: malldbgdmpfile664965
+Node: malldbgdumpfile665635
+Node: mallinfo666155
+Node: malloc669044
+Node: malloc_debug670024
+Node: malloc_verify672571
+Node: mallocmap673866
+Node: mallsethook674554
+Node: math_errhandling678822
+Node: matherr679774
+Node: mblen683913
+Node: mbstowcs684588
+Node: mbtowc685185
+Node: _media_type685872
+Node: memalign686819
+Node: memccpy687386
+Node: memchr688408
+Node: memcmp688997
+Node: memcpy689497
+Node: memicmp690120
+Node: memmove690721
+Node: memset691369
+Node: mkdir692046
+Node: mkdtemp692795
+Node: mkfifo694196
+Node: mknod694612
+Node: mkstemp695457
+Node: mktemp696953
+Node: mktime698384
+Node: modf700046
+Node: modfl700824
+Node: moncontrol701290
+Node: _mono_clear702733
+Node: _mono_printf703049
+Node: _mono_putc703412
+Node: monstartup703747
+Node: movedata705664
+Node: movedatab707355
+Node: movedatal707748
+Node: movedataw708193
+Node: movetext708637
+Node: mprotect709688
+Node: _my_cs710931
+Node: _my_ds711316
+Node: _my_ss711699
+Node: nan712079
+Node: nanf712554
+Node: nanl713030
+Node: nice713520
+Node: normvideo713899
+Node: nosound714837
+Node: ntohl715116
+Node: ntohs715674
+Node: open716226
+Node: _open720171
+Node: opendir721908
+Node: outb724095
+Node: outp724429
+Node: outportb724765
+Node: outportl725233
+Node: outportsb725706
+Node: outportsl726100
+Node: outportsw726496
+Node: outportw726893
+Node: outpw727365
+Node: pathconf727709
+Node: pause729929
+Node: pclose730344
+Node: perror731003
+Node: pipe731742
+Node: popen733759
+Node: pow735256
+Node: pow10736417
+Node: pow2737193
+Node: powi737960
+Node: _preserve_fncase738775
+Node: PRI740366
+Node: printf742563
+Node: psignal750072
+Node: _put_path750862
+Node: putc757601
+Node: putch758083
+Node: putchar759207
+Node: putenv759683
+Node: puts760786
+Node: puttext761280
+Node: putw762299
+Node: pwrite762998
+Node: qsort764648
+Node: raise766222
+Node: rand766670
+Node: rand48768016
+Node: random770251
+Node: rawclock770712
+Node: _rdtsc771194
+Node: read772642
+Node: _read773436
+Node: read_child774047
+Node: read_sel_addr774932
+Node: readdir775679
+Node: readlink777763
+Node: readv778834
+Node: realloc779957
+Node: realpath781509
+Node: redir_cmdline_delete783439
+Node: redir_cmdline_parse784463
+Node: redir_debug_init786730
+Node: redir_to_child791710
+Node: redir_to_debugger793248
+Node: regcomp794753
+Node: regerror809542
+Node: regexec811955
+Node: regfree817907
+Node: remove818469
+Node: remque819029
+Node: _rename819645
+Node: rename820967
+Node: rewind822627
+Node: rewinddir823105
+Node: rindex823637
+Node: rmdir824243
+Node: run_child824744
+Node: save_npx827618
+Node: sbrk828982
+Node: scanf829921
+Ref: scanf-Footnote-1842667
+Node: SCN842796
+Node: Screen Variables844861
+Node: ScreenClear846045
+Node: ScreenCols846567
+Node: ScreenGetChar847283
+Node: ScreenGetCursor848340
+Node: ScreenMode848928
+Node: ScreenPutChar849439
+Node: ScreenPutString850134
+Node: ScreenRetrieve850930
+Node: ScreenRows851687
+Node: ScreenSetCursor852309
+Node: ScreenUpdate852883
+Node: ScreenUpdateLine853453
+Node: ScreenVisualBell853994
+Node: searchpath854537
+Node: seekdir856299
+Node: select856976
+Node: __set_fd_flags862974
+Node: __set_fd_properties863694
+Node: _set_screen_lines865769
+Node: setbuf867563
+Node: setbuffer868461
+Node: setcbrk869331
+Node: _setcursortype869766
+Node: setdate870865
+Node: setdisk871354
+Node: setenv871853
+Node: setftime872970
+Node: setgid873795
+Node: setgrent874303
+Node: setitimer874762
+Node: setjmp879008
+Node: setlinebuf879883
+Node: setlocale880602
+Node: setmntent882683
+Node: setmode883945
+Node: setpgid885375
+Node: setpwent885746
+Node: setrlimit886156
+Node: setsid886662
+Node: setstate887091
+Node: settime887526
+Node: settimeofday888014
+Node: setuid888521
+Node: setvbuf889031
+Node: sigaction890181
+Node: sigaddset891808
+Node: sigdelset892348
+Node: sigemptyset892898
+Node: sigfillset893552
+Node: sigismember894511
+Node: siglongjmp895121
+Node: signal895525
+Node: signbit905087
+Node: __signbitd905883
+Node: __signbitf906570
+Node: __signbitld907260
+Node: sigpending907966
+Node: sigprocmask909325
+Node: sigsetjmp913139
+Node: sin913480
+Node: sincos914746
+Node: sinh915733
+Node: sleep916499
+Node: snprintf916984
+Node: __solve_dir_symlinks918023
+Node: __solve_symlinks919103
+Node: sound920227
+Node: spawn*920597
+Node: sprintf926559
+Node: sqrt927107
+Node: srand927578
+Node: srandom928176
+Node: sscanf928706
+Node: Stack overflow handler929251
+Node: stackavail929835
+Node: stat930275
+Ref: stat-Footnote-1935929
+Node: statfs936150
+Node: _status87937590
+Node: statvfs938804
+Node: _stklen940940
+Node: stpcpy941407
+Node: stpncpy941823
+Node: strcasecmp942395
+Node: strcat942929
+Node: strchr943403
+Node: strcmp944006
+Node: strcoll944587
+Node: strcpy945217
+Node: strcspn945659
+Node: strdup946368
+Node: strerror946987
+Node: strerror_r947563
+Node: strftime948780
+Node: stricmp954178
+Node: strlcat954699
+Node: strlcpy956834
+Node: strlen958642
+Node: strlwr959146
+Node: strncasecmp959600
+Node: strncat960230
+Node: strncmp960723
+Node: strncpy961349
+Node: strndup961836
+Node: strnicmp962547
+Node: strnlen963163
+Node: strpbrk963869
+Node: strrchr964442
+Node: strsep964986
+Node: strspn965921
+Node: strstr966619
+Node: strtod967142
+Node: strtof969884
+Node: strtoimax972615
+Node: strtok973640
+Node: strtok_r974606
+Node: strtol975653
+Node: strtold976672
+Node: _strtold979355
+Node: strtoll981968
+Node: strtoul982981
+Node: strtoull983596
+Node: strtoumax984238
+Node: strupr984885
+Node: strxfrm985322
+Node: swab986010
+Node: symlink986635
+Node: syms_init987496
+Node: syms_line2val988445
+Node: syms_listwild989566
+Node: syms_module991869
+Node: syms_name2val992607
+Node: syms_val2line994896
+Node: syms_val2name996001
+Node: sync997404
+Node: sys_errlist998032
+Node: sys_nerr998456
+Node: sysconf998906
+Node: _sysmalloc999805
+Node: system1001935
+Ref: system-Footnote-11010492
+Node: tan1010821
+Node: tanh1011496
+Node: tcdrain1012089
+Node: tcflow1012741
+Node: tcflush1013669
+Node: tcgetattr1014440
+Node: tcgetpgrp1015221
+Node: tcsendbreak1015988
+Node: tcsetattr1016607
+Node: tcsetpgrp1017505
+Node: tell1018475
+Node: telldir1018895
+Node: tempnam1019482
+Node: Termios functions1021769
+Node: textattr1027398
+Node: textbackground1028715
+Node: textcolor1029682
+Node: textmode1030634
+Node: time1032035
+Node: times1032497
+Node: tmpfile1033506
+Node: tmpnam1034122
+Node: toascii1035782
+Node: _tolower1036245
+Node: tolower1036895
+Node: _toupper1037418
+Node: toupper1038068
+Node: _truename1038591
+Node: _truename_sfn1041071
+Node: truncate1041836
+Node: ttyname1042292
+Node: tzset1042766
+Node: tzsetwall1043323
+Node: uclock1043804
+Node: umask1046197
+Node: uname1046550
+Node: ungetc1047603
+Node: ungetch1048157
+Node: unlink1049183
+Node: unlock1050438
+Node: unlock641050841
+Node: unsetenv1051454
+Node: _use_lfn1052351
+Node: usleep1055626
+Node: utime1056437
+Node: utimes1057624
+Node: v2loadimage1058916
+Node: valloc1061200
+Node: varargs1061739
+Node: vasnprintf1063804
+Node: vasprintf1066191
+Node: vdprintf1067629
+Node: vfork1068274
+Node: vfprintf1068687
+Node: vfscanf1069410
+Node: vprintf1069904
+Node: vscanf1070411
+Node: vsnprintf1070910
+Node: vsprintf1071976
+Node: vsscanf1072587
+Node: wait1073109
+Node: waitpid1073987
+Node: wcstombs1074669
+Node: wctomb1075228
+Node: wherex1075783
+Node: wherey1076698
+Node: wild1077608
+Node: window1078439
+Node: write1079467
+Node: _write1081321
+Node: write_child1083113
+Node: write_sel_addr1084134
+Node: writev1084975
+Node: xfree1086108
+Node: xmalloc1086812
+Node: xrealloc1087593
+Node: Unimplemented1088450
+Node: Function Index1091003
+Node: Variable Index1164271
+Node: Data Type Index1170411
+Node: Concept Index1175828
 
 End Tag Table

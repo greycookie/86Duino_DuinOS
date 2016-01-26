@@ -31,7 +31,6 @@ copying
 copying.dj
 copying.lib
 djgpp.env
-include/.#errno.h.1.8
 include/ar.h
 include/assert.h
 include/bios.h
