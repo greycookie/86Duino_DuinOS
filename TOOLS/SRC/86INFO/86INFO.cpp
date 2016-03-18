@@ -12,7 +12,7 @@ int main()
 	char bios_version[16];
 	unsigned long mem_size;
 
-	printf("86INFO v1.0, author: PING-HUI WEI, E-mail: greycookie@dmp.com.tw, 2015/12/16\n");
+	printf("86INFO v1.1, author: PING-HUI WEI, E-mail: greycookie@dmp.com.tw, 2016/03/18\n");
 
 	printf("CPU:\t\t\t ");
 	switch(vx86_CpuID())
@@ -53,6 +53,7 @@ int main()
 	}
 
 	printf("CPU Frequency:\t\t %ldMHz\n", vx86_CpuCLK());
+	printf("CPU Temperature:\t %f °C\n", cpuTemperature());
 
 	printf("Memory Size:\t\t");
 	if(get_mem_size(&mem_size) == false)
