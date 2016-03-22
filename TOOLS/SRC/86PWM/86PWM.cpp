@@ -70,7 +70,7 @@ int main(int argc, char **argv)
 		case ENABLE_PWM:
 			Timer1.pwm(pin_num, duty, period);
 			printf("Enable PWM on pin %d\n", pin_num);
-			printf("Duty: %d microseconds, Period: %d microseconds\n", duty, period);
+			printf("Duty: %d%%, Period: %d microseconds\n", (int)(duty * 100.0 / 1024.0), period);
 			break;
 		case DISABLE_PWM:
 			Timer1.pwm(pin_num, 1);
@@ -110,5 +110,5 @@ void help(void)
 	printf("         86PWM 11 -D\n\n");
 	printf("Option:\n");
 	printf("    D: disable PWM on <pin>\n");
-	printf("    E: enable PWM on <pin>; <duty> assign PWM duty in microseconds; <period> assign PWM period, you can optionally specify the period (in microseconds), by default it is set at 1 millisecond.\n");
+	printf("    E: enable PWM on <pin>; <duty> set PWM duty in percent (0~1024, e.g. 512 = 50%%); <period> set PWM period, you can optionally specify the period (in microseconds), by default it is set at 1 millisecond.\n");
 }
