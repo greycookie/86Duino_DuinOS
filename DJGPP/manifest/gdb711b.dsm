@@ -1,0 +1,77 @@
+#
+# DSM for GNU debugger (GDB) 7.11 binaries.
+# Written by Juan Manuel Guerrero <juan.guerrero@gmx.de> 2016-03-10
+#
+
+dsm-file-version: 1.0
+dsm-name: gdb711b
+dsm-version: 0.6.1
+
+type: binaries
+
+dsm-author: Juan Manuel Guerrero
+dsm-author-email: juan.guerrero@gmx.de
+
+name: gdb
+version: 7.11 release 1
+manifest: gdb711b
+libraries-dsm: gdb711a
+documentation-dsm: gdb711d
+sources-dsm: gdb711s
+short-description: Binaries for GNU debugger (GDB) version 7.11.
+long-description: GDB is a source-level debugger for DJGPP programs.
+
+license: GNU GPL
+# author.
+author: Richard Stallman
+author-email: 
+# maintainer of the DJGPP port.
+maintainer: Juan Manuel Guerrero
+maintainer-email: juan.guerrero@gmx.de
+# For reporting bugs.
+mailing-list: gdb-patches@sourceware.org
+# The home page of GNU debugger (GDB).
+web-site: http://www.gnu.org/software/gdb/
+# The ftp site of GNU debugger (GDB).
+ftp-site: ftp://ftp.gnu.org/software/gdb/
+# For discussing DJGPP- and DOS/Windows-specific aspects.
+mailing-list: djgpp@delorie.com
+newsgroup: comp.os.msdos.djgpp
+
+porter: Juan Manuel Guerrero
+porter-email: juan.guerrero@gmx.de
+
+simtelnet-path: v2gnu/
+zip: gdb711b.zip
+
+changelog: gnu/gdb-7.11/ChangeLog
+
+pre-install-readme: gnu/gdb-7.11/NEWS
+pre-install-readme: gnu/gdb-7.11/README
+pre-install-readme: gnu/gdb-7.11/djgpp/README
+
+requires: DPMI 0.9
+requires: bash >= 2.05b release 3
+
+replaces: gdb < 7.11 release 1
+
+# For reading the docs.
+depends-on: info-reader
+depends-on: man
+depends-on: less
+
+# This updates the info/DIR main menu
+builtin-post-install-script: command:\
+ install-info --info-dir=/dev/env/DJDIR/info /dev/env/DJDIR/share/info/gdb.info
+builtin-post-install-script: command:\
+ install-info --info-dir=/dev/env/DJDIR/info /dev/env/DJDIR/share/info/gdbint.info
+builtin-post-install-script: command:\
+ install-info --info-dir=/dev/env/DJDIR/info /dev/env/DJDIR/share/info/stabs.info
+builtin-post-install-script: command:\
+ install-info --info-dir=/dev/env/DJDIR/info /dev/env/DJDIR/share/info/annotate.info
+
+# For NLS support.
+# For printing translated messages:
+depends-on: gettext >= 0.19.2 release 1
+# For recoding the .gmo files from unix to dos charset:
+depends-on: libiconv >= 1.14 release 2

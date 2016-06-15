@@ -1,7 +1,7 @@
-This is libquadmath.info, produced by makeinfo version 4.9 from
-/gcc-5.30/libquadmath/libquadmath.texi.
+This is libquadmath.info, produced by makeinfo version 4.13 from
+/gcc-6.10/libquadmath/libquadmath.texi.
 
-   Copyright (C) 2010-2015 Free Software Foundation, Inc.
+Copyright (C) 2010-2016 Free Software Foundation, Inc.
 
      Permission is granted to copy, distribute and/or modify this
      document under the terms of the GNU Free Documentation License,
@@ -24,7 +24,7 @@ END-INFO-DIR-ENTRY
    Published by the Free Software Foundation 51 Franklin Street, Fifth
 Floor Boston, MA 02110-1301 USA
 
-   Copyright (C) 2010-2015 Free Software Foundation, Inc.
+   Copyright (C) 2010-2016 Free Software Foundation, Inc.
 
      Permission is granted to copy, distribute and/or modify this
      document under the terms of the GNU Free Documentation License,
@@ -199,6 +199,8 @@ The following mathematical functions are available:
 `llrintq': round to nearest integer value
 
 `llroundq': round to nearest integer value away from zero
+
+`logbq': get exponent of the value
 
 `logq': natural logarithm function
 
@@ -912,13 +914,13 @@ reported via `http://gcc.gnu.org/bugs.html'.
 
 
 Tag Table:
-Node: Top1659
-Node: Typedef and constants2393
-Node: Math Library Routines3833
-Node: I/O Library Routines7637
-Node: strtoflt1287962
-Node: quadmath_snprintf8720
-Node: GNU Free Documentation License10928
-Node: Reporting Bugs36094
+Node: Top1657
+Node: Typedef and constants2391
+Node: Math Library Routines3831
+Node: I/O Library Routines7671
+Node: strtoflt1287996
+Node: quadmath_snprintf8754
+Node: GNU Free Documentation License10962
+Node: Reporting Bugs36128
 
 End Tag Table

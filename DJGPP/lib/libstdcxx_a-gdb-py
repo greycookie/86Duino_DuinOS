@@ -1,5 +1,5 @@
 # -*- python -*-
-# Copyright (C) 2009-2015 Free Software Foundation, Inc.
+# Copyright (C) 2009-2016 Free Software Foundation, Inc.
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@ import gdb
 import os
 import os.path
 
-pythondir = '/dev/env/DJDIR/share/gcc-5.30/python'
+pythondir = '/dev/env/DJDIR/share/gcc-6.10/python'
 libdir = '/dev/env/DJDIR/lib'
 
 # This file might be loaded when there is no current objfile.  This

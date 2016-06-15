@@ -1,0 +1,17 @@
+gnu/make-4.2.1/djgpp/README
+gnu/make-4.2.1/ChangeLog
+gnu/make-4.2.1/glob/ChangeLog
+gnu/make-4.2.1/NEWS
+gnu/make-4.2.1/tests/NEWS
+gnu/make-4.2.1/tests/README
+gnu/make-4.2.1/tests/COPYING
+gnu/make-4.2.1/README
+gnu/make-4.2.1/COPYING
+manifest/mak421b.dsm
+manifest/mak421b.ver
+manifest/mak421b.mft
+share/info/make.info
+share/man/cat1/make.1
+bin/make.exe
+include/gnumake.h
+gnu/make-4.2.1

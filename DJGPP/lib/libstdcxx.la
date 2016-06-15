@@ -17,7 +17,7 @@ old_library='libstdcxx.a'
 inherited_linker_flags=''
 
 # Libraries that this one depends upon.
-dependency_libs=' -L/dev/g/build.gcc/djgpp/libstdc++-v3/src -L/dev/g/build.gcc/djgpp/libstdc++-v3/src/.libs -L/dev/g/build.gcc/djgpp/libstdc++-v3/libsupc++/.libs'
+dependency_libs=' -L/dev/f/build.gcc/djgpp/libstdc++-v3/src -L/dev/f/build.gcc/djgpp/libstdc++-v3/src/.libs -L/dev/f/build.gcc/djgpp/libstdc++-v3/libsupc++/.libs'
 
 # Names of additional weak libraries provided by this library
 weak_library_names=''
