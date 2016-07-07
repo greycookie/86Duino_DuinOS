@@ -7,7 +7,7 @@
 ============================================================================
 
 
-                              DuinOS v1.20
+                             DuinOS v1.2.1
 
                        README.TXT -- December 2015
 
@@ -42,8 +42,9 @@ SOFTWARE INCLUDED
 
 CHANGELOG
 -----------
-v1.10 - add OpenWATCOM, FreeRTOS, WinCE, 86ADC, 86CLOCK, 86CRSBAR, 86INFO, 86IO
-v1.20 - update DJGPP from 2.05deta to 2.05
+v1.1.0 - add OpenWATCOM, FreeRTOS, WinCE, 86ADC, 86CLOCK, 86CRSBAR, 86INFO, 86IO
+v1.2.0 - update DJGPP from 2.05deta to 2.05
+v1.2.1 - update gcc from 5.3.0 to 6.1.0, update gpp from 5.3.0 to 6.1.0, update make from 4.1 to 4.2.1, update gdb from 7.10.1 to 7.11
 
 
 *For more details, see the wbsite: http://www.86duino.com/
